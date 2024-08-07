@@ -76,6 +76,9 @@ public sealed partial class CultYoggComponent : Component
 
     public int ConsumedShrooms = 0; //buffer
 
+    [ViewVariables(VVAccess.ReadWrite)]
+    public int CurrentStage = 0;
+
     public const int NeededForAscended = 3;//How many shrooms need to be consumed before ascension
 
     /// <summary>

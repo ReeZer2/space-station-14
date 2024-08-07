@@ -11,6 +11,9 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.Examine;
+using Content.Shared.IdentityManagement.Components;
+using Content.Shared.Inventory;
 using Content.Shared.SS220.CultYogg.Components;
 
 namespace Content.Shared.SS220.CultYogg.EntitySystems;
@@ -27,12 +30,16 @@ public abstract class SharedCultYoggSystem : EntitySystem
     [Dependency] private readonly HungerSystem _hungerSystem = default!;
     [Dependency] private readonly SharedCultYoggCorruptedSystem _cultYoggCorruptedSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<CultYoggComponent, ComponentStartup>(OnCompInit);
+
+        // examine
+        SubscribeLocalEvent<CultYoggComponent, ExaminedEvent>(OnExamined);
 
         // actions
         SubscribeLocalEvent<CultYoggComponent, CultYoggPukeShroomEvent>(PukeAction);
@@ -55,6 +62,45 @@ public abstract class SharedCultYoggSystem : EntitySystem
             _actions.SetCooldown(uid.Comp.PukeShroomActionEntity.Value, start, end);
         }
     }
+
+    private void OnExamined(EntityUid uid, CultYoggComponent component, ExaminedEvent args)
+    {
+        if (!HasComp<CultYoggComponent>(uid))
+        {
+            return;
+        }
+
+        if (component.CurrentStage < 1)
+        {
+            return;
+        }
+        if (TryComp<InventoryComponent>(uid, out var item)
+            && _inventory.TryGetSlotEntity(uid, "eyes", out _, item))
+        {
+            return;
+        }
+
+        if (_inventory.TryGetSlotEntity(uid, "head", out var itemHead, item))
+        {
+            if (TryComp(itemHead, out IdentityBlockerComponent? block)
+                && (block.Coverage == IdentityBlockerCoverage.EYES || block.Coverage == IdentityBlockerCoverage.FULL))
+            {
+                return;
+            }
+        }
+
+        if (_inventory.TryGetSlotEntity(uid, "mask", out var itemMask, item))
+        {
+            if (TryComp(itemMask, out IdentityBlockerComponent? block)
+                && (block.Coverage == IdentityBlockerCoverage.EYES || block.Coverage == IdentityBlockerCoverage.FULL))
+            {
+                return;
+            }
+        }
+
+        args.PushMarkup($"[color=green]{Loc.GetString("Глаза горят неестественно зелёным пламенем", ("ent", uid))}[/color]"); // no locale for right now
+    }
+
 
     #region Puke
     private void PukeAction(Entity<CultYoggComponent> uid, ref CultYoggPukeShroomEvent args)
