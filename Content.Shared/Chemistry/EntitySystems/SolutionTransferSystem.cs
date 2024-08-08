@@ -78,8 +78,8 @@ public sealed class SolutionTransferSystem : EntitySystem
         var user = args.User;
         foreach (var amount in DefaultTransferAmounts)
         {
-          if (amount < comp.MinimumTransferAmount || amount > comp.MaximumTransferAmount)
-                continue;
+            // if (amount < comp.MinimumTransferAmount || amount > comp.MaximumTransferAmount) // ss220 ch. amount fix
+            //      continue;  // ss220 ch. amount fix
 
             AlternativeVerb verb = new();
             verb.Text = Loc.GetString("comp-solution-transfer-verb-amount", ("amount", amount));
