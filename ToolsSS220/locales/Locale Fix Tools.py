@@ -92,7 +92,7 @@ def get_code_data():
                             block = content[start_pos:end_pos].strip()
                             args = set(ARG_NAME_IN_BLOCK_PATTERN.findall(block)) if block else set()
                             line = content.count('\n', 0, match.start()) + 1
-                            code_data.setdefault(loc_id, []).append({'file': os.path.relpath(os.path.join(root, file), BASE_PATH), 'line': line, 'args': args})
+                            code_data.setdefault(loc_id, []).append({'file': (Path(root) / file).relative_to(BASE_PATH), 'line': line, 'args': args})
                     except Exception as e:
                         print(f"⚠️ Get CodeData exception in {file}: {e}")
                         continue
@@ -270,7 +270,7 @@ def run_distribute():
 
     # Split into blocks: key + attributes
     kv_pattern = re.compile(r'^([a-zA-Z0-9\-_.]+)\s*=.*(?:\n\s+\..*)*', re.MULTILINE)
-    items = {m.group(0).split('=')[0].strip(): m.group(0) for m in kv_pattern.finditer(clean_input)}
+    items = {m.group(1): m.group(0) for m in kv_pattern.finditer(clean_input)}
 
     if not items:
         print("⚠️ Keys not found.")
@@ -280,14 +280,10 @@ def run_distribute():
     en_map = get_map(EN_PATH)
 
     for loc_id, block in items.items():
-        if loc_id in ru_map:
-            pass
-        else:
+        if loc_id not in ru_map:
             _process_localization(loc_id, block, ru_map, en_map, RU_PATH, EN_PATH, "RU")
 
-        if loc_id in en_map:
-            pass
-        else:
+        if loc_id not in en_map:
             _process_localization(loc_id, block, en_map, ru_map, EN_PATH, RU_PATH, "EN")
 
     INPUT_FILE.write_text("", encoding="utf-8")
