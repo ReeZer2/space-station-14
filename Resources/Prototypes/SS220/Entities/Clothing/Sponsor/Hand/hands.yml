@@ -4,7 +4,7 @@
 - type: entity
   parent: ClothingHandsGlovesSyntheticBase
   id: ClothingHandsGlovesMuzhik
-  name: muzhik's gloves # ai suggest this translate, cause (Оставил "Muzhik" в названии транслитерацией, так как это культурный архетип, который сложно адекватно заменить на просто "man" или "guy")
+  name: muzhik's gloves
   description: Not a single glass of moonshine will ever slip from your hands.
   components:
   - type: Sprite
