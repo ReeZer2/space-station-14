@@ -272,6 +272,7 @@ public sealed partial class AnomalySystem
             SpawnOnRandomGridLocation(grid, component.SpawnerPrototype);
 
         component.EmaggedUser = null;
+        component.ChosenBeacon = null;
         //ss220 add anomaly place end
         RemComp<GeneratingAnomalyGeneratorComponent>(uid);
         Appearance.SetData(uid, AnomalyGeneratorVisuals.Generating, false);

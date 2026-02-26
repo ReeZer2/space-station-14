@@ -8,8 +8,8 @@
                   HorizontalExpand="True"
                   VerticalExpand="True">
         <!--SS220 add anomaly start-->
-        <Button Name="ChooseAnomalyPlaceButton" SetSize="96 32" StyleClasses="OpenBoth" Visible="False"/>
-        <!--SS220 add anomaly nd-->
+        <Button Name="ChooseAnomalyPlaceButton" SetSize="256 32" Text="{Loc 'anomaly-generator-emag-choose-place'}" StyleClasses="OpenBoth" Visible="False"/>
+        <!--SS220 add anomaly end-->
         <BoxContainer Margin="10 0 10 0" Orientation="Horizontal">
             <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                 <BoxContainer Orientation="Horizontal"
