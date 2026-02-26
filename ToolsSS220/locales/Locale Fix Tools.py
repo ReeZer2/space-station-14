@@ -54,7 +54,9 @@ def get_ftl_data(target_path):
                         for attr_match in FTL_ATTRIBUTE_PATTERN.finditer(body):
                             attr_id = f"{parent_id}.{attr_match.group(1)}"
                             ftl_data[attr_id] = parse_block(attr_match.group(2))
-                except Exception: continue
+                except Exception as e:
+                    print(f"⚠️ Get FtlData exception in {file}: {e}")
+                    continue
     return ftl_data
 
 def get_code_data():
@@ -91,7 +93,9 @@ def get_code_data():
                             args = set(ARG_NAME_IN_BLOCK_PATTERN.findall(block)) if block else set()
                             line = content.count('\n', 0, match.start()) + 1
                             code_data.setdefault(loc_id, []).append({'file': os.path.relpath(os.path.join(root, file), BASE_PATH), 'line': line, 'args': args})
-                    except Exception: continue
+                    except Exception as e:
+                        print(f"⚠️ Get CodeData exception in {file}: {e}")
+                        continue
     return code_data
 
 def get_proto_data():
@@ -103,7 +107,7 @@ def get_proto_data():
                 try:
                     rel_path = os.path.relpath(os.path.join(root, file), BASE_PATH)
                     if "GameRules" in rel_path: continue
-                    content = Path(os.path.join(root, file)).read_text(encoding="utf-8").replace('\r\n', '\n')
+                    content = Path(os.path.join(root, file)).read_text(encoding="utf-8-sig").replace('\r\n', '\n')
                     blocks = re.split(r'^- type:\s*', content, flags=re.MULTILINE)
                     for block in blocks:
                         lines = block.splitlines()
@@ -119,7 +123,9 @@ def get_proto_data():
                         # Find other LocId fields (name, desc, suffix)
                         for m in PROTO_VAL_PATTERN.findall(block):
                             if "-" in m or "." in m: proto_keys[m] = rel_path
-                except Exception: continue
+                except Exception as e:
+                    print(f"⚠️ Get ProtoData exception in {file}: {e}")
+                    continue
     return proto_keys
 
 def get_sync_data(path):
@@ -153,7 +159,9 @@ def get_map(path):
                     content = p.read_text(encoding="utf-8-sig")
                     for k in kp.findall(content):
                         m[k.strip()] = p
-                except: continue
+                except Exception as e:
+                    print(f"⚠️ Get Map exception in {p.name}: {e}")
+                    continue
     return m
 
 def _update_block(path: Path, loc_id: str, block: str):
@@ -161,7 +169,7 @@ def _update_block(path: Path, loc_id: str, block: str):
     path.parent.mkdir(parents=True, exist_ok=True)
 
     if path.exists():
-        text = path.read_text(encoding="utf-8").replace('\r\n', '\n')
+        text = path.read_text(encoding="utf-8-sig").replace('\r\n', '\n')
     else:
         text = ""
 
@@ -213,13 +221,29 @@ def _update_block(path: Path, loc_id: str, block: str):
 
     path.write_text(text, encoding="utf-8")
 
+def _process_localization(loc_id, block, primary_map, secondary_map, primary_root, secondary_root, label):
+    """Determines target path and updates FTL block for a specific locale"""
+    if loc_id in primary_map:
+        target = primary_map[loc_id]
+        status = f"✅ {label} (Update)"
+    elif loc_id in secondary_map:
+        rel_path = secondary_map[loc_id].relative_to(secondary_root)
+        target = primary_root / rel_path
+        status = f"📂 {label} (From Mirror path)"
+    else:
+        target = primary_root / "ss220" / "unsorted.ftl"
+        status = f"⚠️ {label} (Unsorted)"
+
+    _update_block(target, loc_id, block)
+    print(f"{label} {status}: {loc_id}")
+
 def run_distribute():
     if not INPUT_FILE.exists() or INPUT_FILE.stat().st_size == 0:
         print("❌ input.ftl is empty.")
         return
 
     print("📤 Distributing keys...")
-    raw_content = INPUT_FILE.read_text(encoding="utf-8").replace('\r\n', '\n')
+    raw_content = INPUT_FILE.read_text(encoding="utf-8-sig").replace('\r\n', '\n')
 
     # Remove comments
     lines = raw_content.splitlines()
@@ -237,34 +261,15 @@ def run_distribute():
     en_map = get_map(EN_PATH)
 
     for loc_id, block in items.items():
-        # RU
         if loc_id in ru_map:
-            _update_block(ru_map[loc_id], loc_id, block)
-            print(f"✅ RU (Update): {loc_id}")
-        elif loc_id in en_map:
-            rel_path = en_map[loc_id].relative_to(EN_PATH)
-            target = RU_PATH / rel_path
-            target.parent.mkdir(parents=True, exist_ok=True)
-            _update_block(target, loc_id, block)
-            print(f"📂 RU (From EN path): {loc_id}")
+            pass
         else:
-            target = RU_PATH / "ss220" / "unsorted.ftl"
-            target.parent.mkdir(parents=True, exist_ok=True)
-            _update_block(target, loc_id, block)
-            print(f"⚠️ RU (Unsorted): {loc_id}")
+            _process_localization(loc_id, block, ru_map, en_map, RU_PATH, EN_PATH, "RU")
 
-        # EN
         if loc_id in en_map:
-            _update_block(en_map[loc_id], loc_id, block)
-        elif loc_id in ru_map:
-            rel_path = ru_map[loc_id].relative_to(RU_PATH)
-            target = EN_PATH / rel_path
-            target.parent.mkdir(parents=True, exist_ok=True)
-            _update_block(target, loc_id, block)
+            pass
         else:
-            target = EN_PATH / "ss220" / "unsorted.ftl"
-            target.parent.mkdir(parents=True, exist_ok=True)
-            _update_block(target, loc_id, block)
+            _process_localization(loc_id, block, en_map, ru_map, EN_PATH, RU_PATH, "EN")
 
     INPUT_FILE.write_text("", encoding="utf-8")
     print("✨ Finished. Keys updated without duplicating attributes.")
