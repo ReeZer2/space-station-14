@@ -163,7 +163,7 @@ public sealed partial class AnomalySystem
         if (gridUid is null || !TryComp<MapGridComponent>(gridUid.Value, out var grid))
             return;
 
-        for (var i = 0; i < 25; i++)
+        for (var _ = 0; _ < 25; _++)
         {
             var point = (pos.Position + Random.NextAngle().ToVec() * dist.Next(Random)).Floored();
             var tile = new Vector2i(point.X, point.Y);
