@@ -20,8 +20,6 @@ ent-ClothingUniformRedsoldier = рубашка армии Республики
     .desc = Одежда солдата армии Речной Республики.
 ent-ClothingUniformJumpsuitWaiter = униформа официанта
     .desc = Униформа мальчика на побегушках.
-
-
 ent-ClothingUniformJumpsuitBlueShieldCombez = комбинезон "Синий Щит"
     .desc = Стандартный комбинезон для синего щита.
 ent-ClothingUniformJumpsuitBlueShieldOperative = комбинезон оперативника "Синий Щит"
@@ -54,10 +52,8 @@ ent-ClothingUniformJumpsuitUssp = униформа СССП
 ent-ClothingUniformWastelandSuit = комбинезон пустоши
     .desc = Я оказался в пустыне, всё кругом было иссушено. И сердца гуманоидов тоже. Я издалека наблюдал за жизнью этих гуманоидов и все думал, зачем они продолжают жить? Какой в этом смысл? На что они надеются?
     .suffix = За емаг одеждомата
-
 ent-ClothingUniformJumpsuitCMOTurtle = водолазка главного врача
     .desc = Это комбинезон, носимый теми, у кого есть опыт работы на должности главного врача. Он обеспечивает слабую биологическую защиту.
-
 ent-ClothingUniformWhiteJumpsuitCaptain = белая униформа офицера
     .desc = Это белый костюм с золотыми украшениями, на погонах одна золотая звезда — «Майор».
 ent-ClothingUniformJumpsuitSeniorService = комбинезон сервисного администратора
@@ -82,3 +78,6 @@ ent-ClothingUniformCentCommOfficer = униформа офицера NanoTrasen
     .desc = На этой униформе изображено звание «лейтенант-коммандер». Её носят исключительно офицеры NanoTrasen. Защитные свойства форме придают экзотические материалы.
 ent-ClothingUniformNanotrasenDiplomat = дипломатическая форма NanoTrasen
     .desc = Очень яркая и официальная униформа дипломатического корпуса NanoTrasen.
+ent-ClothingUniformJumpsuitSeniorServiceDelux = униформа сервисного администратора
+    .desc = Стильная и практичная униформа, сделанная на заказ для мастера своего дела.
+    .suffix = За время в игре
