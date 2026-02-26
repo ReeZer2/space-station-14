@@ -22,7 +22,7 @@ ARG_NAME_IN_BLOCK_PATTERN = re.compile(r'"([a-zA-Z0-9_\-]+)"')
 PROTO_ID_FIELD = re.compile(r'^\s+id:\s*([a-zA-Z0-9\-_.]+)', re.MULTILINE)
 PROTO_ABSTRACT_FIELD = re.compile(r'^\s+abstract:\s*true', re.MULTILINE)
 PROTO_HIDE_MENU_FIELD = re.compile(r'(?:categories:\s*\[.*HideSpawnMenu.*\])|(?:-\s*HideSpawnMenu)', re.MULTILINE) # IDK, do we need translate hidespawn entities?
-PROTO_VAL_PATTERN = re.compile(r'^\s*(?:name|desc|suffix):\s*(?:!type:LocId\s+)?["\']?([a-z0-9\-_.]+)["\']?$', re.MULTILINE)
+PROTO_VAL_PATTERN = re.compile(r'^\s*(?:name|desc|suffix):\s*(?:!type:LocId\s+)?["\']?([a-zA-Z0-9\-_.]+)["\']?$', re.MULTILINE)
 FTL_ATTRIBUTE_PATTERN = re.compile(r'^\s+\.([a-zA-Z0-9_\-]+)\s*=\s*(.*?)(?=\n\s+\.[a-zA-Z0-9_\-]+\s*=|\n[a-zA-Z0-9\-_.]+\s*=|\Z)', re.DOTALL | re.MULTILINE)
 
 IGNORED_VARS = {'gender', 'proper', 'subject', 'object', 'the', 'user', 'target'}
@@ -37,7 +37,7 @@ def get_ftl_data(target_path):
         for file in files:
             if file.endswith(".ftl"):
                 try:
-                    content = Path(os.path.join(root, file)).read_text(encoding="utf-8-sig").replace('\r\n', '\n')
+                    content = (Path(root) / file).read_text(encoding="utf-8-sig").replace('\r\n', '\n')
                     for match in id_pattern.finditer(content):
                         parent_id = match.group(1).strip()
                         body = match.group(2)
@@ -67,7 +67,7 @@ def get_code_data():
             for file in files:
                 if file.endswith(".cs"):
                     try:
-                        content = Path(os.path.join(root, file)).read_text(encoding="utf-8")
+                        content = (Path(root) / file).read_text(encoding="utf-8")
                         for match in LOC_START_PATTERN.finditer(content):
                             raw_id = match.group(1).strip()
                             post_match_pos = match.end()
@@ -105,9 +105,11 @@ def get_proto_data():
         for file in files:
             if file.endswith(".yml"):
                 try:
-                    rel_path = os.path.relpath(os.path.join(root, file), BASE_PATH)
-                    if "GameRules" in rel_path: continue
-                    content = Path(os.path.join(root, file)).read_text(encoding="utf-8-sig").replace('\r\n', '\n')
+                    p = Path(root) / file
+                    rel_path = p.relative_to(BASE_PATH)
+                    if "GameRules" in rel_path.parts:
+                        continue
+                    content = p.read_text(encoding="utf-8-sig").replace('\r\n', '\n')
                     blocks = re.split(r'^- type:\s*', content, flags=re.MULTILINE)
                     for block in blocks:
                         lines = block.splitlines()
@@ -122,7 +124,7 @@ def get_proto_data():
                             proto_keys[f"ent-{e_id}.desc"] = rel_path
                         # Find other LocId fields (name, desc, suffix)
                         for m in PROTO_VAL_PATTERN.findall(block):
-                            if "-" in m or "." in m: proto_keys[m] = rel_path
+                            proto_keys[m] = rel_path
                 except Exception as e:
                     print(f"⚠️ Get ProtoData exception in {file}: {e}")
                     continue
@@ -135,7 +137,7 @@ def get_sync_data(path):
     for root, _, files in os.walk(path):
         for file in sorted(files):
             if file.endswith(".ftl"):
-                p = Path(os.path.join(root, file))
+                p = Path(root) / file
                 content = p.read_text(encoding="utf-8-sig").replace('\r\n', '\n')
                 file_keys = []
                 for m in id_pattern.finditer(content):
@@ -154,7 +156,7 @@ def get_map(path):
     for r, _, fs in os.walk(path):
         for f in fs:
             if f.endswith(".ftl"):
-                p = Path(os.path.join(r, f))
+                p = Path(r) / f
                 try:
                     content = p.read_text(encoding="utf-8-sig")
                     for k in kp.findall(content):
@@ -165,61 +167,78 @@ def get_map(path):
     return m
 
 def _update_block(path: Path, loc_id: str, block: str):
-    """ Updates the key and all attributes in FTL (name, desc, suffix), preserving indentation and order """
     path.parent.mkdir(parents=True, exist_ok=True)
 
     if path.exists():
-        text = path.read_text(encoding="utf-8-sig").replace('\r\n', '\n')
+        text = path.read_text(encoding="utf-8")
+        lines = text.split("\n")
     else:
-        text = ""
+        lines = []
 
-    # Split block into lines
-    lines = block.strip().splitlines()
-    main_line = lines[0].rstrip()
-    attr_lines = [l.rstrip() for l in lines[1:] if l.strip()]
+    # Split incoming block into lines
+    block_lines = block.rstrip().split("\n")
 
-    # --- Update main key ---
-    key_pattern = re.compile(rf'^{re.escape(loc_id)}\s*=.*$', re.MULTILINE)
-    if key_pattern.search(text):
-        text = key_pattern.sub(main_line, text)
-    else:
-        if text and not text.endswith("\n"):
-            text += "\n"
-        text += main_line + "\n"
+    # Main key line (ent-XXX = Name)
+    new_main = block_lines[0]
 
-    # --- Update attributes ---
-    for attr_line in attr_lines:
-        attr_match = re.match(r'^(\s*\.\w+)\s*=\s*(.*)$', attr_line)
-        if not attr_match:
-            continue
-        attr_name = attr_match.group(1).strip()
+    # Extract attributes (.desc, .suffix, etc.)
+    new_attrs = []
+    for l in block_lines[1:]:
+        if l.strip().startswith("."):
+            name = l.strip().split("=", 1)[0].strip()
+            new_attrs.append((name, l))
 
-        # Check if attribute already exists under the target key
-        pattern = re.compile(
-            rf'^{re.escape(loc_id)}\s*=.*\n((?:[ \t]*{re.escape(attr_name)}\s*=.*\n?)*)',
-            re.MULTILINE
-        )
+    key_index = None
+    for i, line in enumerate(lines):
+        if "=" in line:
+            left = line.split("=", 1)[0].strip()
+            if left == loc_id:
+                key_index = i
+                break
 
-        if pattern.search(text):
-            # Replace existing attribute
-            def repl(m):
-                main = m.group(0).splitlines()[0] + "\n"
-                return main + attr_line + "\n"
-            text = pattern.sub(repl, text)
+    if key_index is None:
+        if lines and lines[-1] != "":
+            lines.append("")
+        lines.extend(block_lines)
+        path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        return
+
+    lines[key_index] = new_main
+
+    attr_start = key_index + 1
+    attr_end = attr_start
+
+    while attr_end < len(lines):
+        l = lines[attr_end]
+
+        if not l.startswith(" ") and not l.startswith("\t"):
+            break
+
+        if not l.strip().startswith("."):
+            break
+
+        attr_end += 1
+
+    def rebuild_existing():
+        result = {}
+        for i in range(attr_start, attr_end):
+            name = lines[i].strip().split("=", 1)[0].strip()
+            result[name] = i
+        return result
+
+    insert_pos = attr_start
+
+    for name, attr_line in new_attrs:
+        existing = rebuild_existing()
+
+        if name in existing:
+            lines[existing[name]] = attr_line
         else:
-            # Insert attribute immediately after the main key
-            key_line_pattern = re.compile(rf'^{re.escape(loc_id)}\s*=.*$', re.MULTILINE)
-            match = key_line_pattern.search(text)
-            if match:
-                insert_pos = match.end()
-                text = text[:insert_pos] + "\n" + attr_line + text[insert_pos:]
-            else:
-                # Key is missing — insert at the end
-                if text and not text.endswith("\n"):
-                    text += "\n"
-                text += main_line + "\n" + attr_line + "\n"
+            lines.insert(insert_pos, attr_line)
+            insert_pos += 1
+            attr_end += 1
 
-    path.write_text(text, encoding="utf-8")
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 def _process_localization(loc_id, block, primary_map, secondary_map, primary_root, secondary_root, label):
     """Determines target path and updates FTL block for a specific locale"""
