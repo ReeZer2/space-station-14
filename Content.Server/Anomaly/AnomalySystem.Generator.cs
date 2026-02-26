@@ -75,7 +75,7 @@ public sealed partial class AnomalySystem
         _ui.SetUiState(uid, AnomalyGeneratorUiKey.Key, state);
 
         //ss220 add anomaly place start
-        if (component.EmaggedUser != null && user != null && component.EmaggedUser.Value == user.Value)
+        if (component.EmaggedUser != null && component.EmaggedUser.Value == user)
         {
             List<AnomalyGeneratorEmagStruct> beacons = [];
 
