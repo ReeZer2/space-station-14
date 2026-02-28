@@ -1,6 +1,7 @@
 import os
 import re
 from pathlib import Path
+from tqdm import tqdm
 
 # --- CONFIGURATION ---
 BASE_PATH = Path(__file__).parent.parent.parent
@@ -33,7 +34,7 @@ def get_ftl_data(target_path):
     """Parses FTL files and extracts keys, variables, and selector info"""
     ftl_data = {}
     id_pattern = re.compile(r'^([a-zA-Z0-9\-_.]+)\s*=\s*(.*?)(?=\n[a-zA-Z0-9\-_.]+\s*=|\Z)', re.DOTALL | re.MULTILINE)
-    for root, _, files in os.walk(target_path):
+    for root, _, files in tqdm(os.walk(target_path), desc='iterating over ftl files', unit=' file'):
         for file in files:
             if file.endswith(".ftl"):
                 try:
@@ -63,7 +64,7 @@ def get_code_data():
     """Scans C# files for GetString calls and captures passed arguments"""
     code_data = {}
     for path in CODE_PATHS:
-        for root, _, files in os.walk(path):
+        for root, _, files in tqdm(os.walk(path), desc='Iterating over code files', unit=' file'):
             for file in files:
                 if file.endswith(".cs"):
                     try:
@@ -101,7 +102,7 @@ def get_code_data():
 def get_proto_data():
     """Parses YAML prototypes to find entity IDs and LocId references"""
     proto_keys = {}
-    for root, _, files in os.walk(PROTOTYPES_PATH):
+    for root, _, files in tqdm(os.walk(PROTOTYPES_PATH), desc='Iterating over prototypes file', unit=' file'):
         for file in files:
             if file.endswith(".yml"):
                 try:
@@ -134,7 +135,7 @@ def get_sync_data(path):
     """Utility to collect data for sync operations"""
     data, order, headers = {}, [], {}
     id_pattern = re.compile(r'^([a-zA-Z0-9\-_.]+)\s*=\s*(.*?)(?=\n[a-zA-Z0-9\-_.]+\s*=|\Z)', re.DOTALL | re.MULTILINE)
-    for root, _, files in os.walk(path):
+    for root, _, files in tqdm(os.walk(path), desc='Iterating over prototypes file', unit=' file'):
         for file in sorted(files):
             if file.endswith(".ftl"):
                 p = Path(root) / file
@@ -279,7 +280,7 @@ def run_distribute():
     ru_map = get_map(RU_PATH)
     en_map = get_map(EN_PATH)
 
-    for loc_id, block in items.items():
+    for loc_id, block in tqdm(items.items(), desc = 'Iterating over added locales', unit=' locale entry'):
         if loc_id not in ru_map:
             _process_localization(loc_id, block, ru_map, en_map, RU_PATH, EN_PATH, "RU")
 
@@ -302,7 +303,7 @@ def run_audit():
     missing_from_code = []
 
     report.append("--- ARGUMENT MISMATCHES ---")
-    for loc_id, occurrences in code_locs.items():
+    for loc_id, occurrences in tqdm(code_locs.items()):
         if loc_id not in ftl_locs:
             for occ in occurrences:
                 missing_from_code.append(f"📍 {occ['file']}:{occ['line']} | Key: {loc_id}")
