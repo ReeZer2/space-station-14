@@ -64,6 +64,7 @@ public abstract class SharedDarkReaperSystem : EntitySystem
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly PullingSystem _puller = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
+    [Dependency] private readonly LifestealSystem _lifesteal = default!;
 
     public override void Initialize()
     {
@@ -469,14 +470,10 @@ public abstract class SharedDarkReaperSystem : EntitySystem
         comp.CurrentStage = stage;
         UpdateStageAppearance(uid, comp);
 
-        if (!TryComp<LifestealComponent>(uid, out var lifesteal))
-            return;
-
         if (!comp.LifestealPerStage.TryGetValue(stage, out var lifestealPerStage))
             return;
 
-        lifesteal.Lifesteal = lifestealPerStage;
-        Dirty(uid, lifesteal);
+        _lifesteal.ChangeLifesteal(uid, lifestealPerStage);
     }
 
     public void UpdateStage(EntityUid uid, DarkReaperComponent comp)

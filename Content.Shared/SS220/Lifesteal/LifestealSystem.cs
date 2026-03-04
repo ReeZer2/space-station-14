@@ -13,10 +13,10 @@ public sealed class LifestealSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<LifestealComponent, WeaponAttackEvent>(OnDarkReaperHealOnAttack);
+        SubscribeLocalEvent<LifestealComponent, WeaponAttackEvent>(OnHealOnAttack);
     }
 
-    private void OnDarkReaperHealOnAttack(Entity<LifestealComponent> ent, ref WeaponAttackEvent args)
+    private void OnHealOnAttack(Entity<LifestealComponent> ent, ref WeaponAttackEvent args)
     {
         if (!TryComp<DamageableComponent>(ent, out var damageable))
             return;
@@ -46,5 +46,14 @@ public sealed class LifestealSystem : EntitySystem
         }
 
         _damageable.TryChangeDamage(ent, healSpec, true);
+    }
+
+    public void ChangeLifesteal(Entity<LifestealComponent?> ent, float amount)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return;
+
+        ent.Comp.Lifesteal = amount;
+        Dirty(ent);
     }
 }
