@@ -52,16 +52,13 @@ public sealed partial class MindExtensionSystem : EntitySystem
             return entity.Value;
 
         var newEnt = EntityManager.CreateEntityUninitialized(null);
-        var mindExtComponent = new MindExtensionComponent
-        {
-            Player = player,
-        };
+        var mindExtComponent = new MindExtensionComponent { Player = player };
 
         EntityManager.AddComponent(newEnt, mindExtComponent);
         EntityManager.InitializeEntity(newEnt);
         EntityManager.StartEntity(newEnt);
 
-        return new Entity<MindExtensionComponent>(newEnt, mindExtComponent);
+        return new(newEnt, mindExtComponent);
     }
 
     public bool TryGetMindExtension(NetUserId player, [NotNullWhen(true)] out Entity<MindExtensionComponent>? entity)
