@@ -180,7 +180,6 @@
   - type: InteractionOutline
   - type: Actions
   - type: AirDefense
-    missProbability: 0.25
   - type: Fixtures
     fixtures:
       fix1:

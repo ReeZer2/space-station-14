@@ -11,7 +11,7 @@ public sealed partial class AirDefenseComponent : Component
     public float MissProbability = 0.25f;
 
     [DataField]
-    public EntityWhitelist Blacklist = new()
+    public EntityWhitelist Whitelist = new()
     {
         Tags = new()
         {

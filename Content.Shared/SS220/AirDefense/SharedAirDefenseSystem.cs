@@ -15,7 +15,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.SS220.AirDefense;
 
-public sealed class SharedAirDefenseSystem : EntitySystem
+public sealed partial class SharedAirDefenseSystem : EntitySystem
 {
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -44,7 +44,7 @@ public sealed class SharedAirDefenseSystem : EntitySystem
         if (args.OtherFixtureId != BulletFixture)
             return;
 
-        if (!_whitelist.IsWhitelistPass(ent.Comp.Blacklist, args.OtherEntity))
+        if (!_whitelist.IsWhitelistPass(ent.Comp.Whitelist, args.OtherEntity))
             return;
 
         if (!HasComp<ProjectileComponent>(args.OtherEntity))
@@ -66,16 +66,11 @@ public sealed class SharedAirDefenseSystem : EntitySystem
     private static bool TryGetRadius(FixturesComponent fixtures, out float radius)
     {
         radius = 0;
-        foreach (var fix in fixtures.Fixtures.Values)
-        {
-            if (fix.Shape is not PhysShapeCircle circle)
-                continue;
+        if (!fixtures.Fixtures.TryGetValue("airDefense", out var fixture) || fixture.Shape is not PhysShapeCircle circle)
+            return false;
 
-            radius = circle.Radius;
-            return true;
-        }
-
-        return false;
+        radius = circle.Radius;
+        return true;
     }
 
     private void ExecuteDefensiveFire(Entity<AirDefenseComponent> ent, EntityUid target)
