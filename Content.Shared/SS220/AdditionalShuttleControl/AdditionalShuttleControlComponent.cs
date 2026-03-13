@@ -23,8 +23,5 @@ public sealed partial class AdditionalShuttleControlComponent : Component
 
     [DataField]
     [AutoNetworkedField]
-    public HashSet<AdditionalShuttleGunRecord> ShuttleGunRecords = new();
+    public Dictionary<NetEntity, Angle> ShuttleGunRecords = new();
 }
-
-[Serializable, NetSerializable]
-public record struct AdditionalShuttleGunRecord(NetEntity ShuttleGun, Angle ShuttleGunRotation);

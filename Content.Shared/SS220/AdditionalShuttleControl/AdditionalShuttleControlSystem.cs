@@ -1,11 +1,15 @@
-using System.Linq;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Systems;
+using Content.Shared.Physics;
 using Content.Shared.Trigger.Systems;
+using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.SS220.AdditionalShuttleControl;
@@ -14,6 +18,10 @@ public sealed class AdditionalShuttleControlSystem : EntitySystem
 {
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly SharedDeviceListSystem _deviceList = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+
+    public const string Trigger = "Trigger";
 
     public override void Initialize()
     {
@@ -48,11 +56,11 @@ public sealed class AdditionalShuttleControlSystem : EntitySystem
         consoleComponent.LastRotateToPoint = null;
         foreach (var gunRecord in consoleComponent.ShuttleGunRecords)
         {
-            var gun = GetEntity(gunRecord.ShuttleGun);
+            var gun = GetEntity(gunRecord.Key);
             if (TerminatingOrDeleted(gun))
                 continue;
 
-            _xform.SetWorldRotation(gun, gunRecord.ShuttleGunRotation);
+            _xform.SetWorldRotation(gun, gunRecord.Value);
         }
     }
 
@@ -78,12 +86,15 @@ public sealed class AdditionalShuttleControlSystem : EntitySystem
         var devices = _deviceList.GetAllDevices(console);
         foreach (var device in devices)
         {
+            if (!CanShoot(device))
+                continue;
+
             if (!TryComp<DeviceNetworkComponent>(device, out var deviceNetworkDevice))
                 continue;
 
             var payload = new NetworkPayload
             {
-                [SharedDeviceLinkSystem.InvokedPort] = TriggerSystem.DefaultTriggerKey,
+                [SharedDeviceLinkSystem.InvokedPort] = Trigger,
             };
 
             deviceNetwork.QueuePacket(console, deviceNetworkDevice.Address, payload, deviceNetworkDevice.ReceiveFrequency);
@@ -128,12 +139,44 @@ public sealed class AdditionalShuttleControlSystem : EntitySystem
     private void AddGunToRecords(Entity<AdditionalShuttleControlComponent> console, EntityUid gun)
     {
         var netGun = GetNetEntity(gun);
-        if (console.Comp.ShuttleGunRecords.Any(r => r.ShuttleGun == netGun))
+        if (console.Comp.ShuttleGunRecords.ContainsKey(netGun))
             return;
 
         var currentRotation = _xform.GetWorldRotation(gun);
-        var newRecord = new AdditionalShuttleGunRecord(netGun, currentRotation);
-        console.Comp.ShuttleGunRecords.Add(newRecord);
+        console.Comp.ShuttleGunRecords.Add(netGun, currentRotation);
+    }
+
+    private bool CanShoot(EntityUid gun)
+    {
+        var xform = Transform(gun);
+        if (xform.GridUid == null)
+            return true;
+
+        var gunPos = _xform.GetWorldPosition(xform);
+        var gunRot = _xform.GetWorldRotation(xform);
+        var direction = gunRot.ToWorldVec();
+
+        var collisionMask = (int) CollisionGroup.BulletImpassable;
+
+        if (TryComp<HitscanBatteryAmmoProviderComponent>(gun, out var hitscan) &&
+            _proto.TryIndex<HitscanPrototype>(hitscan.Prototype, out var hitscanPrototype))
+        {
+            collisionMask = hitscanPrototype.CollisionMask;
+        }
+
+        var ray = new CollisionRay(gunPos, direction, collisionMask);
+        var results = _physics.IntersectRay(xform.MapID, ray, ignoredEnt: gun);
+
+        foreach (var result in results)
+        {
+            var hitXform = Transform(result.HitEntity);
+            if (hitXform.GridUid == xform.GridUid)
+                return false;
+
+            break;
+        }
+
+        return true;
     }
 }
 

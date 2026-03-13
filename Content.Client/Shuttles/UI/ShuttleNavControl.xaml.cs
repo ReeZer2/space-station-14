@@ -337,11 +337,10 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
             foreach (var gunRecord in additionalShuttleControl.ShuttleGunRecords)
             {
-                var entGun = EntManager.GetEntity(gunRecord.ShuttleGun);
-                if (!EntManager.EntityExists(entGun))
+                if (!EntManager.TryGetEntity(gunRecord.Key, out var entGun))
                     continue;
 
-                var gunWorldPos = _transform.GetWorldPosition(entGun);
+                var gunWorldPos = _transform.GetWorldPosition(entGun.Value);
 
                 var viewPos = Vector2.Transform(gunWorldPos, worldToView);
                 handle.DrawCircle(viewPos, additionalShuttleControl.GunRadius * MinimapScale, Color.Orange);
