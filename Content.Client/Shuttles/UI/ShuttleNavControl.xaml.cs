@@ -4,6 +4,7 @@ using Content.Shared.Projectiles;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
+using Content.Shared.SS220.AdditionalShuttleControl;
 using Content.Shared.SS220.Forcefield.Components;
 using Content.Shared.SS220.Shuttles.UI;
 using JetBrains.Annotations;
@@ -83,16 +84,21 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
     {
         base.KeyBindUp(args);
 
-        if (_coordinates == null || _rotation == null || args.Function != EngineKeyFunctions.UIClick ||
-            OnRadarClick == null)
-        {
+        // SS220 add additional control for shuttle start
+        if (args.Function != EngineKeyFunctions.UIClick || _consoleEntity == null)
             return;
-        }
 
-        var a = InverseScalePosition(args.RelativePosition);
-        var relativeWorldPos = new Vector2(a.X, -a.Y);
-        relativeWorldPos = _rotation.Value.RotateVec(relativeWorldPos);
-        var coords = _coordinates.Value.Offset(relativeWorldPos);
+        if (Parent is not NavScreen navScreen || !navScreen.RotateToPointToggle.Pressed)
+            return;
+
+        var coords = GetMouseCoordinates(args.PointerLocation);
+        var mapCoords = _transform.ToMapCoordinates(coords);
+
+        var console = EntManager.GetNetEntity(_consoleEntity.Value);
+        var ev = new RequestRotateGunToPoint(console, mapCoords);
+        EntManager.RaisePredictiveEvent(ev);
+        // SS220 add additional control for shuttle end
+
         OnRadarClick?.Invoke(coords);
     }
 
@@ -319,6 +325,29 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
             }
         }
 
+        // SS220 add additional control for shuttle start
+        if (_consoleEntity != null &&
+            EntManager.TryGetComponent<AdditionalShuttleControlComponent>(_consoleEntity, out var additionalShuttleControl))
+        {
+            if (additionalShuttleControl.LastRotateToPoint != null)
+            {
+                var viewPos = Vector2.Transform(additionalShuttleControl.LastRotateToPoint.Value.Position, worldToShuttle * shuttleToView);
+                handle.DrawCircle(viewPos, additionalShuttleControl.LastRotateToPointRadius * MinimapScale, Color.Red);
+            }
+
+            foreach (var gunRecord in additionalShuttleControl.ShuttleGunRecords)
+            {
+                var entGun = EntManager.GetEntity(gunRecord.ShuttleGun);
+                if (!EntManager.EntityExists(entGun))
+                    continue;
+
+                var gunWorldPos = _transform.GetWorldPosition(entGun);
+
+                var viewPos = Vector2.Transform(gunWorldPos, worldToView);
+                handle.DrawCircle(viewPos, additionalShuttleControl.GunRadius * MinimapScale, Color.Orange);
+            }
+        }
+        // SS220 add additional control for shuttle end
     }
 
     private void DrawDocks(DrawingHandleScreen handle, EntityUid uid, Matrix3x2 gridToView)
