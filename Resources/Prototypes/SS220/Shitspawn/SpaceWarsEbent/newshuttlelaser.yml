@@ -54,7 +54,10 @@
   components:
   - type: Sprite
     sprite: SS220/Objects/Weapons/Guns/Shuttles/harkonen.rsi
+    granularLayersRendering: true
     layers:
+    - state: support
+      renderingStrategy: NoRotation
     - state: base
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
