@@ -78,9 +78,7 @@
     board: ShuttleGunHarkonenCircuitboard
   - type: Gun
     projectileSpeed: 60
-    fireRate: 6
     burstFireRate: 6
-    byrstCooldown: 0.8
     angleIncrease: 0.2
     angleDecay: 7
     minAngle: 1
