@@ -3,7 +3,7 @@ using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Physics;
-using Content.Shared.Trigger.Systems;
+using Content.Shared.Shuttles.Systems;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Map;
@@ -14,7 +14,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.SS220.AdditionalShuttleControl;
 
-public sealed class AdditionalShuttleControlSystem : EntitySystem
+public abstract class SharedAdditionalShuttleControlSystem : EntitySystem
 {
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly SharedDeviceListSystem _deviceList = default!;
@@ -86,7 +86,7 @@ public sealed class AdditionalShuttleControlSystem : EntitySystem
         var devices = _deviceList.GetAllDevices(console);
         foreach (var device in devices)
         {
-            if (!CanShoot(device))
+            if (!CanShoot(device, out _))
                 continue;
 
             if (!TryComp<DeviceNetworkComponent>(device, out var deviceNetworkDevice))
@@ -146,8 +146,9 @@ public sealed class AdditionalShuttleControlSystem : EntitySystem
         console.Comp.ShuttleGunRecords.Add(netGun, currentRotation);
     }
 
-    private bool CanShoot(EntityUid gun)
+    public bool CanShoot(EntityUid gun, out float hitDistance)
     {
+        hitDistance = SharedRadarConsoleSystem.DefaultMaxRange;
         var xform = Transform(gun);
         if (xform.GridUid == null)
             return true;
@@ -156,12 +157,13 @@ public sealed class AdditionalShuttleControlSystem : EntitySystem
         var gunRot = _xform.GetWorldRotation(xform);
         var direction = gunRot.ToWorldVec();
 
-        var collisionMask = (int) CollisionGroup.BulletImpassable;
+        var collisionMask = (int) CollisionGroup.BulletImpassable; // can I be sure that all projectiles ammo used this collision group?
 
         if (TryComp<HitscanBatteryAmmoProviderComponent>(gun, out var hitscan) &&
             _proto.TryIndex<HitscanPrototype>(hitscan.Prototype, out var hitscanPrototype))
         {
             collisionMask = hitscanPrototype.CollisionMask;
+            hitDistance = hitscanPrototype.MaxLength;
         }
 
         var ray = new CollisionRay(gunPos, direction, collisionMask);
@@ -170,10 +172,11 @@ public sealed class AdditionalShuttleControlSystem : EntitySystem
         foreach (var result in results)
         {
             var hitXform = Transform(result.HitEntity);
-            if (hitXform.GridUid == xform.GridUid)
-                return false;
+            if (hitXform.GridUid != xform.GridUid)
+                continue;
 
-            break;
+            hitDistance = result.Distance;
+            return false;
         }
 
         return true;

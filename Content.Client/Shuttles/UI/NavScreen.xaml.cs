@@ -34,8 +34,7 @@ public sealed partial class NavScreen : BoxContainer
         // SS220 add additional control for shuttle start
         RotateToPointFireButton.FireButton.OnPressed += _ =>
         {
-            var console = _entManager.GetNetEntity(_consoleEntity);
-            if (console == null)
+            if (!_entManager.TryGetNetEntity(_consoleEntity, out var console))
                 return;
 
             var ev = new RequestShuttleGunsFire(console.Value);
@@ -44,8 +43,7 @@ public sealed partial class NavScreen : BoxContainer
 
         RotateToPointResetButton.OnPressed += _ =>
         {
-            var console = _entManager.GetNetEntity(_consoleEntity);
-            if (console == null)
+            if (!_entManager.TryGetNetEntity(_consoleEntity, out var console))
                 return;
 
             var ev = new RequestResetRotateShuttleGuns(console.Value);
