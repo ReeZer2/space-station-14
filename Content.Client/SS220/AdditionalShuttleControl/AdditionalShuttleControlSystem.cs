@@ -22,6 +22,12 @@ public sealed class AdditionalShuttleControlSystem : SharedAdditionalShuttleCont
         additionalShuttle.AddFunction(KeyFunctions220.FireShuttle);
     }
 
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _input.Contexts.Remove(AdditionalShuttleContext);
+    }
+
     private void OnBoundUIOpened(Entity<AdditionalShuttleControlComponent> ent, ref BoundUIOpenedEvent args)
     {
         _input.Contexts.SetActiveContext(AdditionalShuttleContext);
