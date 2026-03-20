@@ -6,6 +6,7 @@ using Content.Shared.Physics;
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
@@ -18,8 +19,10 @@ public abstract class SharedAdditionalShuttleControlSystem : EntitySystem
 {
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly SharedDeviceListSystem _deviceList = default!;
+    [Dependency] private readonly SharedDeviceNetworkSystem _deviceNetwork = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly SharedGunSystem _gun = default!;
 
     public const string Trigger = "Trigger";
 
@@ -82,7 +85,6 @@ public abstract class SharedAdditionalShuttleControlSystem : EntitySystem
         if (!HasComp<AdditionalShuttleControlComponent>(console))
             return;
 
-        var deviceNetwork = EntityManager.System<SharedDeviceNetworkSystem>();
         var devices = _deviceList.GetAllDevices(console);
         foreach (var device in devices)
         {
@@ -97,7 +99,7 @@ public abstract class SharedAdditionalShuttleControlSystem : EntitySystem
                 [SharedDeviceLinkSystem.InvokedPort] = Trigger,
             };
 
-            deviceNetwork.QueuePacket(console, deviceNetworkDevice.Address, payload, deviceNetworkDevice.ReceiveFrequency);
+            _deviceNetwork.QueuePacket(console, deviceNetworkDevice.Address, payload, deviceNetworkDevice.ReceiveFrequency);
         }
     }
 
@@ -149,9 +151,15 @@ public abstract class SharedAdditionalShuttleControlSystem : EntitySystem
     public bool CanShoot(EntityUid gun, out float hitDistance)
     {
         hitDistance = SharedRadarConsoleSystem.DefaultMaxRange;
+        if (!TryComp<GunComponent>(gun, out var gunComp))
+            return false;
+
         var xform = Transform(gun);
         if (xform.GridUid == null)
             return true;
+
+        if (!_gun.CanShoot(gunComp))
+            return false;
 
         var gunPos = _xform.GetWorldPosition(xform);
         var gunRot = _xform.GetWorldRotation(xform);
