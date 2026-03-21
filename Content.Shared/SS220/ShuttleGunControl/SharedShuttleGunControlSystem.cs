@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
@@ -13,9 +14,9 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.SS220.AdditionalShuttleControl;
+namespace Content.Shared.SS220.ShuttleGunControl;
 
-public abstract class SharedAdditionalShuttleControlSystem : EntitySystem
+public abstract class SharedShuttleGunControlSystem : EntitySystem
 {
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly SharedDeviceListSystem _deviceList = default!;
@@ -32,28 +33,28 @@ public abstract class SharedAdditionalShuttleControlSystem : EntitySystem
         SubscribeNetworkEvent<RequestRotateGunToPoint>(OnRequestRotateGunToPoint);
         SubscribeNetworkEvent<RequestShuttleGunsFire>(OnRequestShuttleGunsFire);
 
-        SubscribeLocalEvent<AdditionalShuttleControlComponent, DeviceListUpdateEvent>(OnDeviceListUpdate);
+        SubscribeLocalEvent<ShuttleGunControlComponent, DeviceListUpdateEvent>(OnDeviceListUpdate);
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<AdditionalShuttleControlComponent>();
+        var query = EntityQueryEnumerator<ShuttleGunControlComponent>();
 
-        while (query.MoveNext(out var console, out var additionalControl))
+        while (query.MoveNext(out var console, out var shuttleGunControl))
         {
-            if (additionalControl.LastRotateToPoint == null)
+            if (shuttleGunControl.LastRotateToPoint == null)
                 continue;
 
-            RotateToPoint((console, additionalControl), additionalControl.LastRotateToPoint.Value);
+            RotateToPoint((console, shuttleGunControl), shuttleGunControl.LastRotateToPoint.Value);
         }
     }
 
     private void OnRequestResetRotateShuttleGuns(RequestResetRotateShuttleGuns ev)
     {
         var console = GetEntity(ev.Console);
-        if (!TryComp<AdditionalShuttleControlComponent>(console, out var consoleComponent))
+        if (!TryComp<ShuttleGunControlComponent>(console, out var consoleComponent))
             return;
 
         consoleComponent.LastRotateToPoint = null;
@@ -70,7 +71,7 @@ public abstract class SharedAdditionalShuttleControlSystem : EntitySystem
     private void OnRequestRotateGunToPoint(RequestRotateGunToPoint ev)
     {
         var console = GetEntity(ev.Console);
-        if (!TryComp<AdditionalShuttleControlComponent>(console, out var consoleComponent))
+        if (!TryComp<ShuttleGunControlComponent>(console, out var consoleComponent))
             return;
 
         consoleComponent.LastRotateToPoint = ev.Coords;
@@ -82,7 +83,7 @@ public abstract class SharedAdditionalShuttleControlSystem : EntitySystem
     private void OnRequestShuttleGunsFire(RequestShuttleGunsFire ev)
     {
         var console = GetEntity(ev.Console);
-        if (!HasComp<AdditionalShuttleControlComponent>(console))
+        if (!HasComp<ShuttleGunControlComponent>(console))
             return;
 
         var devices = _deviceList.GetAllDevices(console);
@@ -103,11 +104,13 @@ public abstract class SharedAdditionalShuttleControlSystem : EntitySystem
         }
     }
 
-    private void OnDeviceListUpdate(Entity<AdditionalShuttleControlComponent> ent, ref DeviceListUpdateEvent args)
+    private void OnDeviceListUpdate(Entity<ShuttleGunControlComponent> ent, ref DeviceListUpdateEvent args)
     {
         ent.Comp.ShuttleGunRecords.Clear();
 
-        foreach (var device in args.Devices)
+        var devices = args.Devices.ToList();
+
+        foreach (var device in devices)
         {
             if (HasComp<GunComponent>(device))
             {
@@ -121,24 +124,22 @@ public abstract class SharedAdditionalShuttleControlSystem : EntitySystem
         Dirty(ent);
     }
 
-    private void RotateToPoint(Entity<AdditionalShuttleControlComponent> console, MapCoordinates coords)
+    private void RotateToPoint(Entity<ShuttleGunControlComponent> console, MapCoordinates coords)
     {
         var deviceList = _deviceList.GetAllDevices(console);
         foreach (var gun in deviceList)
         {
             var gunWorldPos = _xform.GetWorldPosition(gun);
             var direction = coords.Position - gunWorldPos;
-            if (direction.LengthSquared() < 0.01f)
-                continue;
-
             var angle = direction.ToWorldAngle();
+
             _xform.SetWorldRotation(gun, angle);
         }
 
         Dirty(console);
     }
 
-    private void AddGunToRecords(Entity<AdditionalShuttleControlComponent> console, EntityUid gun)
+    private void AddGunToRecords(Entity<ShuttleGunControlComponent> console, EntityUid gun)
     {
         var netGun = GetNetEntity(gun);
         if (console.Comp.ShuttleGunRecords.ContainsKey(netGun))

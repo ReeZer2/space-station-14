@@ -1,12 +1,12 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 
-namespace Content.Shared.SS220.AdditionalShuttleControl;
+namespace Content.Shared.SS220.ShuttleGunControl;
 
 [RegisterComponent]
 [NetworkedComponent]
 [AutoGenerateComponentState]
-public sealed partial class AdditionalShuttleControlComponent : Component
+public sealed partial class ShuttleGunControlComponent : Component
 {
     [DataField]
     [AutoNetworkedField]

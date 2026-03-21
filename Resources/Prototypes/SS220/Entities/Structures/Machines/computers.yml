@@ -201,6 +201,6 @@
   id: ComputerShuttleAdditionalControl
   name: shuttle additional control computer
   components:
-  - type: AdditionalShuttleControl
+  - type: ShuttleGunControl
   - type: ShuttleConsole
     canControlShuttle: false
