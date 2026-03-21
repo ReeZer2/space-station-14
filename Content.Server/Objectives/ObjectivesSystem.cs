@@ -31,7 +31,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
     [Dependency] private readonly SharedJobSystem _job = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-    private IEnumerable<string>? _objectives;
+    //private IEnumerable<string>? _objectives; // ss220 add custom goals x2
 
     private bool _showGreentext;
 
@@ -43,15 +43,17 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
 
         Subs.CVar(_cfg, CCVars.GameShowGreentext, value => _showGreentext = value, true);
 
-        _prototypeManager.PrototypesReloaded += CreateCompletions;
+        //_prototypeManager.PrototypesReloaded += CreateCompletions; // ss220 add custom goals x2
     }
 
-    public override void Shutdown()
-    {
-        base.Shutdown();
-
-        _prototypeManager.PrototypesReloaded -= CreateCompletions;
-    }
+    // ss220 add custom goals x2 start
+    // public override void Shutdown()
+    // {
+    //     base.Shutdown();
+    //
+    //     _prototypeManager.PrototypesReloaded -= CreateCompletions;
+    // }
+    // // ss220 add custom goals x2 end
 
     /// <summary>
     /// Adds objective text for each game rule's players on round end.
@@ -332,30 +334,32 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
     }
 
 
-    private void CreateCompletions(PrototypesReloadedEventArgs unused)
-    {
-        CreateCompletions();
-    }
-
-    /// <summary>
-    /// Get all objective prototypes by their IDs.
-    /// This is used for completions in <see cref="AddObjectiveCommand"/>
-    /// </summary>
-    public IEnumerable<string> Objectives()
-    {
-        if (_objectives == null)
-            CreateCompletions();
-
-        return _objectives!;
-    }
-
-    private void CreateCompletions()
-    {
-        _objectives = _prototypeManager.EnumeratePrototypes<EntityPrototype>()
-            .Where(p => p.HasComponent<ObjectiveComponent>())
-            .Select(p => p.ID)
-            .Order();
-    }
+    // ss220 add custom goals x2 start
+    // private void CreateCompletions(PrototypesReloadedEventArgs unused)
+    // {
+    //     CreateCompletions();
+    // }
+    //
+    // /// <summary>
+    // /// Get all objective prototypes by their IDs.
+    // /// This is used for completions in <see cref="AddObjectiveCommand"/>
+    // /// </summary>
+    // public IEnumerable<string> Objectives()
+    // {
+    //     if (_objectives == null)
+    //         CreateCompletions();
+    //
+    //     return _objectives!;
+    // }
+    //
+    // private void CreateCompletions()
+    // {
+    //     _objectives = _prototypeManager.EnumeratePrototypes<EntityPrototype>()
+    //         .Where(p => p.HasComponent<ObjectiveComponent>())
+    //         .Select(p => p.ID)
+    //         .Order();
+    // }
+    // ss220 add custom goals x2 end
 }
 
 /// <summary>

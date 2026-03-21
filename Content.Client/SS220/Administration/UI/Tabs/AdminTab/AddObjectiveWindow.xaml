@@ -13,7 +13,7 @@
         </BoxContainer>
         <BoxContainer Orientation="Vertical" Name="UsualObjectiveContainer">
             <RichTextLabel Text="{Loc 'ui-add-usual-objective-text'}"/>
-            <LineEdit Name="ObjectiveLineEdit" Access="Public" HorizontalExpand="True" PlaceHolder="{Loc 'ui-add-objective-line-edit-placeholder'}"/>
+            <OptionButton Name="ObjectiveOptionButton" Access="Public" HorizontalExpand="True" Filterable="True"/>
             <LineEdit Name="EntityIdLineEdit" Access="Public" HorizontalExpand="True" PlaceHolder="{Loc 'ui-add-objective-entity-id-line-edit-placeholder'}"/>
             <PanelContainer StyleClasses="LowDivider" Margin="0 10 0 10"/>
         </BoxContainer>

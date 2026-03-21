@@ -8,7 +8,7 @@ ui-add-custom-objective-desc-placeholder = Описание цели
 ui-add-custom-objective-icon-placeholder = Путь к иконке (необязательно)
 ui-add-custom-objective-issuer-placeholder = Принадлежность к организации (необязательно)
 
-ui-add-objective-line-edit-placeholder = ID прототипа цели
+ui-add-objective-option-button-placeholder = Прототип не выбран
 ui-add-objective-entity-id-line-edit-placeholder = Введите ID сущности цели или прототип
 ui-add-objective-apply = Добавить
 ui-add-objective-force-assign-text = Принудительное добавление

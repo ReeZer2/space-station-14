@@ -1,6 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
+using Content.Shared.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -19,12 +21,28 @@ public abstract class SharedObjectivesSystem : EntitySystem
 
     private static readonly EntProtoId FreeObjectiveProto = "SS220FreeObjective"; // ss220 add custom goals x2
 
+    public IEnumerable<string>? ObjectivesQuery; // ss220 add custom goals x2
+
     public override void Initialize()
     {
         base.Initialize();
 
         _metaQuery = GetEntityQuery<MetaDataComponent>();
+
+        // ss220 add custom goals x2 start
+        CreateCompletions();
+        _protoMan.PrototypesReloaded += CreateCompletions;
+        // ss220 add custom goals x2 end
     }
+
+    // ss220 add custom goals x2 start
+    public override void Shutdown()
+    {
+        base.Shutdown();
+
+        _protoMan.PrototypesReloaded -= CreateCompletions;
+    }
+    // ss220 add custom goals x2 end
 
     /// <summary>
     /// Checks requirements and duplicate objectives to see if an objective can be assigned.
@@ -211,6 +229,33 @@ public abstract class SharedObjectivesSystem : EntitySystem
         }
 
         objective.Comp.Completed = !objective.Comp.Completed;
+    }
+    // ss220 add custom goals x2 end
+
+    // ss220 add custom goals x2 start
+    private void CreateCompletions(PrototypesReloadedEventArgs _)
+    {
+        CreateCompletions();
+    }
+
+    /// <summary>
+    /// Get all objective prototypes by their IDs.
+    /// This is used for completions in <see cref="AddObjectiveCommand"/>
+    /// </summary>
+    public IEnumerable<string> Objectives()
+    {
+        if (ObjectivesQuery == null)
+            CreateCompletions();
+
+        return ObjectivesQuery!;
+    }
+
+    private void CreateCompletions()
+    {
+        ObjectivesQuery = _protoMan.EnumeratePrototypes<EntityPrototype>()
+            .Where(p => p.HasComponent<ObjectiveComponent>())
+            .Select(p => p.ID)
+            .Order();
     }
     // ss220 add custom goals x2 end
 }
