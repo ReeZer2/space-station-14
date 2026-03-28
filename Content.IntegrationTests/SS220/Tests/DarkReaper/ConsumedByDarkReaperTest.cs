@@ -151,7 +151,7 @@ public sealed class MobConsumedByDarkReaperTest
             Assert.That(mixture.Pressure, Is.LessThan(Atmospherics.HazardLowPressure));
         });
         await pair.RunSeconds(5);
-        Assert.That(totalDamage, Is.EqualTo(mobDeathDamage));
+        Assert.That(damageableSys.GetTotalDamage(mob), Is.EqualTo(mobDeathDamage));
 
 
         // Test high pressure damage immunity
@@ -164,7 +164,7 @@ public sealed class MobConsumedByDarkReaperTest
             Assert.That(mixture.Pressure, Is.GreaterThan(Atmospherics.HazardHighPressure));
         });
         await pair.RunSeconds(5);
-        Assert.That(totalDamage, Is.EqualTo(mobDeathDamage));
+        Assert.That(damageableSys.GetTotalDamage(mob), Is.EqualTo(mobDeathDamage));
 
 
         // Test temperature damage immunity
@@ -181,7 +181,7 @@ public sealed class MobConsumedByDarkReaperTest
             Assert.That(mixture.Temperature, Is.GreaterThanOrEqualTo(tileTemperature));
         });
         await pair.RunSeconds(5);
-        Assert.That(totalDamage, Is.EqualTo(mobDeathDamage));
+        Assert.That(damageableSys.GetTotalDamage(mob), Is.EqualTo(mobDeathDamage));
 
         await pair.CleanReturnAsync();
     }
@@ -236,7 +236,7 @@ public sealed class MobConsumedByDarkReaperTest
             });
         });
         await pair.RunSeconds(5);
-        Assert.That(totalDamage, Is.EqualTo(mobDeathDamage));
+        Assert.That(damageableSys.GetTotalDamage(mob), Is.EqualTo(mobDeathDamage));
 
         await pair.CleanReturnAsync();
     }
