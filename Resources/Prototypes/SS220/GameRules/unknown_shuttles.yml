@@ -1,3 +1,14 @@
+- type: entityTable
+  id: UnknownShuttlesFriendlyTable
+  table: !type:AllSelector
+    children:
+    - id: UnknownShuttleCargoLost
+    - id: UnknownShuttleTravelingCuisine
+    - id: UnknownShuttleDisasterEvacPod
+    - id: UnknownShuttleHonki
+    - id: UnknownShuttleCivil
+    - id: UnknownShuttleMimesLost
+
 - type: entity
   parent: BaseUnknownShuttleRule
   id: UnknownShuttleCivil
@@ -17,4 +28,3 @@
     weight: 4
   - type: LoadMapRule
     preloadedGrid: ShuttleMimesLost
-    
