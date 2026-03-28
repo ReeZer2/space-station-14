@@ -29,11 +29,13 @@ public sealed class LifestealSystem : EntitySystem
         if (_mobState.IsDead(args.Target))
             return;
 
-        var totalDamage = damageable.TotalDamage;
+        // TODO: Get group damage from new system
+        var allDamage = _damageable.GetAllDamage((ent.Owner, damageable));
+        var totalDamage = allDamage.GetTotal();
         if (totalDamage == FixedPoint2.Zero)
             return;
 
-        var damageDict = damageable.Damage.DamageDict;
+        var damageDict = allDamage.DamageDict;
         var healSpec = new DamageSpecifier();
 
         foreach (var (group, amount) in damageDict)
@@ -47,7 +49,7 @@ public sealed class LifestealSystem : EntitySystem
             healSpec.DamageDict[group] = -healPerGroup;
         }
 
-        _damageable.TryChangeDamage(ent, healSpec, true);
+        _damageable.TryChangeDamage(ent.Owner, healSpec, true);
     }
 
     public void ChangeLifesteal(Entity<LifestealComponent?> ent, float amount)
