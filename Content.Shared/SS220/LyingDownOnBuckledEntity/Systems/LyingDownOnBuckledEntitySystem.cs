@@ -6,6 +6,7 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Gibbing;
+using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
@@ -155,7 +156,7 @@ public sealed partial class LyingDownOnBuckledEntitySystem : EntitySystem
         }
 
         if (TryComp<LyingDownOnBuckledEntityComponent>(user, out var userLyingDownComp) &&
-            HasComp<HumanoidAppearanceComponent>(target) &&
+            HasComp<HumanoidProfileComponent>(target) &&
             !userLyingDownComp.IsLying &&
             CheckBuckledEntity(user, target) &&
             CheckOtherLyingPets(user, target))
