@@ -30,7 +30,7 @@ public sealed class PenScramblerSystem : EntitySystem
         if (!args.CanReach || args.Target == null)
             return;
 
-        if (HasComp<HumanoidAppearanceComponent>(args.Target) && !ent.Comp.HaveDna)
+        if (HasComp<HumanoidProfileComponent>(args.Target) && !ent.Comp.HaveDna)
         {
             _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager,
                 args.User,
@@ -73,7 +73,8 @@ public sealed class PenScramblerSystem : EntitySystem
 
     private EntityUid? CloneToNullspace(EntityUid target)
     {
-        if (!TryComp<HumanoidAppearanceComponent>(target, out var humanoid)
+        // TODO UPSTREAM maybe this now possible with _visualBody.CopyAppearanceFrom(...) ?
+        if (!TryComp<HumanoidProfileComponent>(target, out var humanoid)
             || !_prototype.TryIndex(humanoid.Species, out var speciesPrototype)
             || !TryComp<DnaComponent>(target, out var targetDna)
             || !TryComp<FingerprintComponent>(target, out var targetFingerPrint))

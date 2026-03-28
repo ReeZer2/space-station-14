@@ -1,7 +1,6 @@
 using Content.Shared.Body;
 using Content.Shared.Forensics;
 using Content.Shared.Forensics.Components;
-using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Shared.SS220.PenScrambler;
@@ -43,13 +42,13 @@ public sealed class DnaCopyOnTriggerSystem : EntitySystem
             return;
         }
 
-        if (TryComp<HumanoidProfileComponent>(target, out var userHumanoidProfileComp))
+        if (TryComp<BodyComponent>(target, out var userBodyComp))
         {
 
-            if (!TryComp<HumanoidProfileComponent>(clone, out var cloneHumanoidProfileComp))
+            if (!TryComp<BodyComponent>(clone, out var cloneBodyComp))
                 return;
 
-            _visualBody.CopyAppearanceFrom((clone.Value, cloneHumanoidProfileComp), (target.Value, userHumanoidProfileComp));
+            _visualBody.CopyAppearanceFrom((clone.Value, cloneBodyComp), (target.Value, userBodyComp));
 
             _metaData.SetEntityName(target.Value, MetaData(clone.Value).EntityName, raiseEvents: false);
 
