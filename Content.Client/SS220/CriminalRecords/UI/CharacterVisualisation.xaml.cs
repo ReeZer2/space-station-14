@@ -16,6 +16,7 @@ using Content.Shared.Sprite;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Content.Shared.Body;
+using Content.Client.Body;
 
 namespace Content.Client.SS220.CriminalRecords.UI;
 
@@ -111,7 +112,7 @@ public sealed partial class CharacterVisualisation : BoxContainer
 
         _entMan.DeleteEntity(_previewDummy);
         _previewDummy = _entMan.SpawnEntity(dollPrototype, MapCoordinates.Nullspace);
-        _entMan.EnsureComponent<HumanoidAppearanceComponent>(_previewDummy);
+        _entMan.EnsureComponent<HumanoidProfileComponent>(_previewDummy);
         _entMan.EnsureComponent<SpriteComponent>(_previewDummy);
 
         visualBody.CopyAppearanceFrom(target, _previewDummy);
@@ -122,7 +123,7 @@ public sealed partial class CharacterVisualisation : BoxContainer
 
     public void SetupCharacterSpriteView(HumanoidCharacterProfile profile, string jobPrototype)
     {
-        var appearanceSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<HumanoidAppearanceSystem>();
+        var visualBody = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<VisualBodySystem>();
 
         _entMan.DeleteEntity(_previewDummy);
 
@@ -133,7 +134,7 @@ public sealed partial class CharacterVisualisation : BoxContainer
         if (dollEntProto.TryGetComponent(out ScaleVisualsComponent? scaleVisuals, _entMan.ComponentFactory))
             _sprite.SetScale(_previewDummy, scaleVisuals.Scale);
 
-        appearanceSystem.LoadProfile(_previewDummy, profile);
+        visualBody.ApplyProfileTo(_previewDummy, profile);
         var realJobPrototype = _prototype.Index<JobPrototype>(jobPrototype);
         GiveDummyJobClothes(_previewDummy, profile, realJobPrototype);
 
