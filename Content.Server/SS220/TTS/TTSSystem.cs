@@ -15,6 +15,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Content.Shared.Chat;
 using Robust.Shared.Enums;
 
 namespace Content.Server.SS220.TTS;

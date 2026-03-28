@@ -24,6 +24,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using System.Linq;
+using Content.Shared.Body;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.SS220.TeleportAFKtoCryoSystem;

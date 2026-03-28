@@ -267,7 +267,8 @@ public sealed class HealthAnalyzerSystem : EntitySystem
             null,
             bleeding,
             unrevivable,
-            counterDeath //SS220 LimitationRevive
+            counterDeath, //SS220 LimitationRevive
+            true // SS220-health-analyzer-report
         );
     }
 }

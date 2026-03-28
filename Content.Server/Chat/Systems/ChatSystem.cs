@@ -74,7 +74,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
     [Dependency] private readonly LanguageSystem _languageSystem = default!; // SS220-Add-Languages
     [Dependency] private readonly InventorySystem _inventory = default!; //ss220 add identity concealment for chat and radio messages
-    [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidAppearance = default!; //ss220 add identity concealment for chat and radio messages
+    [Dependency] private readonly HumanoidProfileSystem _humanoidAppearance = default!; //ss220 add identity concealment for chat and radio messages
 
     public readonly TimeSpan CoolDown = TimeSpan.FromSeconds(2); //ss220 chat unique
     public const int MaximumLengthMsg = 5; //ss220 chat unique
@@ -551,18 +551,18 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (originalMessage == message)
         {
             if (name != Name(source))
-                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {source} as {name}: {originalMessage}, defaultLanguage: {defaultLanguageId}."); // SS220 languages
+                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user} as {name}: {originalMessage}, defaultLanguage: {defaultLanguageId}."); // SS220 languages
             else
-                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {source}: {originalMessage}, defaultLanguage: {defaultLanguageId}."); // SS220 languages
+                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user}: {originalMessage}, defaultLanguage: {defaultLanguageId}."); // SS220 languages
         }
         else
         {
             if (name != Name(source))
                 _adminLogger.Add(LogType.Chat, LogImpact.Low,
-                    $"Say from {source} as {name}, original: {originalMessage}, transformed: {message}, defaultLanguage: {defaultLanguageId}."); // SS220 languages
+                    $"Say from {ToPrettyString(source):user} as {name}, original: {originalMessage}, transformed: {message}, defaultLanguage: {defaultLanguageId}."); // SS220 languages
             else
                 _adminLogger.Add(LogType.Chat, LogImpact.Low,
-                    $"Say from {source}, original: {originalMessage}, transformed: {message}, defaultLanguage: {defaultLanguageId}."); // SS220 languages
+                    $"Say from {ToPrettyString(source):user}, original: {originalMessage}, transformed: {message}, defaultLanguage: {defaultLanguageId}."); // SS220 languages
         }
     }
 
@@ -662,18 +662,18 @@ public sealed partial class ChatSystem : SharedChatSystem
             if (originalMessage == message)
             {
                 if (name != Name(source))
-                    _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Whisper from {source} as {name}: {originalMessage}, defaultLanguage: {defaultLanguageId}."); // SS220 languages
+                    _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Whisper from {ToPrettyString(source):user} as {name}: {originalMessage}, defaultLanguage: {defaultLanguageId}."); // SS220 languages
                 else
-                    _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Whisper from {source}: {originalMessage}, defaultLanguage: {defaultLanguageId}."); // SS220 languages
+                    _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Whisper from {ToPrettyString(source):user}: {originalMessage}, defaultLanguage: {defaultLanguageId}."); // SS220 languages
             }
             else
             {
                 if (name != Name(source))
                     _adminLogger.Add(LogType.Chat, LogImpact.Low,
-                    $"Whisper from {source} as {name}, original: {originalMessage}, transformed: {message}, defaultLanguage: {defaultLanguageId}."); // SS220 languages
+                    $"Whisper from {ToPrettyString(source):user} as {name}, original: {originalMessage}, transformed: {message}, defaultLanguage: {defaultLanguageId}."); // SS220 languages
                 else
                     _adminLogger.Add(LogType.Chat, LogImpact.Low,
-                    $"Whisper from {source}, original: {originalMessage}, transformed: {message}, defaultLanguage: {defaultLanguageId}."); // SS220 languages
+                    $"Whisper from {ToPrettyString(source):user}, original: {originalMessage}, transformed: {message}, defaultLanguage: {defaultLanguageId}."); // SS220 languages
             }
     }
 
@@ -708,9 +708,9 @@ public sealed partial class ChatSystem : SharedChatSystem
         SendInVoiceRange(ChatChannel.Emotes, action, wrappedMessage, source, range, author);
         if (!hideLog)
             if (name != Name(source))
-                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Emote from {source} as {name}: {action}");
+                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Emote from {ToPrettyString(source):user} as {name}: {action}");
             else
-                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Emote from {source}: {action}");
+                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Emote from {ToPrettyString(source):user}: {action}");
     }
 
     // ReSharper disable once InconsistentNaming
@@ -733,7 +733,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             ("message", FormattedMessage.EscapeText(message)));
 
         SendInVoiceRange(ChatChannel.LOOC, message, wrappedMessage, source, hideChat ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal, player.UserId);
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"LOOC from {source}: {message}");
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"LOOC from {player:Player}: {message}");
     }
 
     private void SendDeadChat(EntityUid source, ICommonSession player, string message, bool hideChat)
@@ -748,7 +748,7 @@ public sealed partial class ChatSystem : SharedChatSystem
                 ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
                 ("userName", player.Channel.UserName),
                 ("message", FormattedMessage.EscapeText(message)));
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Admin dead chat from {source}: {message}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Admin dead chat from {player:Player}: {message}");
         }
         else
         {
@@ -756,7 +756,7 @@ public sealed partial class ChatSystem : SharedChatSystem
                 ("deadChannelName", Loc.GetString("chat-manager-dead-channel-name")),
                 ("playerName", (playerName)),
                 ("message", FormattedMessage.EscapeText(message)));
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Dead chat from {source}: {message}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Dead chat from {player:Player}: {message}");
         }
 
         _chatManager.ChatMessageToMany(ChatChannel.Dead, message, wrappedMessage, source, hideChat, true, clients.ToList(), author: player.UserId);
@@ -1111,7 +1111,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (idName != null)
             return idName;
 
-        if (!TryComp<HumanoidAppearanceComponent>(entity, out var humanoid))
+        if (!TryComp<HumanoidProfileComponent>(entity, out var humanoid))
             return Loc.GetString("comp-pda-ui-unknown");
 
         var species = _humanoidAppearance.GetSpeciesRepresentation(humanoid.Species);

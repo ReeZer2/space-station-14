@@ -297,7 +297,7 @@ public abstract class SharedMiGoSystem : EntitySystem
     {
         reason = null;
 
-        if (!HasComp<HumanoidAppearanceComponent>(target))
+        if (!HasComp<HumanoidProfileComponent>(target))
         {
             reason = Loc.GetString("cult-yogg-enslave-must-be-human");
             return false;

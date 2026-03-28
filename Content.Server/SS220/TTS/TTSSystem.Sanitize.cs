@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
 using Content.Server.Chat.Systems;
+using Content.Shared.Chat;
 
 namespace Content.Server.SS220.TTS;
 
@@ -9,7 +10,9 @@ public sealed partial class TTSSystem
 {
     private void OnTransformSpeech(TransformSpeechEvent args)
     {
-        if (!_isEnabled) return;
+        if (!_isEnabled)
+            return;
+
         args.Message = args.Message.Replace("+", "");
     }
 
