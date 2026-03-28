@@ -36,6 +36,7 @@ using Content.Shared.Forensics.Components; //SS220 Cult_hotfix_4
 using Content.Shared.SS220.Containers; //SS220 cryo mobs fix
 using Content.Shared.Body.Systems;
 using Content.Server.Guardian;
+using Content.Shared.Body;
 using Content.Shared.Clothing.Components; //SS220 cryo mobs fix
 
 
@@ -190,7 +191,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
         if (!TryComp<CryostorageComponent>(cryostorageEnt, out var cryostorageComponent))
             return;
 
-        _containerSystemExtensions.RemoveEntitiesFromAllContainers<MindContainerComponent>(ent.Owner, [SharedBodySystem.BodyRootContainerId, GuardianHostComponent.GuardianContainerId]); //SS220-cryo-mobs-fix
+        _containerSystemExtensions.RemoveEntitiesFromAllContainers<MindContainerComponent>(ent.Owner, [BodyComponent.ContainerID, GuardianHostComponent.GuardianContainerId]); //SS220-cryo-mobs-fix
 
         // if we have a session, we use that to add back in all the job slots the player had.
         if (userId != null)
