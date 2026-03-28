@@ -50,8 +50,7 @@ public sealed class LifestealSystem : EntitySystem
             healSpec.DamageDict[group] = -healPerGroup;
         }
 
-        if (!_damageable.TryChangeDamage(ent.Owner, healSpec, true))
-            Log.Error($"Lifesteal not working on {ent}, target: {args.Target}");
+        _damageable.TryChangeDamage(ent.Owner, healSpec, true);
     }
 
     [PublicAPI]
