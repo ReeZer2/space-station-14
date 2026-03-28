@@ -5,6 +5,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Weapons.Melee.Events;
+using JetBrains.Annotations;
 
 namespace Content.Shared.SS220.Lifesteal;
 
@@ -49,9 +50,11 @@ public sealed class LifestealSystem : EntitySystem
             healSpec.DamageDict[group] = -healPerGroup;
         }
 
-        _damageable.TryChangeDamage(ent.Owner, healSpec, true);
+        if (!_damageable.TryChangeDamage(ent.Owner, healSpec, true))
+            Log.Error($"Lifesteal not working on {ent}, target: {args.Target}");
     }
 
+    [PublicAPI]
     public void ChangeLifesteal(Entity<LifestealComponent?> ent, float amount)
     {
         if (!Resolve(ent.Owner, ref ent.Comp))
