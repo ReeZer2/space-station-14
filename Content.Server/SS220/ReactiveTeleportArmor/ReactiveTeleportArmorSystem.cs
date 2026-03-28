@@ -15,6 +15,7 @@ using Robust.Shared.Collections;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Server.Explosion.EntitySystems;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Item;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;

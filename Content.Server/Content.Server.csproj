@@ -16,6 +16,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" /> <!-- SS220-new-prime-list -->
     <PackageReference Include="FFMpegCore" /> <!--SS220-add-?-->
     <PackageReference Include="NetCord" /> <!-- SS220 add netcord -->
+    <PackageReference Include="Serilog" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Content.Packaging\Content.Packaging.csproj" />

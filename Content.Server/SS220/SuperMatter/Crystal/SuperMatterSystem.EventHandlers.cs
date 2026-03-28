@@ -80,7 +80,7 @@ public sealed partial class SuperMatterSystem
             return;
         }
 
-        ConsumeObject(args.OtherEntity, entity, HasComp<HumanoidAppearanceComponent>(args.OtherEntity));
+        ConsumeObject(args.OtherEntity, entity, HasComp<HumanoidProfileComponent>(args.OtherEntity));
     }
 
     private void OnActivation(Entity<SuperMatterComponent> entity, ref SuperMatterActivationEvent args)

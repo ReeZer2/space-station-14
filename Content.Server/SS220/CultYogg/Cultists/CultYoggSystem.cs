@@ -1,11 +1,8 @@
 // © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 
-using Content.Server.Humanoid;
 using Content.Server.SS220.Bed.Cryostorage;
 using Content.Server.SS220.GameTicking.Rules;
 using Content.Shared.Actions;
-using Content.Shared.Body.Components;
-using Content.Shared.Body.Systems;
 using Content.Server.Chat.Managers;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Humanoid;
@@ -22,17 +19,18 @@ using Content.Shared.SS220.EntityEffects.Events;
 using Content.Shared.SS220.StuckOnEquip;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using System.Linq;
+using Content.Shared.Body;
+using Content.Shared.Gibbing;
 
 namespace Content.Server.SS220.CultYogg.Cultists;
 
 public sealed class CultYoggSystem : SharedCultYoggSystem
 {
     [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly SharedBodySystem _body = default!;
+    [Dependency] private readonly GibbingSystem _gibbing = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearance = default!;
+    [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearance = default!; // TODO
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -74,7 +72,7 @@ public sealed class CultYoggSystem : SharedCultYoggSystem
 
     public void UpdateCultVisuals(Entity<CultYoggComponent> ent)
     {
-        if (!TryComp<HumanoidAppearanceComponent>(ent, out var huAp))
+        if (!TryComp<HumanoidProfileComponent>(ent, out var huAp))
             return;
 
         switch (ent.Comp.CurrentStage)
@@ -141,7 +139,7 @@ public sealed class CultYoggSystem : SharedCultYoggSystem
 
     public override void DeleteVisuals(Entity<CultYoggComponent> ent)
     {
-        if (!TryComp<HumanoidAppearanceComponent>(ent, out var huAp))
+        if (!TryComp<HumanoidProfileComponent>(ent, out var huAp))
             return;
 
         if (ent.Comp.PreviousEyeColor != null)
@@ -226,7 +224,7 @@ public sealed class CultYoggSystem : SharedCultYoggSystem
 
         //Gib original body
         if (TryComp<BodyComponent>(ent, out var body))
-            _body.GibBody(ent, body: body);
+            _gibbing.Gib(ent);
     }
 
     public bool TryStartAscensionByReagent(EntityUid ent, CultYoggComponent comp)
