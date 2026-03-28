@@ -601,7 +601,7 @@ public sealed class FaxSystem : EntitySystem
             { FaxConstants.FaxPaperContentData, content },
             { FaxConstants.FaxPaperLockedData, paper.EditingDisabled },
             { FaxConstants.FaxPaperDataToCopy, dataToCopy }, // SS220 Photocopy
-            { FaxConstants.FaxPaperMetaData, metaData } // SS220 Photocopy
+            { FaxConstants.FaxPaperMetaData, metaData }, // SS220 Photocopy
             { FaxConstants.FaxPaperSenderFaxNameData, component.FaxName ?? Loc.GetString("fax-machine-popup-source-unknown") }
         };
 
