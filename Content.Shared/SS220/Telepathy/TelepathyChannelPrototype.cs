@@ -5,7 +5,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.SS220.Telepathy;
 
-[Prototype("telepathyChannel")]
 public sealed partial class TelepathyChannelPrototype : IHearableChannelPrototype
 {
     [IdDataField, ViewVariables]

@@ -16,8 +16,9 @@ public sealed class DirectionalAccessSystem : EntitySystem
     public bool IsDirectionAllowed(EntityUid targetUid, EntityUid requesterUid, DirectionalAccessComponent reader)
     {
 
-        if (!TryComp<TransformComponent>(targetUid, out var targetTransformComponent) || !TryComp<TransformComponent>(requesterUid, out var requesterTransformComponent))
-            return false;
+        var targetTransformComponent = Transform(targetUid);
+        var requesterTransformComponent = Transform(requesterUid);
+
 
         var distanceVector = requesterTransformComponent.Coordinates.Position - targetTransformComponent.Coordinates.Position;
         var accessDirection = distanceVector.GetDir();

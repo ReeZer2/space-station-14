@@ -3,11 +3,11 @@ using Robust.Shared.Prototypes;
 
 namespace Robust.Shared.Audio;
 
-[Prototype("touretteCollection")]
+[Prototype]
 public sealed partial class TouretteCollectionPrototype : IPrototype
 {
     [ViewVariables, IdDataField] public string ID { get; private set; } = default!;
 
-    [DataField("replics")]
+    [DataField]
     public List<string> Replics { get; private set; } = new();
 }
