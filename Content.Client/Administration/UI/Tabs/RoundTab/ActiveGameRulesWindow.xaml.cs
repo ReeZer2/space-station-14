@@ -16,7 +16,6 @@ namespace Content.Client.Administration.UI.Tabs.RoundTab
         private List<GameRuleInfo>? _gameRulesList;
         private GameRuleInfo? _selectedGamerule;
 
-        public event Action<GameRuleInfo?>? OnSelectionChanged;
         public IReadOnlyList<GameRuleInfo>? GameRuleInfo => _gameRulesList;
 
         public Func<GameRuleInfo, string, string>? OverrideText;

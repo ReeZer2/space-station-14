@@ -212,7 +212,6 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
 
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly ILocalizationManager _loc = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!; // SS220 languages
 
     private bool _doSanitize;
 

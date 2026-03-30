@@ -37,8 +37,6 @@ using Content.Shared.Cuffs.Components;
 using Content.Shared.Prying.Components;
 using Content.Shared.Traits.Assorted;
 using Robust.Shared.Audio.Systems;
-using Content.Server.Administration.Managers;
-using Content.Shared.Humanoid.Markings;
 using Robust.Server.Player;
 using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.Humanoid.Markings;
