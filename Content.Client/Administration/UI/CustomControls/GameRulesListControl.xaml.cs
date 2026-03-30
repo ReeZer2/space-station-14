@@ -27,8 +27,9 @@ namespace Content.Client.Administration.UI.CustomControls
 
         public GameRulesListControl()
         {
-            _adminSystem = EntitySystem.Get<AdminSystem>();
             _entityManager = IoCManager.Resolve<IEntityManager>();
+            _adminSystem = IoCManager.Resolve<AdminSystem>();
+
             IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
             // Fill the Option data

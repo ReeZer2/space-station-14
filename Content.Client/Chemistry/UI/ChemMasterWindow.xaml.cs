@@ -154,8 +154,6 @@ namespace Content.Client.Chemistry.UI
             if (castState.UpdateLabel)
                 LabelLine = GenerateLabel(castState);
 
-            _chemState = castState; //ss220 tweak sort chem
-
             // Ensure the Panel Info is updated, including UI elements for Buffer Volume, Output Container and so on
             UpdatePanelInfo(castState);
 
