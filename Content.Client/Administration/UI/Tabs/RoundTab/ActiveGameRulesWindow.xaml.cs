@@ -13,11 +13,11 @@ namespace Content.Client.Administration.UI.Tabs.RoundTab
     public sealed partial class ActiveGameRulesWindow : DefaultWindow
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-        private List<GameRuleInfo>? _gameRulesList;
+        // private List<GameRuleInfo>? _gameRulesList;
         private GameRuleInfo? _selectedGamerule;
 
         public event Action<GameRuleInfo?>? OnSelectionChanged;
-        public IReadOnlyList<GameRuleInfo>? GameRuleInfo => _gameRulesList;
+        // public IReadOnlyList<GameRuleInfo>? GameRuleInfo => _gameRulesList;
 
         public Func<GameRuleInfo, string, string>? OverrideText;
 
@@ -31,14 +31,14 @@ namespace Content.Client.Administration.UI.Tabs.RoundTab
         {
             SubmitEndGameruleButton.OnPressed += SubmitEndGameruleButtonOnPressed;
             SubmitClearGamerulesButton.OnPressed += SubmitClearGamerulesButtonOnPressed;
-            GameRulesList.OnSelectionChanged += OnListOnOnSelectionChanged;
+            // GameRulesList.OnSelectionChanged += OnListOnOnSelectionChanged;
         }
 
-        private void OnListOnOnSelectionChanged(GameRuleInfo? obj)
-        {
-            _selectedGamerule = obj;
-            SubmitEndGameruleButton.Disabled = _selectedGamerule == null;
-        }
+        // private void OnListOnOnSelectionChanged(GameRuleInfo? obj)
+        // {
+        //     _selectedGamerule = obj;
+        //     SubmitEndGameruleButton.Disabled = _selectedGamerule == null;
+        // }
 
         private void SubmitEndGameruleButtonOnPressed(BaseButton.ButtonEventArgs obj)
         {

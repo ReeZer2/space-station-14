@@ -33,9 +33,6 @@ namespace Content.Client.Chemistry.UI
         public event Action<BaseButton.ButtonEventArgs, ReagentButton>? OnReagentButtonPressed;
         public readonly Button[] PillTypeButtons;
 
-        private ChemMasterBoundUserInterfaceState? _chemState; //ss220 tweak sort chem
-        private bool _isSortingEnabled; //ss220 tweak sort chem
-
         private const string PillsRsiPath = "/Textures/Objects/Specific/Chemistry/pills.rsi";
 
         /// <summary>
