@@ -168,11 +168,7 @@
   abstract: true
   components:
   - type: Metabolizer
-    maxReagents: 3
-    metabolizerTypes: [ Tajaran ]
-    groups:
-    - id: Food
-    - id: Drink
+    metabolizerTypes: [ Animal ]
 
 - type: entity
   parent: OrganTajaran
