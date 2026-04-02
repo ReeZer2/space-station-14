@@ -65,6 +65,10 @@
       Kidneys: OrganArachnidKidneys
   - type: HumanoidProfile
     species: Arachnid
+  # ss220 add scale visuals to species start
+  - type: ScaleVisuals
+    scale: 1.1, 1.1
+  # ss220 add scale visuals to species end
 
 - type: entity
   parent:
@@ -86,6 +90,7 @@
     hungerCost: 4 # Should total to 25 total silk on full hunger
   - type: Tag
     tags:
+    - ZombifyableByMelee #SS220-arachnid-zombies
     - CanPilot
     - FootstepSound
     - DoorBumpOpener
@@ -118,7 +123,8 @@
       path: /Audio/Effects/bite.ogg
     damage:
       types:
-        Piercing: 5
+        Piercing: 4 #SS220-TweakDamageSpecies
+        Poison: 0.9 #SS220-TweakDamageSpecies
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
@@ -137,6 +143,36 @@
       Unsexed: UnisexArachnid
   - type: TypingIndicator
     proto: spider
+  # ss220 add language to species start
+  - type: Language
+    selectedLanguage: Galactic
+    availableLanguages:
+    - id: Galactic
+    - id: Arati
+    - id: SpiderTongue
+      canSpeak: false
+  # ss220 add language to species end
+  #ss220 emote 5 sec start
+  - type: Emoting
+    chatEmoteCooldown: 5.0
+  #ss220 emote 5 sec end
+  #SS220 LimitationRevive - start
+  - type: LimitationRevive
+  #SS220 LimitationRevive - end
+  # SS220-change-races-height begin
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.375
+        density: 185
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  # SS220-change-races-height end
 
 - type: entity
   parent: OrganBase

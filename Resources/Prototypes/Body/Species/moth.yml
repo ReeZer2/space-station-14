@@ -131,6 +131,10 @@
       Kidneys: OrganMothKidneys
   - type: HumanoidProfile
     species: Moth
+  # ss220 add scale visuals to species start
+  - type: ScaleVisuals
+    scale: 0.9, 0.9
+  # ss220 add scale visuals to species end
 
 - type: entity
   parent:
@@ -193,6 +197,44 @@
       289: 0.9
       275: 0.8
       250: 0.7
+  # SS220-change-races-height begin
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.325
+        density: 185
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  # SS220-change-races-height end
+  #SS220-TweakDamageSpecies-Begin
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Weapons/pierce.ogg
+    angle: 30
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 5 #По лору на апрель 2024 года, у Ниан "когти"
+  #SS220-TweakDamageSpecies-End
+  # SS220-Add-Languages begin
+  - type: Language
+    selectedLanguage: Galactic
+    availableLanguages:
+    - id: Galactic
+    - id: Tkachi
+  # SS220-Add-Languages end
+  #ss220 emote 5 sec start
+  - type: Emoting
+    chatEmoteCooldown: 5.0
+  #ss220 emote 5 sec end
+  #SS220 LimitationRevive - start
+  - type: LimitationRevive
+  #SS220 LimitationRevive - end
 
 - type: entity
   parent: OrganBase

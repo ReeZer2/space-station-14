@@ -93,6 +93,20 @@
     spawned:
     - id: FoodMeatHuman
       amount: 5
+  # SS220-Add-Languages begin
+  - type: Language
+    selectedLanguage: Galactic
+    availableLanguages:
+    - id: Galactic
+    - id: SolCommon
+  # SS220-Add-Languages end
+  #ss220 emote 5 sec start
+  - type: Emoting
+    chatEmoteCooldown: 5.0
+  #ss220 emote 5 sec end
+  #SS220 LimitationRevive - start
+  - type: LimitationRevive
+  #SS220 LimitationRevive - end
 
 - type: entity
   parent: OrganBase

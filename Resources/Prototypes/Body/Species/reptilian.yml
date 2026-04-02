@@ -109,6 +109,10 @@
       Kidneys: OrganReptilianKidneys
   - type: HumanoidProfile
     species: Reptilian
+  # ss220 add scale visuals to species start
+  - type: ScaleVisuals
+    scale: 1.1, 1.1
+  # ss220 add scale visuals to species end
 
 - type: entity
   parent:
@@ -128,7 +132,7 @@
   - type: Speech
     speechSounds: Lizard
     speechVerb: Reptilian
-    allowedEmotes: ['Thump']
+    allowedEmotes: ['Thump', 'Hiss', 'Growl'] # 220 emotesMenuFix
   - type: TypingIndicator
     proto: lizard
   - type: Vocal
@@ -166,6 +170,34 @@
       295: 0.8
       285: 0.7
   - type: Wagging
+  # SS220-change-races-height begin
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.375
+        density: 185
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  # SS220-change-races-height end
+  # SS220-Add-Languages begin
+  - type: Language
+    selectedLanguage: Galactic
+    availableLanguages:
+    - id: Galactic
+    - id: Sintaunathi
+  # SS220-Add-Languages end
+  #ss220 emote 5 sec start
+  - type: Emoting
+    chatEmoteCooldown: 5.0
+  #ss220 emote 5 sec end
+  #SS220 LimitationRevive - start
+  - type: LimitationRevive
+  #SS220 LimitationRevive - end
 
 - type: entity
   parent: OrganBase

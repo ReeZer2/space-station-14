@@ -154,6 +154,10 @@
       Kidneys: OrganVoxKidneys
   - type: HumanoidProfile
     species: Vox
+  # ss220 add scale visuals to species start
+  - type: ScaleVisuals
+    scale: 0.85, 0.85
+  # ss220 add scale visuals to species end
 
 - type: entity
   parent:
@@ -162,6 +166,21 @@
   id: MobVox
   name: Urist McVox
   components:
+  - type: VoxAccent #SS220-Vox Accent
+  # SS220-change-races-height begin
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.30
+        density: 185
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  # SS220-change-races-height end
   - type: Damageable
     damageModifierSet: Vox
   - type: Speech

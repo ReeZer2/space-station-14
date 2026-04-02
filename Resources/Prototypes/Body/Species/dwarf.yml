@@ -66,6 +66,31 @@
     accent: scottish
   - type: Speech
     speechSounds: Bass
+  #SS220-TweakDamageSpecies-Begin
+  - type: MeleeWeapon
+    soundHit:
+      collection: Punch
+    animation: WeaponArcFist
+    attackRate: 0.625
+    damage:
+      types:
+        Blunt: 8
+  #SS220-TweakDamageSpecies-End
+  - type: DwarfAccent #SS220 Dwarf accent
+  # SS220-Add-Languages begin
+  - type: Language
+    selectedLanguage: Galactic
+    availableLanguages:
+    - id: Galactic
+    - id: Eldwarf
+  # SS220-Add-Languages end
+  #ss220 emote 5 sec start
+  - type: Emoting
+    chatEmoteCooldown: 5.0
+  #ss220 emote 5 sec end
+  #SS220 LimitationRevive - start
+  - type: LimitationRevive
+  #SS220 LimitationRevive - end
 
 - type: entity
   parent: OrganBase
