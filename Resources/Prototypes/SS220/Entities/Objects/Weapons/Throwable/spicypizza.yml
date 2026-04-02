@@ -278,7 +278,9 @@
     - state: box
     - state: box-open
       map: ["enum.StorageVisualLayers.Door"]
-  - type: StorageFill
-    contents:
-    - id: SpicyPizzaSynd
-    - id: KnifePlastic
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: SpicyPizzaSynd
+        - id: KnifePlastic
