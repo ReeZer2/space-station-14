@@ -4,27 +4,27 @@
   parent: Undergarments
   id: Tajaran
   onlyWhitelisted: true
-  points:
+  limits:
     enum.HumanoidVisualLayers.Hair:
-      points: 1
+      limit: 1
       required: false
     enum.HumanoidVisualLayers.FacialHair:
-      points: 1
+      limit: 1
       required: false
     enum.HumanoidVisualLayers.Tail:
-      points: 1
+      limit: 1
       required: true
-      defaultMarkings: [ TajaranTail ]
+      default: [ TajaranTail ]
     enum.HumanoidVisualLayers.Snout:
-      points: 1
+      limit: 1
       required: true
-      defaultMarkings: [ TajaranSnout ]
+      default: [ TajaranSnout ]
     enum.HumanoidVisualLayers.HeadTop:
-      points: 1
+      limit: 1
       required: true
-      defaultMarkings: [ TajaranEars ]
+      default: [ TajaranEars ]
     enum.HumanoidVisualLayers.HeadSide:
-      points: 0
+      limit: 0
       required: false
 
 - type: entity
