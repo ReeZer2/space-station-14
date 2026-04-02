@@ -673,8 +673,6 @@
   params:
     variation: 0.125
   sounds:
-  # SS220-port-vulpkanins-begin
-  # SS220-port-vulpkanins-end
     Laugh:
       collection: FemaleLaugh
     Sneeze:

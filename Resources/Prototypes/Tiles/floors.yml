@@ -172,7 +172,7 @@
   parent: BaseStationTile
   name: tiles-steel-floor-diagonal-mini
   # SS220 Tiles Retexture begin
-  sprite: /Textures/SS220/Tiles/steel_diagonal_mini.png
+  sprite: /Textures/SS220/Tiles/steel_diagonal_mini.png # SS220 Tiles Retexture
   variants: 1
 #  placementVariants:
 #  - 1.0
@@ -180,13 +180,26 @@
 #  - 1.0
 #  - 1.0
   # SS220 Tiles Retexture end
-  heatCapacity: 10000
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemSteelDiagonalMini
+
+- type: tile
+  parent: BaseStationTile
+  id: FloorSteelSlatsContinuous
+  name: tiles-steel-floor-slats-continuous
+  sprite: /Textures/Tiles/steel_slats_continuous.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  itemDrop: FloorTileItemSteelSlatsContinuous
+  allowRotationMirror: true
 
 - type: tile
   parent: BaseStationTile

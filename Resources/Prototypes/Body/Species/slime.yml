@@ -79,6 +79,22 @@
   id: MobSlimePerson
   name: Urist McWobble
   components:
+# SS220-change-races-height begin
+  - type: Sprite
+    scale: 0.9, 0.9
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.325
+        density: 185
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+# SS220-change-races-height end
   - type: Storage
     clickInsert: false
     grid:
@@ -173,7 +189,7 @@
       types:
         Asphyxiation: -1.0
     maxSaturation: 15
-  #SS220-TweakDamageSpecies-Begin
+  # SS220-TweakDamageSpecies-Begin
   - type: MeleeWeapon
     soundHit:
       collection: Punch
@@ -182,21 +198,7 @@
       types:
         Blunt: 4.5
         Caustic: 0.5 #Кислотный урон сложен в лечении (мазь - 1.5; лекарство, с относительно сложным рецептом), поэтому урон так мал
-  #SS220-TweakDamageSpecies-End
-  # SS220-change-races-height begin
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.325
-        density: 185
-        restitution: 0.0
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
-  # SS220-change-races-height end
+  # SS220-TweakDamageSpecies-End
   # SS220-Add-Languages begin
   - type: Language
     selectedLanguage: Galactic
@@ -204,14 +206,10 @@
     - id: Galactic
     - id: Bubblish
   # SS220-Add-Languages end
-  #ss220 emote 5 sec start
-  - type: Emoting
-    chatEmoteCooldown: 5.0
-  #ss220 emote 5 sec end
-  #SS220 LimitationRevive - start
+  # SS220 LimitationRevive - start
   - type: LimitationRevive
     reviveLimit: 100 #has no death limit
-  #SS220 LimitationRevive - end
+  # SS220 LimitationRevive - end
 
 - type: entity
   parent: OrganBase

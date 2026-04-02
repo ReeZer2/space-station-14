@@ -109,10 +109,6 @@
       Kidneys: OrganReptilianKidneys
   - type: HumanoidProfile
     species: Reptilian
-  # ss220 add scale visuals to species start
-  - type: ScaleVisuals
-    scale: 1.1, 1.1
-  # ss220 add scale visuals to species end
 
 - type: entity
   parent:
@@ -121,6 +117,29 @@
   id: MobReptilian
   name: Urist McScales
   components:
+  # SS220-change-races-height begin
+  - type: Sprite
+    scale: 1.1, 1.1
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.375
+        density: 185
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  # SS220-change-races-height end
+  # SS220-Add-Languages begin
+  - type: Language
+    selectedLanguage: Galactic
+    availableLanguages:
+    - id: Galactic
+    - id: Sintaunathi
+  # SS220-Add-Languages end
   - type: Puller
     needsHands: false
   - type: Butcherable
@@ -170,34 +189,6 @@
       295: 0.8
       285: 0.7
   - type: Wagging
-  # SS220-change-races-height begin
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.375
-        density: 185
-        restitution: 0.0
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
-  # SS220-change-races-height end
-  # SS220-Add-Languages begin
-  - type: Language
-    selectedLanguage: Galactic
-    availableLanguages:
-    - id: Galactic
-    - id: Sintaunathi
-  # SS220-Add-Languages end
-  #ss220 emote 5 sec start
-  - type: Emoting
-    chatEmoteCooldown: 5.0
-  #ss220 emote 5 sec end
-  #SS220 LimitationRevive - start
-  - type: LimitationRevive
-  #SS220 LimitationRevive - end
 
 - type: entity
   parent: OrganBase
@@ -329,6 +320,7 @@
       - Pill
       - Crayon
       - Paper
+      - Omnivorous #SS220 CultYoggs
 
 - type: entity
   parent: [ OrganBaseLiver, OrganSpriteHumanInternal, OrganReptilianInternal, OrganReptilianMetabolizer ]

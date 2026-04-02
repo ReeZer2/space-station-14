@@ -1,72 +1,51 @@
-# TODO SS220
+# © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 
 - type: markingsGroup
   parent: Undergarments
   id: Tajaran
-  limits:
-    enum.HumanoidVisualLayers.Hair:
-      limit: 1
+  onlyWhitelisted: true
+  points:
+    Hair:
+      points: 1
       required: false
-    enum.HumanoidVisualLayers.FacialHair:
-      limit: 1
-      onlyGroupWhitelisted: true
+    FacialHair:
+      points: 1
       required: false
-    enum.HumanoidVisualLayers.Head:
-      limit: 3
-      required: false
-    enum.HumanoidVisualLayers.HeadTop:
-      limit: 1
+    Tail:
+      points: 1
       required: true
-      default: [ VulpEar ]
-    enum.HumanoidVisualLayers.Snout:
-      limit: 1
+      defaultMarkings: [ TajaranTail ]
+    Snout:
+      points: 1
       required: true
-      default: [ VulpSnout ]
-    enum.HumanoidVisualLayers.SnoutCover:
-      limit: 3
-      required: false
-    enum.HumanoidVisualLayers.Tail:
-      limit: 1
+      defaultMarkings: [ TajaranSnout ]
+    HeadTop:
+      points: 1
       required: true
-      default: [ VulpTailVulp ]
-    enum.HumanoidVisualLayers.LArm:
-      limit: 2
+      defaultMarkings: [ TajaranEars ]
+    HeadSide:
+      points: 0
       required: false
-    enum.HumanoidVisualLayers.RArm:
-      limit: 2
-      required: false
-    enum.HumanoidVisualLayers.LHand:
-      limit: 2
-      required: false
-    enum.HumanoidVisualLayers.RHand:
-      limit: 2
-      required: false
-    enum.HumanoidVisualLayers.LLeg:
-      limit: 2
-      required: false
-    enum.HumanoidVisualLayers.RLeg:
-      limit: 2
-      required: false
-    enum.HumanoidVisualLayers.LFoot:
-      limit: 2
-      required: false
-    enum.HumanoidVisualLayers.RFoot:
-      limit: 2
-      required: false
-    enum.HumanoidVisualLayers.UndergarmentTop:
-      limit: 1
-      required: false
-      nudityDefault: [ UndergarmentTopTanktopVulpkanin ]
-    enum.HumanoidVisualLayers.UndergarmentBottom:
-      limit: 1
-      required: false
-      nudityDefault: [ UndergarmentBottomBoxersVulpkanin ]
 
 - type: entity
+  name: tajaran appearance
   parent: BaseSpeciesAppearance
   id: AppearanceTajaran
-  name: tajaran appearance
   components:
+  - type: Inventory
+    speciesId: Tajaran
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: SS220/Mobs/Species/Tajaran/displacement.rsi
+            state: jumpsuit-female
+    maleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: SS220/Mobs/Species/Tajaran/displacement.rsi
+            state: jumpsuit-male
   - type: InitialBody
     organs:
       Torso: OrganTajaranTorso
@@ -91,104 +70,56 @@
       Kidneys: OrganTajaranKidneys
   - type: HumanoidProfile
     species: Tajaran
-  - type: Inventory
-    speciesId: tajaran
-    femaleDisplacements:
-      jumpsuit:
-        sizeMaps:
-          32:
-            sprite: SS220/Mobs/Species/Tajaran/displacement.rsi
-            state: jumpsuit-female
-    maleDisplacements:
-      jumpsuit:
-        sizeMaps:
-          32:
-            sprite: SS220/Mobs/Species/Tajaran/displacement.rsi
-            state: jumpsuit-male
-    displacements:
-      jumpsuit:
-        sizeMaps:
-          32:
-            sprite: SS220/Mobs/Species/Tajaran/displacement.rsi
-            state: jumpsuit
-      back:
-        sizeMaps:
-          32:
-            sprite: SS220/Mobs/Species/Tajaran/displacement.rsi
-            state: back
-      outerClothing:
-        sizeMaps:
-          32:
-            sprite: SS220/Mobs/Species/Tajaran/displacement.rsi
-            state: outerwear
-      gloves:
-        sizeMaps:
-          32:
-            sprite: SS220/Mobs/Species/Tajaran/displacement.rsi
-            state: hand
-      shoes:
-        sizeMaps:
-          32:
-            sprite: SS220/Mobs/Species/Tajaran/displacement.rsi
-            state: shoes
-      head:
-        sizeMaps:
-          32:
-            sprite: SS220/Mobs/Species/Tajaran/displacement.rsi
-            state: head
-      neck:
-        sizeMaps:
-          32:
-            sprite: SS220/Mobs/Species/Tajaran/displacement.rsi
-            state: neck
-      eyes:
-        sizeMaps:
-          32:
-            sprite: SS220/Mobs/Species/Tajaran/displacement.rsi
-            state: eyes
-      belt:
-        sizeMaps:
-          32:
-            sprite: SS220/Mobs/Species/Tajaran/displacement.rsi
-            state: belt
-  - type: ScaleVisuals
-    scale: 0.95, 0.95
 
 - type: entity
+  name: Urist McTajaran
   parent:
   - AppearanceTajaran
   - BaseSpeciesMobOrganic
   id: MobTajaran
-  name: Urist McTajaran
   components:
+  - type: Sprite
+    drawdepth: Mobs
+    scale: 0.95, 0.95
+  - type: Damageable
+    damageModifierSet: Tajaran
+  - type: TajaranAccent
+  - type: TypingIndicator
+    proto: tajaran
+  - type: Wagging
+    action: ActionToggleWaggingTajaran
+  - type: Vocal
+    sounds:
+      Male: MaleTajaran
+      Female: FemaleTajaran
+      Unsexed: MaleTajaran
+  - type: Speech
+    speechSounds: Alto
+    speechVerb: Tajaran
+    allowedEmotes: ['Growl','Purr','Hiss','Meow','Mrow']
   - type: DamageOnHighSpeedImpact
     damage:
       types:
         Blunt: 0.9
     soundHit:
       path: /Audio/Effects/hit_kick.ogg
-  - type: TypingIndicator
-    proto: tajaran
-  - type: DamageVisuals
-    damageOverlayGroups:
-      Brute:
-        sprite: Mobs/Effects/brute_damage.rsi
-        color: "#ccac1f"
-      Burn:
-        sprite: Mobs/Effects/burn_damage.rsi
-  - type: MessyDrinker
-    spillChance: 0.33
-  - type: Speech
-    speechSounds: Alto
-    speechVerb: Tajaran
-    allowedEmotes: ['Growl','Purr','Hiss','Meow','Mrow']
-  - type: Vocal
-    sounds:
-      Male: MaleTajaran
-      Female: FemaleTajaran
-      Unsexed: MaleTajaran
-  - type: Damageable
-    damageModifierSet: Tajaran
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+      - id: FoodMeat
+        amount: 5
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 185
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: MeleeWeapon
     soundHit:
       collection: AlienClaw
@@ -204,30 +135,10 @@
     specificHeat: 42
     coldDamage:
       types:
-        Cold: 0.05 #per second, scales with temperature & other constants
+        Cold : 0.05 #per second, scales with temperature & other constants
     heatDamage:
       types:
-        Heat: 2 #per second, scales with temperature & other constants
-  - type: TemperatureDamage
-    heatDamageThreshold: 320
-    coldDamageThreshold: 230
-    coldDamage:
-      types:
-        Cold: 0.05
-    heatDamage:
-      types:
-        Heat: 2.5
-  - type: TemperatureProtection
-    heatingCoefficient: 1.2
-    coolingCoefficient: 0.3
-  - type: Bloodstream
-    bloodReferenceSolution:
-      reagents:
-      - ReagentId: SulfurBlood
-        Quantity: 300
-  - type: TajaranAccent
-  - type: Wagging
-    action: ActionToggleWaggingTajaran
+        Heat : 2 #per second, scales with temperature & other constants
   - type: TemperatureSpeed
     thresholds:
       289: 0.8
@@ -244,37 +155,24 @@
     - id: Siiktajr
   - type: LimitationRevive
     reviveLimit: 3
-  - type: Perishable
-  - type: Butcherable
-    butcheringType: Spike
-    spawned:
-    - id: FoodMeat
-      amount: 5
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.35
-        density: 185
-        restitution: 0.0
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
+
 
 - type: entity
   parent: OrganBase
   id: OrganTajaran
   abstract: true
-  suffix: tajaran
+  suffix: Tajaran
 
 - type: entity
   id: OrganTajaranMetabolizer
   abstract: true
   components:
   - type: Metabolizer
-    metabolizerTypes: [ Animal ]
+    maxReagents: 3
+    metabolizerTypes: [ Tajaran ]
+    groups:
+    - id: Food
+    - id: Drink
 
 - type: entity
   parent: OrganTajaran
@@ -282,21 +180,10 @@
   abstract: true
   components:
   - type: Sprite
-    sprite: SS220/Mobs/Species/Tajaran/parts.rsi
+    sprite: Mobs/Species/Human/organs.rsi
 
 - type: entity
-  id: OrganTajaranVisual
-  abstract: true
-  components:
-  - type: VisualOrgan
-    data:
-      sprite: SS220/Mobs/Species/Tajaran/parts.rsi
-  - type: VisualOrganMarkings
-    markingData:
-      group: Tajaran
-
-- type: entity
-  parent: [ OrganTajaran, OrganTajaranVisual ]
+  parent: OrganTajaran
   id: OrganTajaranExternal
   abstract: true
   components:
@@ -304,23 +191,12 @@
     sprite: SS220/Mobs/Species/Tajaran/parts.rsi
 
 - type: entity
-  parent: [ OrganBaseTorsoSexed, OrganBaseTorso, OrganTajaranExternal ]
+  parent: [ OrganBaseTorso, OrganTajaranExternal ]
   id: OrganTajaranTorso
 
 - type: entity
   parent: [ OrganBaseHead, OrganTajaranExternal ]
   id: OrganTajaranHead
-  components:
-  - type: VisualOrganMarkings
-    hideableLayers:
-    - enum.HumanoidVisualLayers.Snout
-    - enum.HumanoidVisualLayers.HeadTop
-    - enum.HumanoidVisualLayers.HeadSide
-    - enum.HumanoidVisualLayers.Hair
-    - enum.HumanoidVisualLayers.FacialHair
-    dependentHidingLayers:
-      enum.HumanoidVisualLayers.Snout:
-      - enum.HumanoidVisualLayers.SnoutCover
 
 - type: entity
   parent: [ OrganBaseArmLeft, OrganTajaranExternal ]
@@ -359,7 +235,7 @@
   id: OrganTajaranBrain
 
 - type: entity
-  parent: [ OrganTajaranVisual, OrganBaseEyes, OrganTajaranInternal ]
+  parent: [ OrganBaseEyes, OrganTajaranInternal ]
   id: OrganTajaranEyes
 
 - type: entity
@@ -367,11 +243,11 @@
   id: OrganTajaranTongue
 
 - type: entity
-  parent: [ OrganBaseAppendix, OrganTajaranInternal ]
+  parent: [ OrganBaseAppendix, OrganSpriteHumanInternal, OrganTajaranInternal ]
   id: OrganTajaranAppendix
 
 - type: entity
-  parent: [ OrganBaseEars, OrganTajaranInternal ]
+  parent: [ OrganBaseEars, OrganSpriteHumanInternal, OrganTajaranInternal ]
   id: OrganTajaranEars
 
 - type: entity
@@ -385,11 +261,23 @@
 - type: entity
   parent: [ OrganBaseStomach, OrganTajaranInternal, OrganTajaranMetabolizer ]
   id: OrganTajaranStomach
+  components:
+  - type: Stomach
+    specialDigestible:
+      tags:
+      - Fruit
+      - ReptilianFood
+      - Meat
+      - Pill
+      - Crayon
+      - Paper
+      - Bread
+      - Omnivorous #SS220 CultYoggs
 
 - type: entity
-  parent: [ OrganBaseLiver, OrganTajaranInternal, OrganTajaranMetabolizer ]
+  parent: [ OrganBaseLiver, OrganSpriteHumanInternal, OrganTajaranInternal, OrganTajaranMetabolizer ]
   id: OrganTajaranLiver
 
 - type: entity
-  parent: [ OrganBaseKidneys, OrganTajaranInternal, OrganTajaranMetabolizer ]
+  parent: [ OrganBaseKidneys, OrganSpriteHumanInternal, OrganTajaranInternal, OrganTajaranMetabolizer ]
   id: OrganTajaranKidneys
