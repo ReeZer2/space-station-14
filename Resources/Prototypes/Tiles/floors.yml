@@ -1173,12 +1173,12 @@
   name: tiles-white-shuttle-floor
   tags: [ tile-tag-shuttle ] # SS220 Resprite Tiles
   sprite: /Textures/Tiles/shuttlewhite.png
-  variants: 4
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
+  variants: 1
+#  placementVariants:
+#  - 1.0
+#  - 1.0
+#  - 1.0
+#  - 1.0
   itemDrop: FloorTileItemShuttleWhite
 
 - type: tile
@@ -1187,12 +1187,12 @@
   name: tiles-grey-shuttle-floor
   tags: [ tile-tag-shuttle ] # SS220 Resprite Tiles
   sprite: /Textures/Tiles/shuttlegrey.png
-  variants: 4
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
+  variants: 1
+#  placementVariants:
+#  - 1.0
+#  - 1.0
+#  - 1.0
+#  - 1.0
   itemDrop: FloorTileItemShuttleGrey
 
 - type: tile
@@ -1201,12 +1201,12 @@
   name: tiles-black-shuttle-floor
   tags: [ tile-tag-shuttle ] # SS220 Resprite Tiles
   sprite: /Textures/Tiles/shuttleblack.png
-  variants: 4
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
+  variants: 1
+#  placementVariants:
+#  - 1.0
+#  - 1.0
+#  - 1.0
+#  - 1.0
   itemDrop: FloorTileItemShuttleBlack
 
 - type: tile
@@ -1215,12 +1215,12 @@
   name: tiles-blue-shuttle-floor
   tags: [ tile-tag-shuttle ] # SS220 Resprite Tiles
   sprite: /Textures/Tiles/shuttleblue.png
-  variants: 4
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
+  variants: 1
+#  placementVariants:
+#  - 1.0
+#  - 1.0
+#  - 1.0
+#  - 1.0
   itemDrop: FloorTileItemShuttleBlue
 
 - type: tile
@@ -1229,12 +1229,12 @@
   name: tiles-orange-shuttle-floor
   tags: [ tile-tag-shuttle ] # SS220 Resprite Tiles
   sprite: /Textures/Tiles/shuttleorange.png
-  variants: 4
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
+  variants: 1
+#  placementVariants:
+#  - 1.0
+#  - 1.0
+#  - 1.0
+#  - 1.0
   itemDrop: FloorTileItemShuttleOrange
 
 - type: tile
@@ -1243,12 +1243,12 @@
   name: tiles-purple-shuttle-floor
   tags: [ tile-tag-shuttle ] # SS220 Resprite Tiles
   sprite: /Textures/Tiles/shuttlepurple.png
-  variants: 4
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
+  variants: 1
+#  placementVariants:
+#  - 1.0
+#  - 1.0
+#  - 1.0
+#  - 1.0
   itemDrop: FloorTileItemShuttlePurple
 
 - type: tile
@@ -1257,12 +1257,12 @@
   name: tiles-red-shuttle-floor
   tags: [ tile-tag-shuttle ] # SS220 Resprite Tiles
   sprite: /Textures/Tiles/shuttlered.png
-  variants: 4
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
+  variants: 1
+#  placementVariants:
+#  - 1.0
+#  - 1.0
+#  - 1.0
+#  - 1.0
   itemDrop: FloorTileItemShuttleRed
 
 

@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.SS220.CriminalRecords;
 
-[Prototype("criminalStatus")]
+[Prototype]
 public sealed partial class CriminalStatusPrototype : IPrototype
 {
     [IdDataField]

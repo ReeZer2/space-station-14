@@ -67,7 +67,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     {
         var adminName = banInfo.BanningAdmin == null
             ? Loc.GetString("system-user")
-            : (await _db.GetPlayerRecordByUserId(banInfo.BanningAdmin.Value))?.LastSeenUserName ?? Loc.GetString("system-user");
+            : banInfo.BanningAdminName ?? (await _db.GetPlayerRecordByUserId(banInfo.BanningAdmin.Value))?.LastSeenUserName ?? Loc.GetString("system-user");
 
         ImmutableArray<IBanRoleDef> speciesDefs = [.. banInfo.SpeciesPrototypes.Where(x => _prototypeManager.HasIndex(x)).Select(x => new BanSpecieDef(x))];
         var (banDef, expires) = await CreateBanDef(banInfo, BanType.Species, speciesDefs, adminName);
@@ -91,7 +91,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         foreach (var (userId, _) in banInfo.Users)
         {
             if (_playerManager.TryGetSessionById(userId, out var session))
-                SendRoleBans(session);
+                SendSpeciesBans(session);
         }
     }
 
@@ -212,7 +212,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     {
         var adminName = banInfo.BanningAdmin == null
             ? Loc.GetString("system-user")
-            : (await _db.GetPlayerRecordByUserId(banInfo.BanningAdmin.Value))?.LastSeenUserName ?? Loc.GetString("system-user");
+            : banInfo.BanningAdminName ?? (await _db.GetPlayerRecordByUserId(banInfo.BanningAdmin.Value))?.LastSeenUserName ?? Loc.GetString("system-user");
 
         ImmutableArray<IBanRoleDef> chatDefs = [.. banInfo.Chats.Where(x => x is not BannableChats.Invalid).Select(x => new BanChatDef(x))];
         var (banDef, expires) = await CreateBanDef(banInfo, BanType.Chat, chatDefs, adminName);
@@ -226,7 +226,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
             : string.Join(", ", banInfo.Users.Select(u => $"{u.UserName} ({u.UserId})"));
         var bannedChats = string.Join(", ", banInfo.Chats);
 
-        _chat.SendAdminAlert(Loc.GetString("cmd-chat-ban-success", ("target", targetName), ("chats", bannedChats), ("reason", banInfo.Reason), ("length", length)));
+        _chat.SendAdminAlert(Loc.GetString("cmd-chat-ban-success", ("target", targetName), ("chat", bannedChats), ("reason", banInfo.Reason), ("length", length)));
 
         if (banInfo.PostBanInfo && banDef.Id is { } banId)
         {
@@ -236,7 +236,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         foreach (var (userId, _) in banInfo.Users)
         {
             if (_playerManager.TryGetSessionById(userId, out var session))
-                SendRoleBans(session);
+                SendChatsBans(session);
         }
     }
 
@@ -273,7 +273,6 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
                 chatsBans.RemoveAll(chatBan => chatBan.Id == ban.Id);
                 SendChatsBans(session);
             }
-
         }
 
         return $"Pardoned chats ban with id {banId}";
