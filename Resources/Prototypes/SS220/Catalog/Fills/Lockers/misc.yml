@@ -39,20 +39,18 @@
         children:
         - id: ClothingMaskBreath
         - id: ClothingOuterSuitEmergency
-        - id: EmergencyOxygenTankFilled
-          prob: 0.5
-          orGroup: OxygenTank
-        - id: OxygenTankFilled
-          prob: 0.5
-          orGroup: OxygenTank
-          #SS220 Emergency_Nitrogen_Tank_return start
-        - id: EmergencyNitrogenTankFilled
-          prob: 0.80
-          orGroup: EmergencyNitrogenTankOrRegularTank
-        - id: NitrogenTankFilled
-          prob: 0.20
-          orGroup: EmergencyNitrogenTankOrRegularTank
-          #SS220 Emergency_Nitrogen_Tank_return end
+        - !type:GroupSelector
+          children:
+          - id: EmergencyOxygenTankFilled
+            weight: 1
+          - id: OxygenTankFilled
+            weight: 1
+          - !type:GroupSelector
+            children:
+            - id: EmergencyNitrogenTankFilled
+              weight: 0.8
+            - id: NitrogenTankFilled
+              weight: 0.2
         - id: ToolboxEmergencyFilled
           prob: 0.5
         - id: MedkitOxygenFilled
@@ -61,7 +59,7 @@
           prob: 0.05
         - id: BoxMRE
           prob: 0.1
-        - id: LotteryCash #SS220 Lottery
+        - id: LotteryCash
           prob: 0.05
 
 - type: entity
