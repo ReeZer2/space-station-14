@@ -1165,7 +1165,7 @@
         type: Remove
         time: 150
       #SS220 Cult end
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         conditions:

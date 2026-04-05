@@ -10,20 +10,19 @@
         - id: ClothingOuterSuitFire
         - id: ClothingHeadHelmetFire
         - id: ClothingMaskGas
-        - id: EmergencyOxygenTankFilled
+        - !type:GroupSelector
           prob: 0.5
-          orGroup: OxygenTank
-        - id: OxygenTankFilled
-          prob: 0.5
-          orGroup: OxygenTank
+          children:
+          - id: EmergencyOxygenTankFilled
+          - id: OxygenTankFilled
         - id: NitrogenTankFilled #SS220 Emergency_Nitrogen_Tank_return
         - id: CrowbarRed
-        - id: FireExtinguisher
-          prob: 0.98
-          orGroup: FireExtinguisher
-        - id: SprayBottleWater #It's just budget cut after budget cut man
-          prob: 0.02
-          orGroup: FireExtinguisher
+        - !type:GroupSelector
+          children:
+          - id: FireExtinguisher
+            weight: 0.98
+          - id: SprayBottleWater #It's just budget cut after budget cut man
+            weight: 0.02
         - id: InflatableWallStack1
         - id: InflatableWallStack1
           prob: 0.30

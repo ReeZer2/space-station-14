@@ -111,9 +111,7 @@
     solutionOnBody: false
     updateInterval: 0.25
     metabolizerTypes: [ Dragon ]
-    groups:
-    - id: Medicine
-    - id: Poison
+    stages: [ Bloodstream ]
   - type: Butcherable
     spawned:
     - id: FoodMeatDragon
