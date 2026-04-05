@@ -63,6 +63,10 @@
       Stomach: OrganDionaStomachNymphing
   - type: HumanoidProfile
     species: Diona
+  # SS220-change-races-height begin
+  - type: ScaleVisuals
+    scale: 0.9, 0.9
+  # SS220-change-races-height end
 
 - type: entity
   parent:
@@ -71,10 +75,6 @@
   id: MobDiona
   name: Urist McPlants
   components:
-# SS220-change-races-height begin
-  - type: Sprite
-    scale: 0.9, 0.9
-# SS220-change-races-height end
   - type: Respirator
     damage:
       types:

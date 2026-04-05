@@ -94,9 +94,7 @@
   suffix: SelfRecharger
   components:
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 48
-    autoRechargePause: true
     autoRechargePauseTime: 10
 
 # Base KR

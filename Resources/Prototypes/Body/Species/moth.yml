@@ -131,6 +131,10 @@
       Kidneys: OrganMothKidneys
   - type: HumanoidProfile
     species: Moth
+  # SS220-change-races-height begin
+  - type: ScaleVisuals
+    scale: 0.9, 0.9
+  # SS220-change-races-height end
 
 - type: entity
   parent:
@@ -140,8 +144,6 @@
   name: Urist McFluff
   components:
 # SS220-change-races-height begin
-  - type: Sprite
-    scale: 0.9, 0.9
   - type: Fixtures
     fixtures:
       fix1:

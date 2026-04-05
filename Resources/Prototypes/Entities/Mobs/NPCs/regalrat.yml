@@ -192,7 +192,7 @@
   id: MobRatServant
   parent: [ BaseMobRat, SimpleMobBase, MobCombat, MobPassiveCollision ] # SS220 Add Mob Passive Collision
   description: He's da mini rat. He don't make da roolz.
-  categories: [ HideSpawnMenu ] #Must be configured to a King or the AI breaks.
+  #categories: [ HideSpawnMenu ] #Must be configured to a King or the AI breaks.
   components:
   - type: CombatMode
   - type: MovementSpeedModifier
@@ -227,7 +227,10 @@
       state: eyes
       shader: unshaded
   - type: Bloodstream
-    bloodMaxVolume: 40 #SS220 RatBlood fix
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 40
   - type: SpriteMovement
     movementLayers:
       movement:

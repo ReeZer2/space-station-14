@@ -46,17 +46,18 @@ public sealed class MobConsumedByDarkReaperTest
       0: Alive
       100: Critical
       200: Dead
-  - type: Temperature
+  - type: TemperatureDamage
     heatDamageThreshold: 325
     coldDamageThreshold: 260
-    currentTemperature: 310.15
-    specificHeat: 42
     coldDamage:
       types:
         Cold: 1
     heatDamage:
       types:
         Heat: 1.5
+  - type: Temperature
+    currentTemperature: 310.15
+    specificHeat: 42
   - type: Barotrauma
     damage:
       types:

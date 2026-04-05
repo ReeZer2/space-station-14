@@ -65,6 +65,10 @@
       Kidneys: OrganArachnidKidneys
   - type: HumanoidProfile
     species: Arachnid
+  # SS220-change-races-height begin
+  - type: ScaleVisuals
+    scale: 1.1, 1.1
+  # SS220-change-races-height end
 
 - type: entity
   parent:
@@ -74,8 +78,6 @@
   name: Urist McWebs
   components:
   # SS220-change-races-height begin
-  - type: Sprite
-    scale: 1.1, 1.1
   - type: Fixtures
     fixtures:
       fix1:
