@@ -118,6 +118,11 @@ public sealed class MarkingManager
 
     private bool CanBeApplied(MarkingsGroupPrototype group, Sex sex, MarkingPrototype prototype, bool whitelisted)
     {
+        // ss220 add hidden markings start
+        if (prototype.Hidden)
+            return false;
+        // ss220 add hidden markings end
+
         if (prototype.GroupWhitelist == null)
         {
             if (whitelisted)
@@ -149,6 +154,12 @@ public sealed class MarkingManager
 
                 if (marking.Sprites.Count != markings[i].MarkingColors.Count)
                 {
+                    if (marking.Sprites.Count == 0)
+                    {
+                        markings.RemoveAt(i);
+                        continue;
+                    }
+
                     markings[i] = new Marking(marking.ID, marking.Sprites.Count);
                 }
             }
@@ -175,13 +186,16 @@ public sealed class MarkingManager
     /// </summary>
     public void EnsureValidLayers(Dictionary<HumanoidVisualLayers, List<Marking>> markingSets, HashSet<HumanoidVisualLayers> layers)
     {
-        foreach (var markings in markingSets.Values)
+        foreach (var (markingSet, markings) in markingSets)
         {
             for (var i = markings.Count - 1; i >= 0; i--)
             {
                 if (!TryGetMarking(markings[i], out var marking) || !layers.Contains(marking.BodyPart))
                     markings.RemoveAt(i);
             }
+
+            if (markings.Count == 0)
+                markingSets.Remove(markingSet);
         }
     }
 
