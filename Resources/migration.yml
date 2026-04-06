@@ -975,3 +975,6 @@ BlasterPowerCellPulse: PowerCellBlasterHighCapacity
 cqc_nonlethal: CQCManual
 cqc_lethal: CQCManual
 # SS220 new cqc end
+
+# 2026-04-06 - SS220 remove necrosol
+JugNecrosol: JugArcryox

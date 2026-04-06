@@ -387,3 +387,6 @@
 
 - type: Tag
   id: CatWalk
+
+- type: Tag
+  id: MagazineCaselessRifle

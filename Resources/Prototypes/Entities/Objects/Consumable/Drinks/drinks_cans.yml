@@ -316,7 +316,7 @@
       drink:
         maxVol: 30
         reagents:
-        - ReagentId: KiraSpecial
+        - ReagentId: OrangeLimeSoda # TODO SS220 KIRA SPECIAL
           Quantity: 8
         - ReagentId: RootBeerFloat
           Quantity: 8

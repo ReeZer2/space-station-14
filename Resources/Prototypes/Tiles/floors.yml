@@ -203,6 +203,19 @@
 
 - type: tile
   parent: BaseStationTile
+  id: FloorSteelHorizontalSlatsBordered
+  name: tiles-steel-floor-horizontal-slats-bordered
+  sprite: /Textures/Tiles/steel_horizontal_slats_bordered.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  itemDrop: FloorTileItemSteelHorizontalSlatsBordered
+
+- type: tile
+  parent: BaseStationTile
   id: FloorSteelVerticalSlatsBordered
   name: tiles-steel-floor-vertical-slats-bordered
   sprite: /Textures/Tiles/steel_vertical_slats_bordered.png
