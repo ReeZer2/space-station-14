@@ -154,12 +154,6 @@ public sealed class MarkingManager
 
                 if (marking.Sprites.Count != markings[i].MarkingColors.Count)
                 {
-                    if (marking.Sprites.Count == 0)
-                    {
-                        markings.RemoveAt(i);
-                        continue;
-                    }
-
                     markings[i] = new Marking(marking.ID, marking.Sprites.Count);
                 }
             }
