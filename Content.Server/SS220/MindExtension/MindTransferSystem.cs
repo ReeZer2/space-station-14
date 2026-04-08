@@ -7,54 +7,41 @@ namespace Content.Server.SS220.MindExtension;
 
 public partial class MindExtensionSystem //MindTransferSystem
 {
-    /// <summary>
-    /// Moves a MindExtension from one entity to another.
-    /// This method implements the core logic of the entire system.
-    /// </summary>
     public void TransferExtension(EntityUid? oldEntity, EntityUid? newEntity, NetUserId? player)
     {
         if (player is null)
             return;
 
-        TryGetMindExtension(player.Value, out var mindExtEnt);
+        if (!TryGetExtension(player.Value, out var data))
+        {
+            if (newEntity == null)
+                return;
 
-        if (newEntity == null && mindExtEnt == null)
-            return;
-
-        mindExtEnt ??= GetMindExtension(player.Value);
-
-        var mindExt = mindExtEnt.Value.Comp;
+            data = GetOrCreateExtension(player.Value);
+        }
 
         if (oldEntity != null && HasComp<MindExtensionContainerComponent>(oldEntity))
         {
-            //Main check for abandonment
-            ChangeOrAddTrailPoint(mindExt, oldEntity.Value, CheckEntityAbandoned(oldEntity.Value));
-            EntityManager.RemoveComponent<MindExtensionContainerComponent>(oldEntity.Value);
+            ChangeOrAddTrailPoint(data, oldEntity.Value, CheckEntityAbandoned(oldEntity.Value));
+            RemComp<MindExtensionContainerComponent>(oldEntity.Value);
         }
 
-        if (newEntity is null)
+        if (newEntity == null)
+        {
+            data.CurrentBody = null;
             return;
+        }
 
-        ChangeOrAddTrailPoint(mindExt, newEntity.Value, false);
-        SetRespawnTimer(mindExt, newEntity.Value, player.Value);
+        data.CurrentBody = newEntity;
+        ChangeOrAddTrailPoint(data, newEntity.Value, false);
+        SetRespawnTimer(data, newEntity.Value, player.Value);
 
-        var newMindExt = EnsureComp<MindExtensionContainerComponent>(newEntity.Value);
-        newMindExt.MindExtension = mindExtEnt.Value.Owner;
+        EnsureComp<MindExtensionContainerComponent>(newEntity.Value);
     }
 
-    /// <summary>
-    /// Marks the entity in the system as not abandoned.
-    /// This is necessary for suicide or other mind transfer methods that allow
-    /// the player to return despite the primary check.
-    /// </summary>
     public void MarkAsNotAbandoned(EntityUid invoker, NetUserId player)
     {
-        if (!TryGetMindExtension(player, out var mindExtEnt))
-            return;
-
-        ChangeOrAddTrailPoint(
-            comp: mindExtEnt.Value.Comp,
-            entity: invoker,
-            isAbandoned: false);
+        if (TryGetExtension(player, out var data))
+            ChangeOrAddTrailPoint(data, invoker, false);
     }
 }

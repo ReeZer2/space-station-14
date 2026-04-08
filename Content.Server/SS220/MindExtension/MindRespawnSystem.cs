@@ -16,73 +16,66 @@ public partial class MindExtensionSystem //MindRespawnSystem
 {
     private void SubscribeRespawnSystemEvents()
     {
-        SubscribeNetworkEvent<RespawnRequest>(OnRespawnRequest
-            );
+        SubscribeNetworkEvent<RespawnRequest>(OnRespawnRequest);
         SubscribeNetworkEvent<RespawnTimeRequest>(OnRespawnTimeRequest);
     }
 
     private void OnRespawnRequest(RespawnRequest ev, EntitySessionEventArgs args)
     {
-        if (!TryComp<MindExtensionContainerComponent>(args.SenderSession.AttachedEntity, out var mindContExt))
+        if (!TryGetExtension(args.SenderSession.UserId, out var data))
             return;
 
-        if (!TryComp<MindExtensionComponent>(mindContExt.MindExtension, out var mindExt))
+        if (!data.RespawnAvailable)
             return;
 
-        if (!mindExt.RespawnAvailable)
+        if (data.RespawnTimer != null && !(_gameTiming.CurTime > data.RespawnTimer))
             return;
 
-        if (_gameTiming.CurTime > mindExt.RespawnTimer)
-        {
-            RaiseLocalEvent(args.SenderSession.AttachedEntity.Value, new RespawnActionEvent());
-            RaiseNetworkEvent(new RespawnedResponse(), args.SenderSession);
-        }
+        if (args.SenderSession.AttachedEntity == null)
+            return;
+
+        RaiseLocalEvent(args.SenderSession.AttachedEntity.Value, new RespawnActionEvent());
+        RaiseNetworkEvent(new RespawnedResponse(), args.SenderSession);
     }
 
     private void OnRespawnTimeRequest(RespawnTimeRequest ev, EntitySessionEventArgs args)
     {
-        if (!TryGetMindExtension(args.SenderSession.UserId, out var mindExtEnt))
+        if (!TryGetExtension(args.SenderSession.UserId, out var data))
             return;
 
-        UpdateRespawnTimer(mindExtEnt.Value.Comp.RespawnTimer, args.SenderSession);
+        UpdateRespawnTimer(data.RespawnTimer, args.SenderSession);
     }
 
-    private void SetRespawnTimer(MindExtensionComponent component, EntityUid newEntity, NetUserId playerId)
+    private void SetRespawnTimer(MindExtensionData data, EntityUid newEntity, NetUserId playerId)
     {
-        //This is the main check to see if transferring to this entity resets the return timer to the lobby.
-        //Now the timer is only turned off when transferring to a living humanoid (Dna Component) or Borg.
         if (HasComp<DnaComponent>(newEntity) || HasComp<BorgChassisComponent>(newEntity))
         {
             if (TryComp<MobStateComponent>(newEntity, out var mobState) &&
-                (mobState.CurrentState == MobState.Dead || mobState.CurrentState == MobState.Invalid))
+                mobState.CurrentState is MobState.Dead or MobState.Invalid)
             {
-                SetRespawnAvaible(component, playerId, true);
+                SetRespawnAvailable(data, playerId, true);
+                return;
             }
 
-            SetRespawnAvaible(component, playerId, false);
+            SetRespawnAvailable(data, playerId, false);
         }
         else
-            SetRespawnAvaible(component, playerId, true);
+            SetRespawnAvailable(data, playerId, true);
     }
 
-    private void SetRespawnAvaible(MindExtensionComponent component, NetUserId playerId, bool newRespawnAvaliability)
+    private void SetRespawnAvailable(MindExtensionData data, NetUserId playerId, bool newAvailability)
     {
-        if (component.RespawnAvailable == newRespawnAvaliability)
+        if (data.RespawnAvailable == newAvailability)
             return;
 
-        if (newRespawnAvaliability)
-            component.RespawnTimer = _gameTiming.CurTime + component.RespawnTime;
-        //When turned off, set the value to false, which means the timer is turned off.
-        else
-            component.RespawnTimer = null;
+        data.RespawnAvailable = newAvailability;
+        data.RespawnTimer = newAvailability ? _gameTiming.CurTime + data.RespawnTime : null;
 
-        component.RespawnAvailable = newRespawnAvaliability;
-        UpdateRespawnTimer(component.RespawnTimer, _playerManager.GetSessionById(playerId));
+        UpdateRespawnTimer(data.RespawnTimer, _playerManager.GetSessionById(playerId));
     }
 
     private void UpdateRespawnTimer(TimeSpan? timer, ICommonSession session)
     {
-        var ev = new RespawnTimeResponse(timer);
-        RaiseNetworkEvent(ev, session);
+        RaiseNetworkEvent(new RespawnTimeResponse(timer), session);
     }
 }
