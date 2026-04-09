@@ -68,6 +68,9 @@ public sealed partial class MindExtensionSystem : EntitySystem
         };
     }
 
+    /// <summary>
+    /// Retrieves existing extension data for a player or creates a new entry if none exists.
+    /// </summary>
     [PublicAPI]
     public MindExtensionData GetOrCreateExtension(NetUserId userId)
     {
@@ -79,6 +82,9 @@ public sealed partial class MindExtensionSystem : EntitySystem
         return data;
     }
 
+    /// <summary>
+    /// Attempts to find the extension data for a specific user.
+    /// </summary>
     [PublicAPI]
     public bool TryGetExtension(NetUserId userId, [NotNullWhen(true)] out MindExtensionData? data)
     {

@@ -7,6 +7,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.SS220.MindExtension;
 using Content.Shared.SS220.MindExtension.Events;
+using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 
@@ -18,6 +19,8 @@ public partial class MindExtensionSystem //MindRespawnSystem
     {
         SubscribeNetworkEvent<RespawnRequest>(OnRespawnRequest);
         SubscribeNetworkEvent<RespawnTimeRequest>(OnRespawnTimeRequest);
+
+        _playerManager.PlayerStatusChanged += OnPlayerStatusChanged; // we need to force update timer
     }
 
     private void OnRespawnRequest(RespawnRequest ev, EntitySessionEventArgs args)
@@ -46,6 +49,15 @@ public partial class MindExtensionSystem //MindRespawnSystem
         UpdateRespawnTimer(data.RespawnTimer, args.SenderSession);
     }
 
+    private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs ev)
+    {
+        if (ev.NewStatus != SessionStatus.InGame)
+            return;
+
+        if (TryGetExtension(ev.Session.UserId, out var data))
+            UpdateRespawnTimer(data.RespawnTimer, ev.Session);
+    }
+
     private void SetRespawnTimer(MindExtensionData data, EntityUid newEntity, NetUserId playerId)
     {
         if (HasComp<DnaComponent>(newEntity) || HasComp<BorgChassisComponent>(newEntity))
@@ -63,17 +75,44 @@ public partial class MindExtensionSystem //MindRespawnSystem
             SetRespawnAvailable(data, playerId, true);
     }
 
+    /// <summary>
+    /// Updates the respawn availability flag and calculates the cooldown timer.
+    /// Only sets a timer if the player is actively in-game.
+    /// </summary>
     private void SetRespawnAvailable(MindExtensionData data, NetUserId playerId, bool newAvailability)
     {
-        if (data.RespawnAvailable == newAvailability)
-            return;
-
         data.RespawnAvailable = newAvailability;
-        data.RespawnTimer = newAvailability ? _gameTiming.CurTime + data.RespawnTime : null;
 
-        UpdateRespawnTimer(data.RespawnTimer, _playerManager.GetSessionById(playerId));
+        var session = _playerManager.GetSessionById(playerId);
+        var shouldSendUpdate = data.RespawnAvailable != newAvailability;
+
+        if (data.RespawnAvailable)
+        {
+            if (session.Status != SessionStatus.InGame)
+            {
+                data.RespawnTimer = null;
+            }
+            else if (data.RespawnTimer == null)
+            {
+                data.RespawnTimer = _gameTiming.CurTime + data.RespawnTime;
+                shouldSendUpdate = true;
+            }
+        }
+        else
+        {
+            if (data.RespawnTimer != null)
+                shouldSendUpdate = true;
+
+            data.RespawnTimer = null;
+        }
+
+        if (shouldSendUpdate)
+            UpdateRespawnTimer(data.RespawnTimer, session);
     }
 
+    /// <summary>
+    /// Sends a network event to the client with the current respawn timer value.
+    /// </summary>
     private void UpdateRespawnTimer(TimeSpan? timer, ICommonSession session)
     {
         RaiseNetworkEvent(new RespawnTimeResponse(timer), session);

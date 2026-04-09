@@ -85,6 +85,9 @@ public partial class MindExtensionSystem //MindTrailSystem
 
     #endregion
 
+    /// <summary>
+    /// Adds a new entity to the players trail or updates the status of an existing one.
+    /// </summary>
     private void ChangeOrAddTrailPoint(MindExtensionData data, EntityUid entity, bool isAbandoned)
     {
         if (HasComp<GhostComponent>(entity))

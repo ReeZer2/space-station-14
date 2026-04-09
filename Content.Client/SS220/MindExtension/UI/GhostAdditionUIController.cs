@@ -69,6 +69,9 @@ public sealed partial class GhostAdditionUIController : UIController, IOnSystemC
 
         AdditionGui.OnRespawnPressed -= RequestRespawn;
         AdditionGui.OnReturnToBodyPressed -= RequestReturnToBody;
+        AdditionGui.BodyMenuWindow.OnFollowBodyAction -= OnFollowBodyAction;
+        AdditionGui.BodyMenuWindow.OnToBodyAction -= OnToBodyAction;
+        AdditionGui.BodyMenuWindow.OnDeleteTrailPointAction -= DeleteTrailPointAction;
     }
 
     public void OnSystemLoaded(MindExtensionSystem system)
