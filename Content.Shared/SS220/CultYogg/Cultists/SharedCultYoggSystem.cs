@@ -1,9 +1,12 @@
 // © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 
 using Content.Shared.Actions;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Markings;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
@@ -40,12 +43,16 @@ public abstract class SharedCultYoggSystem : EntitySystem
     {
         _actions.AddAction(uid, ref uid.Comp.CorruptItemActionEntity, uid.Comp.CorruptItemAction);
         _actions.AddAction(uid, ref uid.Comp.CorruptItemInHandActionEntity, uid.Comp.CorruptItemInHandAction);
+
         if (_actions.AddAction(uid, ref uid.Comp.PukeShroomActionEntity, out var act, uid.Comp.PukeShroomAction) && act.UseDelay != null) //useDelay when added
         {
             var start = _timing.CurTime;
             var end = start + act.UseDelay.Value;
             _actions.SetCooldown(uid.Comp.PukeShroomActionEntity.Value, start, end);
         }
+
+        var ev = new ProgressCultEvent();
+        RaiseLocalEvent(uid, ref ev, true);
     }
 
     #region Stage
@@ -61,20 +68,23 @@ public abstract class SharedCultYoggSystem : EntitySystem
         if (_inventory.TryGetSlotEntity(ent.Owner, "head", out var itemHead, item))
         {
             if (TryComp(itemHead, out IdentityBlockerComponent? block)
-                && (block.Coverage == IdentityBlockerCoverage.EYES || block.Coverage == IdentityBlockerCoverage.FULL))
+                && block.Coverage is IdentityBlockerCoverage.EYES or IdentityBlockerCoverage.FULL)
                 return;
         }
 
         if (_inventory.TryGetSlotEntity(ent.Owner, "mask", out var itemMask, item))
         {
-            if (TryComp(itemMask, out IdentityBlockerComponent? block)
-                && (block.Coverage == IdentityBlockerCoverage.EYES || block.Coverage == IdentityBlockerCoverage.FULL))
+            if (TryComp<MaskComponent>(itemMask, out var mask) && mask.IsToggled)
+            {
+            }
+            else if (TryComp<IdentityBlockerComponent>(itemMask, out var block)
+                && block.Coverage is IdentityBlockerCoverage.EYES or IdentityBlockerCoverage.FULL)
             {
                 return;
             }
         }
 
-        args.PushMarkup($"[color=green]{Loc.GetString("cult-yogg-stage-eyes-markups", ("ent", ent.Owner))}[/color]");
+        args.PushMarkup(Loc.GetString("cult-yogg-stage-eyes-markups"));
     }
     #endregion
 
@@ -83,6 +93,12 @@ public abstract class SharedCultYoggSystem : EntitySystem
     {
         if (args.Handled)
             return;
+
+        if (TryCorruptInteractions(uid, args.Target))
+        {
+            args.Handled = true;
+            return;
+        }
 
         if (_cultYoggCorruptedSystem.IsCorrupted(args.Target))
         {
@@ -123,6 +139,21 @@ public abstract class SharedCultYoggSystem : EntitySystem
         }
         args.Handled = true;
     }
+
+    private bool TryCorruptInteractions(Entity<CultYoggComponent> ent, EntityUid target)
+    {
+        var effectEv = new CorruptInteractionEvent();
+        RaiseLocalEvent(target, ref effectEv);
+
+        if (effectEv.Handled)
+            return true;
+
+        return false;
+    }
+    #endregion
+
+    #region Visuals
+    public virtual void DeleteVisuals(Entity<CultYoggComponent> ent) { }
     #endregion
 
     protected void OnRemove(Entity<CultYoggComponent> uid, ref ComponentRemove args)
@@ -135,8 +166,6 @@ public abstract class SharedCultYoggSystem : EntitySystem
         _actions.RemoveAction(uid.Comp.DigestActionEntity);
         _actions.RemoveAction(uid.Comp.PukeShroomActionEntity);
 
-        //sending to a gamerule so it would be deleted and added in one place
-        var ev = new CultYoggDeCultingEvent(uid);
-        RaiseLocalEvent(uid, ref ev, true);
+        DeleteVisuals(uid);
     }
 }

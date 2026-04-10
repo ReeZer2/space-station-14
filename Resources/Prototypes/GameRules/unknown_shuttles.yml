@@ -8,7 +8,9 @@
     - id: UnknownShuttleTravelingCuisine
     - id: UnknownShuttleDisasterEvacPod
     - id: UnknownShuttleHonki
-    - id: UnknownShuttleCivil
+    - id: UnknownShuttleCivil # SS220-Mimes-Lost-Shuttle
+    - id: UnknownShuttleMimesLost # SS220-Mimes-Lost-Shuttle
+    - id: UnknownShuttleRedwings # SS220-Redwings-Shuttle
 #SS220-NoUnknownShuttles begin
 #    - id: UnknownShuttleNTQuark
 #    - id: UnknownShuttleCruiser

@@ -1,8 +1,8 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
 using Content.Server.Hands.Systems;
-using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Botany;
@@ -24,8 +24,11 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
+using Content.Shared.EntityEffects;
+using Content.Shared.Kitchen.Components;
 using Content.Shared.Labels.Components;
 
 namespace Content.Server.Botany.Systems;
@@ -47,6 +50,7 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
 
     public const float HydroponicsSpeedMultiplier = 1f;
     public const float HydroponicsConsumptionMultiplier = 2f;
@@ -428,12 +432,14 @@ public sealed class PlantHolderSystem : EntitySystem
             component.Health = 0;
         }
 
+        //SS220 Tomato-Killer start
         if (component.Seed != null && component.Seed.TurnIntoTomatoKiller)
         {
             Spawn(component.Seed.TomatoKillerPrototype, Transform(uid).Coordinates.SnapToGrid(EntityManager));
             component.Seed.TurnIntoTomatoKiller = false;
             component.Health = 0;
         }
+        //SS220 Tomato-Killer end
 
         // There's a chance for a weed explosion to happen if weeds take over.
         // Plants that are themselves weeds (WeedTolerance > 8) are unaffected.
@@ -678,6 +684,14 @@ public sealed class PlantHolderSystem : EntitySystem
 
         if (component.UpdateSpriteAfterUpdate)
             UpdateSprite(uid, component);
+
+        //SS220-Mob-Spawn-Nerf start
+        if (component.Harvest && component.Seed.AutoSpawnMob)
+        {
+            component.Seed.HarvestRepeat = HarvestType.NoRepeat;
+            AutoHarvest(uid, component);
+        }
+        //SS220-Mob-Spawn-Nerf end
     }
 
     //TODO: kill this bullshit
@@ -893,7 +907,7 @@ public sealed class PlantHolderSystem : EntitySystem
             foreach (var entry in _solutionContainerSystem.RemoveEachReagent(component.SoilSolution.Value, amt))
             {
                 var reagentProto = _prototype.Index<ReagentPrototype>(entry.Reagent.Prototype);
-                reagentProto.ReactionPlant(uid, entry, solution);
+                _entityEffects.ApplyEffects(uid, reagentProto.PlantMetabolisms.ToArray());
             }
         }
 

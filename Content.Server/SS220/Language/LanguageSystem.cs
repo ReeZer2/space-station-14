@@ -8,6 +8,10 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.SS220.Language.Systems;
 using Robust.Shared.Configuration;
 using Content.Shared.SS220.CCVars;
+using Content.Shared.Speech;
+using Content.Server.Speech.EntitySystems;
+using System.Linq;
+using Content.Shared.Polymorph;
 
 namespace Content.Server.SS220.Language;
 
@@ -23,6 +27,8 @@ public sealed partial class LanguageSystem : SharedLanguageSystem
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
         SubscribeLocalEvent<LanguageComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<LanguageComponent, SendLanguageMessageAttemptEvent>(OnSendLanguageMessageAttemptEvent);
+        SubscribeLocalEvent<LanguageComponent, AccentGetEvent>(OnAccentGet);
+        SubscribeLocalEvent<LanguageComponent, PolymorphedEvent>(OnPolymorphed);
 
         // Client
         SubscribeNetworkEvent<ClientSelectLanguageEvent>(OnClientSelectLanguage);
@@ -41,12 +47,28 @@ public sealed partial class LanguageSystem : SharedLanguageSystem
     /// </summary>
     private void OnMapInit(Entity<LanguageComponent> ent, ref MapInitEvent args)
     {
-        TrySetLanguage(ent, 0);
+        if (ent.Comp.SelectedLanguage is not { } languageId || !CanSpeak(ent, languageId))
+            TrySelectRandomLanguage(ent);
     }
 
     private void OnSendLanguageMessageAttemptEvent(Entity<LanguageComponent> ent, ref SendLanguageMessageAttemptEvent args)
     {
         args.Listener = ent;
+    }
+
+    private void OnAccentGet(EntityUid uid, LanguageComponent component, AccentGetEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        var currentLangId = component.SelectedLanguage;
+        if (currentLangId == null)
+            return;
+
+        if (CanSpeak(uid, currentLangId))
+        {
+            args.Cancel();
+        }
     }
 
     #region Client
@@ -56,7 +78,7 @@ public sealed partial class LanguageSystem : SharedLanguageSystem
         if (entity == null || !TryComp<LanguageComponent>(entity, out var comp))
             return;
 
-        TrySetLanguage((entity.Value, comp), msg.LanguageId);
+        TrySelectLanguage((entity.Value, comp), msg.LanguageId);
     }
 
     private void UpdateSeed()
@@ -116,6 +138,14 @@ public sealed partial class LanguageSystem : SharedLanguageSystem
         Seed = seed;
         UpdateSeed();
     }
+
+    private void OnPolymorphed(Entity<LanguageComponent> ent, ref PolymorphedEvent ev)
+    {
+        if (ev.IsRevert)
+            return;
+
+        AddLanguagesFromSource(ent, ev.NewEntity);
+    }
 }
 
 [ByRefEvent]
@@ -123,4 +153,3 @@ public sealed class SendLanguageMessageAttemptEvent : CancellableEntityEventArgs
 {
     public EntityUid? Listener;
 }
-

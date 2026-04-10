@@ -5,12 +5,12 @@ using Content.Server.Medical.Components;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
-using Content.Server.Temperature.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Medical.Cryogenics;
 using Content.Shared.MedicalScanner;
+using Content.Shared.Temperature.Components;
 using Content.Shared.UserInterface;
 using Robust.Shared.Containers;
 
@@ -57,6 +57,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
                 bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
                 ? bloodSolution.FillFraction
                 : 0,
+            false, // SS220-health-analyzer-report
             null,
             null, //SS220 LimitationRevive
             null,

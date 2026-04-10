@@ -19,11 +19,19 @@ public sealed class CultYoggDeCultingEvent(EntityUid entity) : EntityEventArgs
 }
 
 [ByRefEvent, Serializable]
-public record struct CultYoggForceAscendingEvent;
-
-[ByRefEvent, Serializable]
 public record struct CultYoggAscendingEvent;
-
 
 [ByRefEvent, Serializable]
 public record struct CultYoggSacrificedTargetEvent(Entity<CultYoggAltarComponent> Altar);
+
+[ByRefEvent]
+public record struct GotCultifiedEvent;
+
+[ByRefEvent]
+public record struct CorruptInteractionEvent()
+{
+    public bool Handled = false;
+}
+
+[ByRefEvent]
+public record struct ProgressCultEvent;

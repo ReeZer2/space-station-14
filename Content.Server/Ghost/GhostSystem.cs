@@ -105,7 +105,7 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
             SubscribeLocalEvent<GhostComponent, ToggleGhostHearingActionEvent>(OnGhostHearingAction);
             SubscribeLocalEvent<GhostComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
-            SubscribeLocalEvent<GhostComponent, RespawnActionEvent>(OnActionRespanw);
+            SubscribeLocalEvent<GhostComponent, RespawnActionEvent>(OnActionRespawn);
             SubscribeLocalEvent<GhostComponent, ToggleAGhostBodyVisualsActionEvent>(OnToggleBodyVisualsAction);
             SubscribeLocalEvent<GhostComponent, ToggleHudOnOtherActionEvent>(OnToggleHudOnOther);
 
@@ -224,7 +224,7 @@ namespace Content.Server.Ghost
         //SS220-ghost-hats end
 
         //SS-220 noDeath
-        private void OnActionRespanw(EntityUid uid, GhostComponent component, RespawnActionEvent args)
+        private void OnActionRespawn(EntityUid uid, GhostComponent component, RespawnActionEvent args)
         {
             if (!TryComp<ActorComponent>(uid, out var actor))
                 return;
@@ -316,15 +316,6 @@ namespace Content.Server.Ghost
             _actions.AddAction(uid, ref component.ToggleHudOnOtherActionEntity, component.ToggleHudOnOtherAction);
             //ss220 add filter tts for ghost
             _actions.AddAction(uid, ref component.ToggleRadioChannelsUIEntity, component.ToggleRadioChannelsUI);
-            //SS-220 noDeath
-            if (_actions.AddAction(uid, ref component.RespawnActionEntity, out var actResp, component.RespawnAction)
-                && actResp.UseDelay != null)
-            {
-                var start = _gameTiming.CurTime;
-                var end = start + actResp.UseDelay.Value;
-                _actions.SetCooldown(component.RespawnActionEntity.Value, start, end);
-            }
-            //SS-220 end noDeath
         }
 
         private void OnGhostExamine(EntityUid uid, GhostComponent component, ExaminedEvent args)
