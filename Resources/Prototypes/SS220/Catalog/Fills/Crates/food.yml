@@ -100,15 +100,15 @@
         - id: FoodMeat
           amount: 5
         # bird meat
-        - id: FoodMeatChicken
-          amount: 4
+        - !type:GroupSelector
           prob: 0.3
-          orGroup: BirdMeat
-        - id: FoodMeatDuck
-          amount: 4
-          prob: 0.3
-          orGroup: BirdMeat
+          children:
+          - id: FoodMeatChicken
+            amount: 4
+            weight: 1
+          - id: FoodMeatDuck
+            amount: 4
+            weight: 1
         # some bacon
         - id: FoodMeatBacon
           amount: 2
-

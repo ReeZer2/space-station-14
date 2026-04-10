@@ -227,7 +227,10 @@
       state: eyes
       shader: unshaded
   - type: Bloodstream
-    bloodMaxVolume: 40 #SS220 RatBlood fix
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 40
   - type: SpriteMovement
     movementLayers:
       movement:

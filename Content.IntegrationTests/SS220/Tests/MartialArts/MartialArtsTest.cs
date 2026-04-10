@@ -89,8 +89,6 @@ public sealed class MartialArtsTest
         - MobLayer
   - type: Hands
   - type: Body
-    prototype: Human
-    requiredLegs: 2
   - type: ComplexInteraction
   - type: CombatMode
     canDisarm: true

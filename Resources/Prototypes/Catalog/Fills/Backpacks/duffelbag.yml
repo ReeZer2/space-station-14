@@ -491,21 +491,20 @@
         - id: BoxDonkSoftBox
         - id: BoxCartridgeCap
         - id: ClothingNeckSyndicakePin
-        - id: WeaponShotgunBulldogToy
-          orGroup: PrimaryWeapon
-        - id: WeaponSubMachineGunC20rToy
-          orGroup: PrimaryWeapon
-        - id: WeaponPistolViperToy
-          orGroup: Secondary
-        - id: WeaponPistolCobraToy
-          orGroup: Secondary
-        - id: FoamCrossbow
-          orGroup: Secondary
-        - id: DoubleToySword
-          orGroup: Sword
-        - id: ToySword
-          orGroup: Sword
-        #ss220 toys end
+        - !type:GroupSelector
+          children:
+          - id: WeaponShotgunBulldogToy
+          - id: WeaponSubMachineGunC20rToy
+        - !type:GroupSelector
+          children:
+          - id: WeaponPistolViperToy
+          - id: WeaponPistolCobraToy
+          - id: FoamCrossbow
+        - !type:GroupSelector
+          children:
+          - id: DoubleToySword
+          - id: ToySword
+      #ss220 toys end
 
 - type: entity
   parent: [ ClothingBackpackDuffelBundle, BaseMajorContraband ]

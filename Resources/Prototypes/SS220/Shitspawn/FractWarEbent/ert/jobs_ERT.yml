@@ -8,7 +8,7 @@
   suffix: Shitspawn, Ebent, FractWar
   components:
   - type: AccessReader
-    access: [[ Command ]]
+    access: [ [ Command ] ]
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:AllSelector
@@ -30,7 +30,7 @@
   suffix: Shitspawn, Ebent, FractWar
   components:
   - type: AccessReader
-    access: [[ Command ]]
+    access: [ [ Command ] ]
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:AllSelector
@@ -66,7 +66,7 @@
   suffix: Shitspawn, Ebent, FractWar
   components:
   - type: AccessReader
-    access: [[ Command ]]
+    access: [ [ Command ] ]
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:AllSelector
@@ -96,7 +96,7 @@
   suffix: Shitspawn, Ebent, FractWar
   components:
   - type: AccessReader
-    access: [[ Command ]]
+    access: [ [ Command ] ]
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:AllSelector
@@ -124,7 +124,7 @@
   suffix: Shitspawn, Ebent, FractWar
   components:
   - type: AccessReader
-    access: [[ Command ]]
+    access: [ [ Command ] ]
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:AllSelector
@@ -161,32 +161,32 @@
   name: 1Спавнер Офицера Специальных Операций
   suffix: Shitspawn, Ebent, FractWar
   components:
-    - type: Sprite
-      sprite: Markers/jobs.rsi
-      state: ertleader
-    - type: RandomHumanoidSpawner
-      settings: EbentSpecOpsLeader
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    state: ertleader
+  - type: RandomHumanoidSpawner
+    settings: EbentSpecOpsLeader
 
 - type: randomHumanoidSettings
   id: EbentSpecOpsLeader
   randomizeName: true
   speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth, Felinid, Tajaran ]
   components:
-    - type: Loadout
-      prototypes: [ EbentSpecOpsLeaderGear ]
-    - type: EventRole
-      roleGroupKey: SpecOps
-      statusIcon: NTSpecOpsOfficer
-    - type: NpcFactionMember
-      factions:
-      - EbentNanoTrasen
-    - type: DefibrillatorSkill
-      chanceWithMedSkill: 1
-    - type: LimitationRevive
-      reviveLimit: 3
-      beforeDamageDelay: 180
-    - type: RandomHumanoidAppearance
-      randomizeName: false
+  - type: Loadout
+    prototypes: [ EbentSpecOpsLeaderGear ]
+  - type: EventRole
+    roleGroupKey: SpecOps
+    statusIcon: NTSpecOpsOfficer
+  - type: NpcFactionMember
+    factions:
+    - EbentNanoTrasen
+  - type: DefibrillatorSkill
+    chanceWithMedSkill: 1
+  - type: LimitationRevive
+    reviveLimit: 3
+    beforeDamageDelay: 180
+  - type: RandomHumanoidAppearance
+    randomizeName: false
 
 - type: job
   id: SpecOpsLeader
@@ -224,32 +224,32 @@
   name: 2Спавнер Старшего Инженера Специальных Операций
   suffix: Shitspawn, Ebent, FractWar
   components:
-    - type: Sprite
-      sprite: Markers/jobs.rsi
-      state: ertleader
-    - type: RandomHumanoidSpawner
-      settings: EbentSpecOpsEngineer
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    state: ertleader
+  - type: RandomHumanoidSpawner
+    settings: EbentSpecOpsEngineer
 
 - type: randomHumanoidSettings
   id: EbentSpecOpsEngineer
   randomizeName: true
   speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth, Felinid, Tajaran ]
   components:
-    - type: Loadout
-      prototypes: [ EbentSpecOpsEngineerGear ]
-    - type: EventRole
-      roleGroupKey: SpecOps
-      statusIcon: NTEngineerOfficer
-    - type: NpcFactionMember
-      factions:
-      - EbentNanoTrasen
-    - type: DefibrillatorSkill
-      chanceWithMedSkill: 1
-    - type: LimitationRevive
-      reviveLimit: 3
-      beforeDamageDelay: 180
-    - type: RandomHumanoidAppearance
-      randomizeName: false
+  - type: Loadout
+    prototypes: [ EbentSpecOpsEngineerGear ]
+  - type: EventRole
+    roleGroupKey: SpecOps
+    statusIcon: NTEngineerOfficer
+  - type: NpcFactionMember
+    factions:
+    - EbentNanoTrasen
+  - type: DefibrillatorSkill
+    chanceWithMedSkill: 1
+  - type: LimitationRevive
+    reviveLimit: 3
+    beforeDamageDelay: 180
+  - type: RandomHumanoidAppearance
+    randomizeName: false
 
 - type: job
   id: SpecOpsEngineer
@@ -287,37 +287,37 @@
   name: 5Спавнер Парамедика Специальных Операций
   suffix: Shitspawn, Ebent, FractWar
   components:
-    - type: Sprite
-      sprite: Markers/jobs.rsi
-      state: ertleader
-    - type: RandomHumanoidSpawner
-      settings: EbentSpecOpsCorpsman
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    state: ertleader
+  - type: RandomHumanoidSpawner
+    settings: EbentSpecOpsCorpsman
 
 - type: randomHumanoidSettings
   id: EbentSpecOpsCorpsman
   randomizeName: true
   speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth, Felinid, Tajaran ]
   components:
-    - type: Loadout
-      prototypes: [ EbentSpecOpsCorpsmanGear ]
-    - type: GhostRole
-      makeSentient: true
-      name: Парамедик Специальных Операций
-      job: SpecOpsCorpsman
-    - type: GhostTakeoverAvailable
-    - type: EventRole
-      roleGroupKey: SpecOps
-      statusIcon: NTMedic
-    - type: NpcFactionMember
-      factions:
-      - EbentNanoTrasen
-    - type: DefibrillatorSkill
-      chanceWithMedSkill: 1
-    - type: LimitationRevive
-      reviveLimit: 3
-      beforeDamageDelay: 180
-    - type: RandomHumanoidAppearance
-      randomizeName: false
+  - type: Loadout
+    prototypes: [ EbentSpecOpsCorpsmanGear ]
+  - type: GhostRole
+    makeSentient: true
+    name: Парамедик Специальных Операций
+    job: SpecOpsCorpsman
+  - type: GhostTakeoverAvailable
+  - type: EventRole
+    roleGroupKey: SpecOps
+    statusIcon: NTMedic
+  - type: NpcFactionMember
+    factions:
+    - EbentNanoTrasen
+  - type: DefibrillatorSkill
+    chanceWithMedSkill: 1
+  - type: LimitationRevive
+    reviveLimit: 3
+    beforeDamageDelay: 180
+  - type: RandomHumanoidAppearance
+    randomizeName: false
 
 - type: job
   id: SpecOpsCorpsman
@@ -355,32 +355,32 @@
   name: 3Спавнер Главного Врача Специальных Операций
   suffix: Shitspawn, Ebent, FractWar
   components:
-    - type: Sprite
-      sprite: Markers/jobs.rsi
-      state: ertleader
-    - type: RandomHumanoidSpawner
-      settings: EbentSpecOpsCMO
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    state: ertleader
+  - type: RandomHumanoidSpawner
+    settings: EbentSpecOpsCMO
 
 - type: randomHumanoidSettings
   id: EbentSpecOpsCMO
   randomizeName: true
   speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth, Felinid, Tajaran ]
   components:
-    - type: Loadout
-      prototypes: [ EbentSpecOpsCMOGear ]
-    - type: EventRole
-      roleGroupKey: SpecOps
-      statusIcon: NTMedicalOfficer
-    - type: RandomHumanoidAppearance
-      randomizeName: false
-    - type: NpcFactionMember
-      factions:
-      - EbentNanoTrasen
-    - type: DefibrillatorSkill
-      chanceWithMedSkill: 1
-    - type: LimitationRevive
-      reviveLimit: 3
-      beforeDamageDelay: 180
+  - type: Loadout
+    prototypes: [ EbentSpecOpsCMOGear ]
+  - type: EventRole
+    roleGroupKey: SpecOps
+    statusIcon: NTMedicalOfficer
+  - type: RandomHumanoidAppearance
+    randomizeName: false
+  - type: NpcFactionMember
+    factions:
+    - EbentNanoTrasen
+  - type: DefibrillatorSkill
+    chanceWithMedSkill: 1
+  - type: LimitationRevive
+    reviveLimit: 3
+    beforeDamageDelay: 180
 
 - type: job
   id: SpecOpsCMO
@@ -417,37 +417,37 @@
   name: 4Спавнер Рядового Специальных Операций
   suffix: Shitspawn, Ebent, FractWar
   components:
-    - type: Sprite
-      sprite: Markers/jobs.rsi
-      state: ertleader
-    - type: RandomHumanoidSpawner
-      settings: EbentSpecOpsTrooper
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    state: ertleader
+  - type: RandomHumanoidSpawner
+    settings: EbentSpecOpsTrooper
 
 - type: randomHumanoidSettings
   id: EbentSpecOpsTrooper
   randomizeName: true
   speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth, Felinid, Tajaran ]
   components:
-    - type: Loadout
-      prototypes: [ EbentSpecOpsTrooperGear ]
-    - type: GhostRole
-      makeSentient: true
-      name: Рядовой Специальных Операций
-      job: SpecOpsFighter
-    - type: GhostTakeoverAvailable
-    - type: RandomHumanoidAppearance
-      randomizeName: false
-    - type: EventRole
-      roleGroupKey: SpecOps
-      statusIcon: NTCombatant
-    - type: NpcFactionMember
-      factions:
-      - EbentNanoTrasen
-    - type: DefibrillatorSkill
-      chanceWithMedSkill: 1
-    - type: LimitationRevive
-      reviveLimit: 3
-      beforeDamageDelay: 180
+  - type: Loadout
+    prototypes: [ EbentSpecOpsTrooperGear ]
+  - type: GhostRole
+    makeSentient: true
+    name: Рядовой Специальных Операций
+    job: SpecOpsFighter
+  - type: GhostTakeoverAvailable
+  - type: RandomHumanoidAppearance
+    randomizeName: false
+  - type: EventRole
+    roleGroupKey: SpecOps
+    statusIcon: NTCombatant
+  - type: NpcFactionMember
+    factions:
+    - EbentNanoTrasen
+  - type: DefibrillatorSkill
+    chanceWithMedSkill: 1
+  - type: LimitationRevive
+    reviveLimit: 3
+    beforeDamageDelay: 180
 
 - type: job
   id: SpecOpsFighter

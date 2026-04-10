@@ -3,7 +3,7 @@
 - type: markingsGroup
   parent: Undergarments
   id: Tajaran
-  onlyWhitelisted: true
+  onlyGroupWhitelisted: true
   limits:
     enum.HumanoidVisualLayers.Hair:
       limit: 1
@@ -70,11 +70,8 @@
       Kidneys: OrganTajaranKidneys
   - type: HumanoidProfile
     species: Tajaran
-    hideLayersOnEquip:
-    - Snout
-    - HeadTop
-    - HeadSide
-    - Tail
+  - type: ScaleVisuals
+    scale: 0.95, 0.95
 
 - type: entity
   name: Urist McTajaran
@@ -83,9 +80,6 @@
   - BaseSpeciesMobOrganic
   id: MobTajaran
   components:
-  - type: Sprite
-    drawdepth: Mobs
-    scale: 0.95, 0.95
   - type: Damageable
     damageModifierSet: Tajaran
   - type: TajaranAccent
@@ -133,17 +127,18 @@
     damage:
       types:
         Slash: 5
-  - type: Temperature
+  - type: TemperatureDamage
     heatDamageThreshold: 320
     coldDamageThreshold: 230
-    currentTemperature: 310.15
-    specificHeat: 42
     coldDamage:
       types:
-        Cold : 0.05 #per second, scales with temperature & other constants
+        Cold: 0.05 #per second, scales with temperature & other constants
     heatDamage:
       types:
-        Heat : 2 #per second, scales with temperature & other constants
+        Heat: 2 #per second, scales with temperature & other constants
+  - type: Temperature
+    currentTemperature: 310.15
+    specificHeat: 42
   - type: TemperatureSpeed
     thresholds:
       289: 0.8
@@ -174,7 +169,7 @@
   components:
   - type: Metabolizer
     maxReagents: 3
-    metabolizerTypes: [ Tajaran ]
+    metabolizerTypes: [ Animal ]
     groups:
     - id: Food
     - id: Drink
@@ -212,8 +207,10 @@
   components:
   - type: VisualOrganMarkings
     hideableLayers:
-    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.HeadTop
     - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.HeadSide
+    - enum.HumanoidVisualLayers.Tail
 
 - type: entity
   parent: [ OrganBaseArmLeft, OrganTajaranExternal ]

@@ -824,7 +824,6 @@
     #ss220 add stun mode end
     zeroVisible: true
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 40
   - type: Appearance
   - type: StaticPrice
