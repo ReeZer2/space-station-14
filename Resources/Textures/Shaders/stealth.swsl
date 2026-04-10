@@ -27,8 +27,7 @@ void fragment() {
     // SS220 stealth no distortion begin
     // When hideDistortion is active and entity is fully invisible,
     // eliminate distortion offset to remove visible artifacts.
-    if (hideDistortion > 0.5 && visibility < -0.999)
-        w = 0.0;
+    w *= 1.0 - step(0.5, hideDistortion) * step(visibility, -0.999);
     // SS220 stealth no distortion end
 
     highp vec4 background = zTextureSpec(SCREEN_TEXTURE, ( FRAGCOORD.xy + vec2(w) ) * SCREEN_PIXEL_SIZE );
