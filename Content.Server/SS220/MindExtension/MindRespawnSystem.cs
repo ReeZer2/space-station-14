@@ -81,10 +81,12 @@ public partial class MindExtensionSystem //MindRespawnSystem
     /// </summary>
     private void SetRespawnAvailable(MindExtensionData data, NetUserId playerId, bool newAvailability)
     {
+        var statusChanged = data.RespawnAvailable != newAvailability;
+        var shouldSendUpdate = statusChanged;
+
         data.RespawnAvailable = newAvailability;
 
         _playerManager.TryGetSessionById(playerId, out var session);
-        var shouldSendUpdate = data.RespawnAvailable != newAvailability;
 
         if (data.RespawnAvailable)
         {
