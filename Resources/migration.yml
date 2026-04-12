@@ -988,3 +988,13 @@ LeftLegVulpkanin: OrganVulpkaninLegLeft
 RightLegVulpkanin: OrganVulpkaninLegRight
 LeftFootVulpkanin: OrganVulpkaninFootLeft
 RightFootVulpkanin: OrganVulpkaninFootRight
+
+# 2026-04-12 - SS220 remove old parts
+LeftFootHuman: OrganHumanFootLeft
+RightFootHuman: OrganHumanFootRight
+RightHandHuman: OrganHumanHandRight
+LeftHandHuman: OrganHumanHandRight
+TorsoHuman: OrganHumanTorso
+HeadSlime: OrganSlimePersonHead
+LeftFootSkeleton: OrganSkeletonPersonFootLeft
+RightFootSkeleton: OrganSkeletonPersonFootRight
