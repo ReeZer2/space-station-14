@@ -998,3 +998,7 @@ TorsoHuman: OrganHumanTorso
 HeadSlime: OrganSlimePersonHead
 LeftFootSkeleton: OrganSkeletonPersonFootLeft
 RightFootSkeleton: OrganSkeletonPersonFootRight
+
+# 2026-04-13 - SS220 remove gingerbread parts
+HeadGingerbread: OrganGingerbreadHead
+LeftLegGingerbread: OrganGingerbreadLegLeft
