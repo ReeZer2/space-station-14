@@ -203,7 +203,9 @@ public abstract partial class SharedBatterySystem : EntitySystem
             default:
             {
                 var fraction = GetChargeLevel((ent.Owner, battery));
-                level = Math.Clamp((int) Math.Ceiling(fraction * ent.Comp.Levels), 1, ent.Comp.Levels - 1);
+                var maxLevel = Math.Max(1, ent.Comp.Levels - 1);
+                var minLevel = 1;
+                level = Math.Clamp((int) Math.Ceiling(fraction * ent.Comp.Levels), minLevel, maxLevel);
                 break;
             }
         }
