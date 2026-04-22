@@ -99,7 +99,8 @@ public abstract class SharedJetpackSystem : EntitySystem
     private void OnJetpackUserEntParentChanged(EntityUid uid, JetpackUserComponent component, ref EntParentChangedMessage args)
     {
         if (TryComp<JetpackComponent>(component.Jetpack, out var jetpack) &&
-            (!CanEnableOnGrid(args.Transform.GridUid) || !CheckMagboots(uid))) // SS220 Magboots with jet fix
+            (!CanEnableOnGrid(args.Transform.GridUid) || !CheckMagboots(uid)) && // SS220 Magboots with jet fix
+            CheckMoonBoots(uid)) // ss220-fix-jetpack-effect
         {
             SetEnabled(component.Jetpack, jetpack, false, uid);
 
@@ -240,6 +241,20 @@ public abstract class SharedJetpackSystem : EntitySystem
         return true;
     }
     // SS220 Magboots with jet fix end
+
+    // ss220-fix-jetpack-effect-begin
+    private bool CheckMoonBoots(EntityUid user)
+    {
+        var slotEnumerator = _inventory.GetSlotEnumerator(user);
+        while (slotEnumerator.NextItem(out var item))
+        {
+            if (HasComp<AntiGravityClothingComponent>(item))
+                return false;
+        }
+
+        return true;
+    }
+    // ss220-fix-jetpack-effect-end
 
     private void OnJetpackGetAction(EntityUid uid, JetpackComponent component, GetItemActionsEvent args)
     {
