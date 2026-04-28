@@ -160,6 +160,7 @@
   rules:
   - DummyNonAntagChance
   - Traitor
+  - BloodBrothers # ss220-blood-brothers
   - SubGamemodesRule
   - BasicStationEventScheduler
   - MeteorSwarmScheduler
@@ -190,6 +191,7 @@
   showInVote: false
   rules:
     - Nukeops
+    - BloodBrothers # ss220-blood-brothers
     - DummyNonAntagChance
     # - SubGamemodesRule #SS220 no-thief-on-nukie-round-fix
     - BasicStationEventScheduler

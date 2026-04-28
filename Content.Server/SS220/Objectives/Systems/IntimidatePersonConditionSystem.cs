@@ -61,39 +61,28 @@ public sealed class IntimidatePersonConditionSystem : EntitySystem
 
     private void OnPersonAssigned(Entity<IntimidatePersonConditionComponent> entity, ref ObjectiveAssignedEvent args)
     {
+        args.Cancelled = true;
         var (uid, _) = entity;
 
-        if (!TryComp<TargetObjectiveComponent>(uid, out var targetObjectiveComponent))
-        {
-            args.Cancelled = true;
+        if (args.Mind.CurrentEntity == null)
             return;
-        }
+
+        if (!TryComp<TargetObjectiveComponent>(uid, out var targetObjectiveComponent))
+            return;
 
         if (targetObjectiveComponent.Target != null)
             return;
 
-        var targetableMinds = _mind.GetAliveHumans(args.MindId)
-                    .Where(x => TryComp<MindComponent>(x, out var mindComponent)
-                                && !HasComp<DamageReceivedTrackerComponent>(GetEntity(mindComponent.OriginalOwnedEntity)))
-                    .ToList();
-
-        if (targetableMinds.Count == 0)
-        {
-            args.Cancelled = true;
+        if (_mind.PickFromPool(entity.Comp.Pool, entity.Comp.Filters, args.MindId) is not { } picked)
             return;
-        }
 
-        var targetMindUid = _random.Pick(targetableMinds);
-        var target = GetMindsOriginalEntity(targetMindUid);
+        var target = picked.Comp.OwnedEntity;
 
-        if (args.Mind.CurrentEntity == null
-            || target == null)
-        {
-            args.Cancelled = true;
+        if (target == null)
             return;
-        }
 
-        _target.SetTarget(uid, targetMindUid, targetObjectiveComponent);
+        args.Cancelled = false;
+        _target.SetTarget(uid, picked.Owner, targetObjectiveComponent);
         var damageReceivedTracker = AddComp<DamageReceivedTrackerComponent>(target.Value);
         entity.Comp.TargetMob = target.Value;
         damageReceivedTracker.WhomDamageTrack = args.Mind.CurrentEntity.Value;
@@ -112,11 +101,6 @@ public sealed class IntimidatePersonConditionSystem : EntitySystem
             return 0f;
 
         return tracker.GetProgress();
-    }
-
-    private EntityUid? GetMindsOriginalEntity(EntityUid mindUid)
-    {
-        return GetEntity(Comp<MindComponent>(mindUid).OriginalOwnedEntity);
     }
 
     /// <summary>
