@@ -3,6 +3,7 @@ using Content.Shared.Mining;
 using Content.Shared.Mining.Components;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
+using Content.Shared.SS220.RoundEndInfo;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -11,10 +12,13 @@ namespace Content.Server.Mining;
 /// <summary>
 /// This handles creating ores when the entity is destroyed.
 /// </summary>
-public sealed class MiningSystem : EntitySystem
+public sealed partial class MiningSystem : EntitySystem //ss220 add additional info for round
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    //ss220 add additional info for round start
+    [Dependency] private IRoundEndInfoManager _infoManager = default!;
+    //ss220 add additional info for round end
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -40,6 +44,10 @@ public sealed class MiningSystem : EntitySystem
         {
             Spawn(proto.OreEntity, coords.Offset(_random.NextVector2(0.2f)));
         }
+
+        //ss220 add additional info for round start
+        _infoManager.EnsureInfo<OreInfo>().TotalOre += toSpawn;
+        //ss220 add additional info for round end
     }
 
     private void OnMapInit(EntityUid uid, OreVeinComponent component, MapInitEvent args)
