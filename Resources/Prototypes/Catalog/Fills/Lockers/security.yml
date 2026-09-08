@@ -40,6 +40,7 @@
     - id: RubberStampWarden
     - id: DoorRemoteArmory
     - id: HoloprojectorSecurity
+    - id: MastercardIPC #SS220-ipc-builtin-radio
     # - id: BookSpaceLaw # SS220-replace-space-law
     - id: BookSpaceLaws # SS220-space-law
     - id: ClothingBackpackElectropack
@@ -48,6 +49,7 @@
       amount: 2
     - id: NetworkConfigurator
     - id: Binoculars
+    - id: WeaponEnergyShotgun #SS220-fix
     - id: PlushieLizardJobWarden
       prob: 0.02
 
@@ -127,6 +129,7 @@
     # SS220 Return trackers for brigmed Begin
     - id: TrackingImplanter
       amount: 2
+    - id: HandHeldImplantMedicalScanner # SS220-surgery-scanner
     # SS220 Return trackers for brigmed End
     - id: ClothingOuterHardsuitBrigmedic
     - id: OxygenTankFilled   #SS220 add-tanks-brigmed
@@ -155,6 +158,7 @@
         weight: 1.8
     - id: ClothingNeckCloakMoth #bzzz Moth-pocalypse
       prob: 0.15
+    - id: ClothingBackpackDuffelSurgeryFilled #SS220 add Surgery Duffel for brigmed
 
 - type: entity
   id: LockerDetectiveFilled
@@ -179,6 +183,7 @@
     - id: Telescopichka # SS220 Ya-lybly-translit
     - id: ClothingEyesHudSecurity # Dec is sec
     - id: BodySecurityCamera #SS220-Bodycam
+    - id: HandHeldImplantMedicalScanner # SS220-surgery-scanner
     # SS220-our-stuff-end
     - id: ClothingEyesGlassesNoir
     - id: ClothingHeadHatDetGadget
