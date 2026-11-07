@@ -1,7 +1,7 @@
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Utility;
-using Content.Server.DeviceLinking.Systems;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Components;
+using Content.Shared.DeviceLinking.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -12,6 +12,8 @@ public sealed class DeviceLinkingTest : GameTest
 {
     private const string PortTesterProtoId = "DeviceLinkingSinkPortTester";
 
+    private const string PortOutputName = "Output";
+
     [TestPrototypes]
     private const string Prototypes = $@"
 - type: entity
@@ -19,7 +21,7 @@ public sealed class DeviceLinkingTest : GameTest
   components:
   - type: DeviceLinkSource
     ports:
-    - Output
+    - {PortOutputName}
 ";
 
     private static string[] _entitiesWithDeviceLinkSink = GameDataScrounger.EntitiesWithComponent("DeviceLinkSink");
@@ -34,7 +36,6 @@ public sealed class DeviceLinkingTest : GameTest
         var server = pair.Server;
         var protoMan = server.ProtoMan;
         var compFact = server.ResolveDependency<IComponentFactory>();
-        var mapMan = server.ResolveDependency<IMapManager>();
         var mapSys = server.System<SharedMapSystem>();
         var deviceLinkSys = server.System<DeviceLinkSystem>();
 
@@ -43,10 +44,23 @@ public sealed class DeviceLinkingTest : GameTest
             // SS220-move-to-test-loop-begin
             foreach (var protoKey in _entitiesWithDeviceLinkSink)
             {
+<<<<<<< HEAD
                 using (Assert.EnterMultipleScope())
                 {
                     var proto = protoMan.Index(protoKey);
                     Assert.That(proto.TryGetComponent<DeviceLinkSinkComponent>(out var protoSinkComp, compFact));
+=======
+                var proto = protoMan.Index(protoKey);
+                Assert.That(proto.TryComp<DeviceLinkSinkComponent>(out var protoSinkComp, compFact));
+
+                foreach (var port in protoSinkComp!.Ports)
+                {
+                    // Create a map for each entity/port combo so they can't interfere
+                    mapSys.CreateMap(out var mapId);
+                    var grid = mapSys.CreateGridEntity(mapId);
+                    mapSys.SetTile(grid.Owner, grid.Comp, Vector2i.Zero, new Tile(1));
+                    var coord = new EntityCoordinates(grid.Owner, 0, 0);
+>>>>>>> wizards/stable
 
                     foreach (var port in protoSinkComp!.Ports)
                     {
@@ -61,6 +75,7 @@ public sealed class DeviceLinkingTest : GameTest
                         // Get the actual sink component, since the one we got from the prototype isn't initialized.
                         var sinkComp = server.EntMan.GetComponent<DeviceLinkSinkComponent>(sinkEnt);
 
+<<<<<<< HEAD
                         // Spawn the tester
                         var sourceEnt = server.EntMan.SpawnEntity(PortTesterProtoId, coord);
                         var sourceComp = server.EntMan.GetComponent<DeviceLinkSourceComponent>(sourceEnt);
@@ -72,6 +87,17 @@ public sealed class DeviceLinkingTest : GameTest
                             [("Output", port.Id)],
                             sourceComp,
                             sinkComp);
+=======
+                    // Create a link from the tester's output to the target port on the sink
+                    deviceLinkSys.SaveLinks(null,
+                        (sourceEnt, sourceComp),
+                        (sinkEnt, sinkComp),
+                        [(PortOutputName, port.Id)]);
+
+                    // Send a signal to the port
+                    Assert.DoesNotThrow(() => { deviceLinkSys.InvokePort((sourceEnt, sourceComp), PortOutputName); },
+                        $"Exception thrown while triggering port {port.Id} of the sink device.");
+>>>>>>> wizards/stable
 
                         // Send a signal to the port
                         Assert.DoesNotThrow(() => { deviceLinkSys.InvokePort(sourceEnt, "Output", null, sourceComp); },

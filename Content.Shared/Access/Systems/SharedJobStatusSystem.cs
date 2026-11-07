@@ -9,10 +9,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Access.Systems;
 
-public abstract class SharedJobStatusSystem : EntitySystem
+public abstract partial class SharedJobStatusSystem : EntitySystem
 {
-    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private AccessReaderSystem _accessReader = default!;
+    [Dependency] private SharedIdCardSystem _idCard = default!;
 
     private static readonly ProtoId<JobIconPrototype> JobIconForNoId = "JobIconNoId";
 
@@ -67,7 +67,15 @@ public abstract class SharedJobStatusSystem : EntitySystem
         // SS220 Add borg icon for hud end
 
         ent.Comp.JobStatusIcon = iconId;
-        ent.Comp.IsCrew = _prototype.Index(iconId).IsCrewJob;
+        ent.Comp.IsCrew = ProtoMan.Index(iconId).IsCrewJob;
         Dirty(ent);
+    }
+
+    /// <summary>
+    /// Updates the job status of the entity wearing/holding the given ID card.
+    /// </summary>
+    public void UpdateIdHolderStatus(EntityUid idCard)
+    {
+        UpdateStatus(_idCard.GetIdHolder(idCard));
     }
 }

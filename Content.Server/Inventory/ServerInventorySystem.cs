@@ -7,7 +7,7 @@ using System.Globalization;
 
 namespace Content.Server.Inventory
 {
-    public sealed class ServerInventorySystem : InventorySystem
+    public sealed partial class ServerInventorySystem : InventorySystem
     {
 
         [Dependency] private readonly SharedIdCardSystem _sharedIdCard = default!; // SS220 Borgs-Id-fix

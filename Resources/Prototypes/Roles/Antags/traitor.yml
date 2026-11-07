@@ -5,13 +5,35 @@
   setPreference: true
   objective: roles-antag-syndicate-agent-objective
   guides: [ Traitors ]
+<<<<<<< HEAD
   #SS220 Add antags playtime trackers begin
+=======
+  tags:
+  - OnStation
+  - Roundstart
+>>>>>>> wizards/stable
   requirements:
   - !type:OverallPlaytimeRequirement
     time: 20h # 20h SS220 time
   playTimeTracker: AntagTraitor
   antagColor: Crimson
   #SS220 Add antags playtime trackers end
+
+- type: antagSpecifier
+  abstract: true
+  parent: RestrictedAntag
+  id: BaseTraitor
+
+- type: antagSpecifier
+  parent: BaseTraitor
+  id: Traitor
+  prefRoles:
+  - Traitor
+  blacklist:
+    components:
+    - AntagImmune
+  mindRoles:
+  - MindRoleTraitor
 
 - type: antag
   id: TraitorSleeper
@@ -20,13 +42,36 @@
   setPreference: true
   objective: roles-antag-syndicate-agent-sleeper-objective
   guides: [ Traitors ]
+<<<<<<< HEAD
   #SS220 Add antags playtime trackers begin
+=======
+  tags:
+  - OnStation
+  - Midround
+>>>>>>> wizards/stable
   requirements:
   - !type:OverallPlaytimeRequirement
     time: 20h # 20h SS220 time
   playTimeTracker: AntagTraitor
   antagColor: Crimson
   #SS220 Add antags playtime trackers end
+
+- type: antagSpecifier
+  parent: BaseTraitor
+  id: TraitorSleeper
+  prefRoles:
+  - TraitorSleeper
+  mindRoles:
+  - MindRoleTraitorSleeper
+
+- type: antagSpecifier
+  parent: BaseTraitor
+  id: TraitorReinforcement
+  prefRoles:
+  - Traitor
+  - GenericTeamAntagonist # Matters for Antag bans.
+  mindRoles:
+  - MindRoleTraitorReinforcement
 
 # Syndicate Operative Outfit - Monkey
 - type: startingGear
@@ -51,64 +96,87 @@
     - DeathAcidifierImplanter
 
 - type: startingGear
-  id: SyndicateOperativeClothing
+  id: SyndicateReinforcementClothing
   equipment:
     jumpsuit: ClothingUniformJumpsuitOperative
-    back: ClothingBackpackSyndicate
+    back: ClothingBackpackDuffel
     shoes: ClothingShoesBootsSyndieFilled
     gloves: ClothingHandsGlovesColorBlack
+    ears: ClothingHeadsetSyndicateCovert
+    id: SyndiCovertPDA
+    pocket1: WeaponPistolViper
+  inhand:
+    - PaperWrittenSyndicateInstructions
 
 - type: startingGear
+  parent: SyndicateReinforcementClothing
   id: SyndicateReinforcementMedic
   experienceDefinition: MedicalDoctorRoleExperience # SS220-experience-update
   equipment:
-    jumpsuit: ClothingUniformJumpsuitOperative
-    shoes: ClothingShoesColorRed
-    gloves: ClothingHandsGlovesLatex
     head: ClothingHeadHatSurgcapPurple
-    id: VisitorPDA
+    mask: ClothingMaskSterile
+    gloves: ClothingHandsGlovesLatex
     belt: ClothingBeltMedicalFilled
-    back: ClothingBackpackDuffelMedical
-    ears: ClothingHeadsetMedical
     eyes: ClothingEyesHudMedical
-    pocket1: HandheldHealthAnalyzer
     pocket2: PillCanisterBicaridine
   inhand:
     - MedkitCombatFilled
   storage:
     back:
-    - Defibrillator
+    - SyndicateFlippo
+    - EncryptionKeySyndie
+    - MagazinePistolHighCapacity
+    - EncryptionKeyMedical
+    - DefibrillatorSyndicate
     - CigPackSyndicate
     - UniformScrubsColorPurple
     - ChemistryBottleToxin
-    - WeaponPistolViper
     - Syringe
+<<<<<<< HEAD
     - Syringe
+=======
+    - HandheldHealthAnalyzer
+    - AdvancedJetInjector
+>>>>>>> wizards/stable
 
 - type: startingGear
+  parent: SyndicateReinforcementClothing
   id: SyndicateReinforcementSpy
   experienceDefinition: VisitorRoleExperience # SS220-experience-update
   equipment:
-    jumpsuit: ClothingUniformJumpsuitOperative
-    back: ClothingBackpack
-    shoes: ClothingShoesColorBlack
-    gloves: ClothingHandsGlovesColorBlack
-    pocket1: WeaponPistolViper
+    pocket1: WeaponPistolCobra
     pocket2: VoiceMaskImplanter
   inhand:
     - ClothingBackpackChameleonFillAgent
+<<<<<<< HEAD
+=======
+  storage:
+    back:
+    - SyndicateFlippo
+    - EncryptionKeySyndie
+    - BodyBagFolded
+    - Syringe
+    - ChemistryBottleMuteToxin
+>>>>>>> wizards/stable
 
 - type: startingGear
+  parent: SyndicateReinforcementClothing
   id: SyndicateReinforcementThief
+<<<<<<< HEAD
   experienceDefinition: StationEngineerRoleExperience # SS220-experience-update
   parent: SyndicateOperativeClothing
+=======
+>>>>>>> wizards/stable
   equipment:
-    pocket1: WeaponPistolViper
-    pocket2: MagazinePistolHighCapacity
+    eyes: ClothingEyesGlassesHiddenSecurity
+    outerClothing: ClothingOuterCoatJensenSyndie
+    pocket2: C4
   inhand:
     - ToolboxSyndicateFilled
   storage:
     back:
+    - SyndicateFlippo
+    - EncryptionKeySyndie
     - SyndicateJawsOfLife
     - CameraBug
 

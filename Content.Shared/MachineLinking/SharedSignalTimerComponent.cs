@@ -2,18 +2,22 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.MachineLinking;
 
+/// <summary>
+/// Bound user interface key for the signal timer.
+/// </summary>
 [Serializable, NetSerializable]
 public enum SignalTimerUiKey : byte
 {
-    Key
+    Key,
 }
 
 /// <summary>
-/// Represents a SignalTimerComponent state that can be sent to the client
+/// Message requesting a change to the signal timer's displayed text.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class SignalTimerBoundUserInterfaceState : BoundUserInterfaceState
+public sealed class SignalTimerTextChangedMessage(string text) : BoundUserInterfaceMessage
 {
+<<<<<<< HEAD
     public string CurrentText;
     public string CurrentDescriptionText; //SS220-brig-timer-description
     public string CurrentDelayMinutes;
@@ -41,19 +45,21 @@ public sealed class SignalTimerBoundUserInterfaceState : BoundUserInterfaceState
         TimerStarted = timerStarted;
         HasAccess = hasAccess;
     }
+=======
+    public readonly string Text = text;
+>>>>>>> wizards/stable
 }
 
+/// <summary>
+/// Message requesting a change to the signal timer's delay.
+/// </summary>
 [Serializable, NetSerializable]
-public sealed class SignalTimerTextChangedMessage : BoundUserInterfaceMessage
+public sealed class SignalTimerDelayChangedMessage(TimeSpan delay) : BoundUserInterfaceMessage
 {
-    public string Text { get; }
-
-    public SignalTimerTextChangedMessage(string text)
-    {
-        Text = text;
-    }
+    public readonly TimeSpan Delay = delay;
 }
 
+<<<<<<< HEAD
 //SS220-brig-timer-description begin
 [Serializable, NetSerializable]
 public sealed class SignalTimerDescriptionTextChangedMessage : BoundUserInterfaceMessage
@@ -67,18 +73,10 @@ public sealed class SignalTimerDescriptionTextChangedMessage : BoundUserInterfac
 }
 //SS220-brig-timer-description end
 
+=======
+/// <summary>
+/// Message requesting that the signal timer start counting down.
+/// </summary>
+>>>>>>> wizards/stable
 [Serializable, NetSerializable]
-public sealed class SignalTimerDelayChangedMessage : BoundUserInterfaceMessage
-{
-    public TimeSpan Delay { get; }
-    public SignalTimerDelayChangedMessage(TimeSpan delay)
-    {
-        Delay = delay;
-    }
-}
-
-[Serializable, NetSerializable]
-public sealed class SignalTimerStartMessage : BoundUserInterfaceMessage
-{
-
-}
+public sealed class SignalTimerStartMessage : BoundUserInterfaceMessage;

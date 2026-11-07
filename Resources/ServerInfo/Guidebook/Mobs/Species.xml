@@ -4,6 +4,7 @@
   В Nanotrasen работают различные разумные виды.
 
   <Box>
+<<<<<<< HEAD
   <GuideEntityEmbed Entity="AppearanceArachnid" Caption="Арахнид"/>
   <GuideEntityEmbed Entity="AppearanceDiona" Caption="Диона"/>
   <GuideEntityEmbed Entity="AppearanceDwarf" Caption="Дворф"/>
@@ -16,8 +17,18 @@
   <GuideEntityEmbed Entity="AppearanceTajaran" Caption="Таяран"/> <!-- SS220 Tajaran -->
   <GuideEntityEmbed Entity="AppearanceIpc" Caption="КПБ"/> <!-- SS220 Ipc -->
   <GuideEntityEmbed Entity="AppearanceVox" Caption="Вокс"/>
+=======
+    <GuideEntityEmbed Entity="AppearanceArachnid" Caption="Arachnid"/>
+    <GuideEntityEmbed Entity="AppearanceDiona" Caption="Diona"/>
+    <GuideEntityEmbed Entity="AppearanceDwarf" Caption="Dwarf"/>
+    <GuideEntityEmbed Entity="AppearanceHuman" Caption="Human"/>
+    <GuideEntityEmbed Entity="AppearanceMoth" Caption="Moth Person"/>
+>>>>>>> wizards/stable
   </Box>
   <Box>
+    <GuideEntityEmbed Entity="AppearanceReptilian" Caption="Reptilian"/>
+    <GuideEntityEmbed Entity="AppearanceSlimePerson" Caption="Slime Person"/>
+    <GuideEntityEmbed Entity="AppearanceVox" Caption="Vox"/>
     <GuideEntityEmbed Entity="AppearanceVulpkanin" Caption="Vulpkanin"/>
   </Box>
 

@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "version": 1,
   "license": "CC-BY-SA-3.0",
   "copyright": "Made by PuroSlavKing (github) for SS14, vox states sprited by Estkemran (Github) for SS220",
@@ -46,4 +47,36 @@
       "directions": 4
     }
   ]
+=======
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by PuroSlavKing (github) for SS14",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "icon-unshaded"
+        },
+        {
+            "name": "light-overlay"
+        },
+        {
+            "name": "equipped-head",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-light",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-unshaded",
+            "directions": 4
+        }
+    ]
+>>>>>>> wizards/stable
 }

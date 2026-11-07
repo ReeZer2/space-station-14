@@ -20,6 +20,14 @@
     sound:
       path: /Audio/Effects/packetrip.ogg
   - type: Appearance
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#cc2323"
+      right:
+      - state: inhand-right
+        color: "#cc2323"
 
 - type: entity
   parent: BoxBase
@@ -48,6 +56,11 @@
     sprite: SS220/Objects/Misc/bureaucracy.rsi #SS220-RespriteFolders
     size: Small
     shape: null
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
   - type: Storage
     maxItemSize: Small
     grid:
@@ -122,6 +135,14 @@
     - state: folder-colormap
       color: "#c11b1b" #SS220-RespriteFolders
     - state: folder-base
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#cc2323"
+      right:
+      - state: inhand-right
+        color: "#cc2323"
 
 - type: entity
   parent: [BoxFolderRedEmpty, BoxFolderFill]
@@ -144,6 +165,14 @@
     - state: folder-colormap
       color: "#1367a7" #SS220-RespriteFolders
     - state: folder-base
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#355d99"
+      right:
+      - state: inhand-right
+        color: "#355d99"
 
 - type: entity
   parent: [BoxFolderBlueEmpty, BoxFolderFill]
@@ -166,6 +195,14 @@
     - state: folder-colormap
       color: "#dfda25" #SS220-RespriteFolders
     - state: folder-base
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#b38e3c"
+      right:
+      - state: inhand-right
+        color: "#b38e3c"
 
 - type: entity
   parent: [BoxFolderYellowEmpty, BoxFolderFillThreePapers]
@@ -183,6 +220,14 @@
     - state: folder-colormap
       color: "#b1b1b1" #SS220-RespriteFolders
     - state: folder-base
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#999999"
+      right:
+      - state: inhand-right
+        color: "#999999"
 
 - type: entity
   parent: [BoxFolderGreyEmpty, BoxFolderFill]
@@ -205,6 +250,14 @@
     - state: folder-colormap
       color: "#39393f" #SS220-RespriteFolders
     - state: folder-base
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#3f3f3f"
+      right:
+      - state: inhand-right
+        color: "#3f3f3f"
 
 - type: entity
   parent: [BoxFolderBlackEmpty, BoxFolderFill]
@@ -227,6 +280,14 @@
     - state: folder-colormap
       color: "#1dbf1d" #SS220-RespriteFolders
     - state: folder-base
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#43bc38"
+      right:
+      - state: inhand-right
+        color: "#43bc38"
 
 - type: entity
   parent: [BoxFolderGreenEmpty, BoxFolderFill]
@@ -274,6 +335,14 @@
     layers:
     - state: folder-centcomm #SS220 New CentCom
     - state: folder-base
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#48b448"
+      right:
+      - state: inhand-right
+        color: "#48b448"
 
 - type: entity
   parent: [BoxFolderCentComEmpty, BoxFolderFill]
@@ -472,6 +541,10 @@
           - Write
   - type: CargoOrderConsole
     removeLimitAccess: [ "Quartermaster" ]
+  - type: DeviceLinkSource
+    range: 200
+    ports:
+    - OrderSender
   - type: ActivatableUI
     verbText: qm-clipboard-computer-verb-text
     key: enum.CargoConsoleUiKey.Orders
@@ -490,7 +563,12 @@
     - Folder
     - HighRiskItem
   - type: StealTarget
+<<<<<<< HEAD
     stealGroup: BoxFolderQmClipboard
   #ss220 pinpointer ui add start
   - type: TrackedItem
   #ss220 pinpointer ui add end
+=======
+    stealGroup:
+    - BoxFolderQmClipboard
+>>>>>>> wizards/stable

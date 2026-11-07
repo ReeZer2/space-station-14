@@ -16,8 +16,8 @@
 - type: entity
   parent: [ ClothingOuterArmorBase, ClothingOuterStorageBase, AllowSuitStorageClothing, BaseSecurityContraband ]
   id: ClothingOuterCoatDetective
-  name: detective armored trenchcoat
-  description: An 18th-century multi-purpose trenchcoat. Someone who wears this means serious business.
+  name: detective's armored trenchcoat
+  description: An 20th-century trenchcoat with an armored underlay. Someone who wears this means serious business.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Coats/detective.rsi
@@ -154,7 +154,7 @@
   # ss220 add radio slot end
 
 - type: entity
-  parent: ClothingOuterStorageToggleableBase
+  parent: ClothingOuterJacketToggleableBase
   id: ClothingOuterCoatJensen
   name: jensen coat
   description: A jensen coat.
@@ -182,7 +182,7 @@
         id: SyndieHandyFlag
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: ClothingOuterJacketBase
   id: ClothingOuterCoatTrench
   name: trench coat
   description: A comfy trench coat.
@@ -191,13 +191,11 @@
     sprite: Clothing/OuterClothing/Coats/trenchcoat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/trenchcoat.rsi
-  - type: TemperatureProtection
-    heatingCoefficient: 0.1
-    coolingCoefficient: 0.1
   - type: Armor
     modifiers:
       coefficients:
         Slash: 0.95
+<<<<<<< HEAD
   - type: Edible
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
@@ -212,6 +210,8 @@
     microFiberMaterial: micro-fibers-cotton
     microFiberColor: micro-fibers-brown
 #SS220 Micro_fibers end
+=======
+>>>>>>> wizards/stable
 
 - type: entity
   parent: ClothingOuterStorageFoldableBase
@@ -720,6 +720,7 @@
   id: ClothingOuterCoatExpensiveOpened
   name: expensive coat
 
+<<<<<<< HEAD
 #SS220-DressTweak-Begin
 
 - type: entity
@@ -771,3 +772,20 @@
        Heat: 0.8
 
 #SS220-DressTweak-End
+=======
+- type: entity
+  parent: ClothingOuterStorageFoldableBase
+  id: ClothingOuterCoatVirtualIce
+  name: ice singer's coat
+  description: A white coat with blue trim, designed to protect against strong winds. The code 'CRV2' is printed on the chest.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/virtual_ice.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/virtual_ice.rsi
+
+- type: entity
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatVirtualIce]
+  id: ClothingOuterCoatVirtualIceOpened
+  name: ice singer's coat
+>>>>>>> wizards/stable

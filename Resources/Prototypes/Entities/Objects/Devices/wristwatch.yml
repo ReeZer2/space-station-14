@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # SS220 wristwatch begin
 # - type: entity
 #   id: Wristwatch
@@ -42,6 +43,46 @@
 #   - type: PhysicalComposition
 #     materialComposition:
 #       Steel: 300
+=======
+- type: entity
+  id: Wristwatch
+  parent: [ BaseItem, BaseItemDestructible ]
+  name: wristwatch
+  description: A cheap watch for telling time. How much did you waste playing Space Station 14?
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/wristwatch.rsi
+    layers:
+    - state: wristwatch
+    - map: [ "enum.ClockVisualLayers.MinuteHand"]
+    - map: [ "enum.ClockVisualLayers.HourHand"]
+  - type: Clock
+  - type: Item
+    sprite: Objects/Devices/wristwatch.rsi
+    size: Small
+  - type: Clothing
+    sprite: Objects/Devices/wristwatch.rsi
+    slots:
+    - gloves
+  - type: Appearance
+  - type: Damageable
+  - type: Injurable
+    damageContainer: Inorganic
+  - type: StaticPrice
+    price: 50
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageGroupTrigger
+        damageGroup: Brute
+        damage: 5
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 300
+>>>>>>> wizards/stable
 
 # - type: entity
 #   id: WristwatchGold

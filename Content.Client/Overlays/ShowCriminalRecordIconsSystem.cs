@@ -4,18 +4,23 @@ using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Overlays;
 using Content.Shared.PDA;
 using Content.Shared.Security.Components;
+<<<<<<< HEAD
 using Content.Shared.SS220.CriminalRecords;
 using Content.Shared.StatusIcon;
+=======
+>>>>>>> wizards/stable
 using Content.Shared.StatusIcon.Components;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Overlays;
 
-public sealed class ShowCriminalRecordIconsSystem : EquipmentHudSystem<ShowCriminalRecordIconsComponent>
+public sealed partial class ShowCriminalRecordIconsSystem : EquipmentHudSystem<ShowCriminalRecordIconsComponent>
 {
+<<<<<<< HEAD
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
 
+=======
+>>>>>>> wizards/stable
     public override void Initialize()
     {
         base.Initialize();
@@ -28,6 +33,7 @@ public sealed class ShowCriminalRecordIconsSystem : EquipmentHudSystem<ShowCrimi
         if (!IsActive)
             return;
 
+<<<<<<< HEAD
         //SS220 Criminal-Records begin
 
         // WizDen code, no longer needed
@@ -75,5 +81,9 @@ public sealed class ShowCriminalRecordIconsSystem : EquipmentHudSystem<ShowCrimi
             }
         }
         //SS220 Criminal-Records end
+=======
+        if (ProtoMan.Resolve(component.StatusIcon, out var iconPrototype))
+            ev.StatusIcons.Add(iconPrototype);
+>>>>>>> wizards/stable
     }
 }

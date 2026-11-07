@@ -7,9 +7,16 @@
   - type: Action
     useDelay: 30
     itemIconStyle: BigAction
+<<<<<<< HEAD
     icon:
       sprite: SS220/Interface/Actions/magic_spells.rsi # SS220 Wizard getting used to
       state: charge # SS220 Wizard getting used to
+=======
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Basic/wands.rsi
+    layers:
+    - state: nothing
+>>>>>>> wizards/stable
   - type: InstantAction
     event: !type:ChargeSpellEvent
       charge: 1

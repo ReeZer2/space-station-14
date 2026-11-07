@@ -31,7 +31,8 @@ public sealed partial class StationAiSystem
                 Event = new StationAiBoltEvent
                 {
                     Bolted = !ent.Comp.BoltsDown,
-                }
+                },
+                Order = 1,
             }
         );
     }
@@ -50,7 +51,8 @@ public sealed partial class StationAiSystem
                 Event = new StationAiEmergencyAccessEvent
                 {
                     EmergencyAccess = !ent.Comp.EmergencyAccess,
-                }
+                },
+                Order = 2,
             }
         );
     }
@@ -69,7 +71,8 @@ public sealed partial class StationAiSystem
                 Event = new StationAiElectrifiedEvent
                 {
                     Electrified = !ent.Comp.Enabled,
-                }
+                },
+                Order = 3,
             }
         );
     }

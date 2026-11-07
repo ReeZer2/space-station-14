@@ -16,8 +16,9 @@ namespace Content.Shared.Bed.Cryostorage;
 /// <summary>
 /// This handles <see cref="CryostorageComponent"/>
 /// </summary>
-public abstract class SharedCryostorageSystem : EntitySystem
+public abstract partial class SharedCryostorageSystem : EntitySystem
 {
+<<<<<<< HEAD
     [Dependency] private   readonly IConfigurationManager _configuration = default!;
     [Dependency] private   readonly ISharedPlayerManager _player = default!;
     [Dependency] private   readonly SharedMapSystem _map = default!;
@@ -28,6 +29,17 @@ public abstract class SharedCryostorageSystem : EntitySystem
     [Dependency] protected readonly SharedMindSystem Mind = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!; // 220 cryo action
     [Dependency] private readonly MetaDataSystem _meta = default!;
+=======
+    [Dependency] private IConfigurationManager _configuration = default!;
+    [Dependency] private ISharedPlayerManager _player = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] protected ISharedAdminLogManager AdminLog = default!;
+    [Dependency] protected SharedMindSystem Mind = default!;
+    [Dependency] private MetaDataSystem _meta = default!;
+>>>>>>> wizards/stable
 
     protected EntityUid? PausedMap { get; private set; }
 

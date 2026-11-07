@@ -1,6 +1,10 @@
 - type: entity
   id: PowerSink
+<<<<<<< HEAD
   parent: [BaseMachine]
+=======
+  parent: [BaseMachine, BaseSyndicateContraband, BaseMachineDestructible]
+>>>>>>> wizards/stable
   name: power sink
   description: Drains immense amounts of electricity from the grid.
   components:
@@ -30,14 +34,6 @@
           - MachineMask
           layer:
           - MachineLayer
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 25
-        behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
     - type: PowerSink
     - type: Battery
       # Very important:
@@ -48,16 +44,15 @@
       maxCharge: 250000000
       pricePerJoule: 0.000009
     - type: ExaminableBattery
+    - type: PowerConsumerBatteryCharger
     - type: PowerConsumer
       voltage: High
       drawRate: 10000000
     - type: Sprite
       sprite: Objects/Power/powersink.rsi
       state: powersink
-    - type: Tag
-      tags:
-      - GhostOnlyWarp
     - type: WarpPoint
+<<<<<<< HEAD
       location: powersink
       blacklist:
         tags:
@@ -74,5 +69,16 @@
       - [ScienceKnowledge, null]
       hiddenName: ent-PowerSink
 # SS220-hidden-desc-end
+=======
+      location: location-powersink
+>>>>>>> wizards/stable
     - type: StaticPrice
       price: 3000
+    - type: Destructible
+      thresholds:
+      - trigger: !type:DamageTrigger
+          damage: 175
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak

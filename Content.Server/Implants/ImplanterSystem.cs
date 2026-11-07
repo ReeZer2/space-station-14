@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 using System.Linq;
 using Content.Server.Construction.Conditions;
 using Content.Server.Popups;
@@ -241,3 +242,10 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         args.Handled = true;
     }
 }
+=======
+using Content.Shared.Implants;
+
+namespace Content.Server.Implants;
+
+public sealed partial class ImplanterSystem : SharedImplanterSystem;
+>>>>>>> wizards/stable

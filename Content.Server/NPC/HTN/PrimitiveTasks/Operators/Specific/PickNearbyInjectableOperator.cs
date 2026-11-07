@@ -1,23 +1,22 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Shared.NPC.Components;
 using Content.Server.NPC.Pathfinding;
-using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Damage.Components;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Interaction;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Silicons.Bots;
+<<<<<<< HEAD
 using Content.Shared.Emag.Components;
 using Content.Shared.Stealth.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes; //ss220 fix medibot
 using Content.Shared.FixedPoint;
+=======
+>>>>>>> wizards/stable
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
 public sealed partial class PickNearbyInjectableOperator : HTNOperator
 {
+<<<<<<< HEAD
     [Dependency] private readonly IEntityManager _entManager = default!;
 
     private MedibotSystem _medibot = default!;
@@ -30,6 +29,11 @@ public sealed partial class PickNearbyInjectableOperator : HTNOperator
     private EntityQuery<MobStateComponent> _mobState = default!;
     private EntityQuery<EmaggedComponent> _emaggedQuery = default!;
     private SharedContainerSystem _container = default!; //ss220 stealth inject fix
+=======
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private MedibotSystem _medibot = default!;
+    [Dependency] private PathfindingSystem _pathfinding = default!;
+>>>>>>> wizards/stable
 
     [DataField("rangeKey")] public string RangeKey = NPCBlackboard.MedibotInjectRange;
 
@@ -45,6 +49,7 @@ public sealed partial class PickNearbyInjectableOperator : HTNOperator
     [DataField("targetMoveKey", required: true)]
     public string TargetMoveKey = string.Empty;
 
+<<<<<<< HEAD
     public override void Initialize(IEntitySystemManager sysManager)
     {
         base.Initialize(sysManager);
@@ -60,29 +65,42 @@ public sealed partial class PickNearbyInjectableOperator : HTNOperator
         _container = sysManager.GetEntitySystem<SharedContainerSystem>(); //ss220 npc stealth inject fix
     }
 
+=======
+>>>>>>> wizards/stable
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
         CancellationToken cancelToken)
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        if (!blackboard.TryGetValue<float>(RangeKey, out var range, _entManager))
+        if (!blackboard.TryGetValue<float>(RangeKey, out _, _entManager))
             return (false, null);
 
         if (!_entManager.TryGetComponent<MedibotComponent>(owner, out var medibot))
             return (false, null);
 
+<<<<<<< HEAD
         var stealthQuery = _entManager.GetEntityQuery<StealthComponent>(); //ss220 medibot inject in stealth entity fix
 
+=======
+>>>>>>> wizards/stable
         if (!blackboard.TryGetValue<IEnumerable<KeyValuePair<EntityUid, float>>>("TargetList", out var patients, _entManager))
             return (false, null);
 
         foreach (var (entity, _) in patients)
         {
-            if (_mobState.TryGetComponent(entity, out var state) &&
-                _injectQuery.HasComponent(entity) &&
-                _damageQuery.TryGetComponent(entity, out var damage) &&
-                !_recentlyInjected.HasComponent(entity))
+            if (!_medibot.CheckInjectable((owner, medibot), entity, true))
+                continue;
+
+            //Needed to make sure it doesn't sometimes stop right outside it's interaction range
+            var pathRange = SharedInteractionSystem.InteractionRange - 1f;
+            var path = await _pathfinding.GetPath(owner, entity, pathRange, cancelToken);
+
+            if (path.Result == PathResult.NoPath)
+                continue;
+
+            return (true, new Dictionary<string, object>()
             {
+<<<<<<< HEAD
                 //ss220 medibot inject in stealth entity fix start
                 if (_container.IsEntityInContainer(entity))
                 {
@@ -119,6 +137,12 @@ public sealed partial class PickNearbyInjectableOperator : HTNOperator
                     {NPCBlackboard.PathfindKey, path},
                 });
             }
+=======
+                { TargetKey, entity },
+                { TargetMoveKey, _entManager.GetComponent<TransformComponent>(entity).Coordinates },
+                { NPCBlackboard.PathfindKey, path },
+            });
+>>>>>>> wizards/stable
         }
 
         return (false, null);

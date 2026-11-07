@@ -75,9 +75,14 @@
 
   Как только вы получите ядерный диск, вставьте его в ядерную боеголовку и используйте код, чтобы взвести её. Отсчёт будет идти 300 секунд, а для того чтобы член экипажа смог обезвредить её, ему потребуется 30. Будьте готовы защищать ядерную боеголовку как можно дольше, помните, что сбежать живым необязательно, но рекомендуется.
 
+<<<<<<< HEAD
   <Box>
     <GuideEntityEmbed Entity="NuclearBomb" Caption="Ядерная боеголовка"/>
   </Box>
+=======
+  [bold][color=red]Syndicate Minor Victory[/color][/bold]
+  - At least one operative survives, and the crew escapes, leaving the disk behind.
+>>>>>>> wizards/stable
 
   ## Победы
 

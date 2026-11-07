@@ -1,4 +1,5 @@
-﻿using Content.Shared.Administration.Logs;
+using Content.Client.UserInterface.Controls;
+using Content.Shared.Administration.Logs;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
@@ -7,6 +8,7 @@ namespace Content.Client.Administration.UI.CustomControls;
 
 public sealed class AdminLogLabel : RichTextLabel
 {
+<<<<<<< HEAD
     //SS220-make-copy-for-logs-begin
     public bool SelectHoverMode = false;
 
@@ -16,10 +18,14 @@ public sealed class AdminLogLabel : RichTextLabel
     //SS220-make-copy-for-logs-begin
 
     public AdminLogLabel(ref SharedAdminLog log, HSeparator separator)
+=======
+    public AdminLogLabel(ref SharedAdminLog log, Separator separator)
+>>>>>>> wizards/stable
     {
         Log = log;
         Separator = separator;
 
+<<<<<<< HEAD
         //SS220-make-copy-for-logs-begin
         MouseFilter = MouseFilterMode.Pass;
         OnKeyBindDown += (args) =>
@@ -39,12 +45,17 @@ public sealed class AdminLogLabel : RichTextLabel
         //SS220-make-copy-for-logs-end
 
         SetMessage($"{log.Date:HH:mm:ss}: {log.Message}", defaultColor: _textColor); //SS220-make-copy-for-logs
+=======
+        var localTime = log.Date.ToLocalTime();
+
+        SetMessage($"{localTime:HH:mm:ss}: {log.Message}");
+>>>>>>> wizards/stable
         OnVisibilityChanged += VisibilityChanged;
     }
 
     public new SharedAdminLog Log { get; }
 
-    public HSeparator Separator { get; }
+    public Separator Separator { get; }
 
     // SS220-make-copy-for-logs-begin
     private bool _markedForCopying = false;

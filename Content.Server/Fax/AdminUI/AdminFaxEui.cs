@@ -1,25 +1,31 @@
-using Content.Server.Construction.Conditions;
-using Content.Server.DeviceNetwork.Components;
 using Content.Server.EUI;
+<<<<<<< HEAD
 using Content.Server.Ghost.Components;
 using Content.Server.Paper;
+=======
+using Content.Shared.DeviceNetwork;
+>>>>>>> wizards/stable
 using Content.Shared.Eui;
 using Content.Shared.Fax.Components;
 using Content.Shared.Fax;
 using Content.Shared.Follower;
-using Content.Shared.Ghost;
 using Content.Shared.Paper;
 using Content.Shared.SS220.Photocopier;
 using Content.Server.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.Ghost.Components;
 
 namespace Content.Server.Fax.AdminUI;
 
-public sealed class AdminFaxEui : BaseEui
+public sealed partial class AdminFaxEui : BaseEui
 {
+<<<<<<< HEAD
     [Dependency] private readonly IEntityManager _entityManager = default!;
 
+=======
+    [Dependency] private IEntityManager _entityManager = default!;
+>>>>>>> wizards/stable
     private readonly FaxSystem _faxSystem;
     private readonly FollowerSystem _followerSystem;
 
@@ -41,7 +47,7 @@ public sealed class AdminFaxEui : BaseEui
         var entries = new List<AdminFaxEntry>();
         while (faxes.MoveNext(out var uid, out var fax, out var device))
         {
-            entries.Add(new AdminFaxEntry(_entityManager.GetNetEntity(uid), fax.FaxName, device.Address));
+            entries.Add(new AdminFaxEntry(_entityManager.GetNetEntity(uid), fax.FaxName, DeviceLocalizationHelpers.GetAddressFromId(device)));
         }
         return new AdminFaxEuiState(entries);
     }

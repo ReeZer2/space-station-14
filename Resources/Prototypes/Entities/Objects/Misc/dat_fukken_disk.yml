@@ -16,19 +16,20 @@
   - type: ArrivalsBlacklist
   - type: WarpPoint
     follow: true
-    location: nuke disk
-    blacklist:
-      tags:
-      - GhostOnlyWarp
+    location: location-nuke-disk
   - type: Tag
     tags:
     - HighRiskItem
-    - GhostOnlyWarp
   - type: StealTarget
+<<<<<<< HEAD
     stealGroup: NukeDisk
   #ss220 pinpointer ui add start
   - type: TrackedItem
   #ss220 pinpointer ui add end
+=======
+    stealGroup:
+    - NukeDisk
+>>>>>>> wizards/stable
 
 - type: entity
   name: nuclear authentication disk

@@ -29,11 +29,18 @@
   components:
   - type: Action
     useDelay: 0.5
+<<<<<<< HEAD
     icon:
       sprite: SS220/Interface/Actions/ninja.rsi # ss220 actions resprites
       state: ninjaThrowingStar # ss220 actions resprites
+=======
+>>>>>>> wizards/stable
     itemIconStyle: NoItem
     priority: -10
+  - type: Sprite
+    sprite: Objects/Weapons/Throwable/throwing_star.rsi
+    layers:
+    - state: icon
   - type: InstantAction
     event: !type:CreateItemEvent {}
 
@@ -45,11 +52,18 @@
   components:
   - type: Action
     useDelay: 1
+<<<<<<< HEAD
     icon:
       sprite: SS220/Interface/Actions/ninja.rsi # ss220 actions resprites
       state: ninjaTeleport # ss220 actions resprites
+=======
+>>>>>>> wizards/stable
     itemIconStyle: NoItem
     priority: -11
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/energykatana.rsi
+    layers:
+    - state: icon
   - type: InstantAction
     event: !type:RecallKatanaEvent {}
 
@@ -60,11 +74,19 @@
   description: Disable any nearby technology with an electro-magnetic pulse.
   components:
   - type: Action
+<<<<<<< HEAD
     icon:
       sprite: SS220/Interface/Actions/ninja.rsi # ss220 actions resprites
       state: ninjaEMP # ss220 actions resprites
     itemIconStyle: NoItem # ss220 actions resprites
+=======
+    itemIconStyle: BigAction
+>>>>>>> wizards/stable
     priority: -13
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/empgrenade.rsi
+    layers:
+    - state: icon
   - type: InstantAction
     event: !type:NinjaEmpEvent {}
 
@@ -93,17 +115,38 @@
   description: Teleport to anywhere you can see, if your Energy Katana is in your hand.
   components:
   - type: Action
+<<<<<<< HEAD
     icon:
       sprite: SS220/Interface/Actions/ninja.rsi # ss220 actions resprites
       state: ninjadash # ss220 actions resprites
+=======
+>>>>>>> wizards/stable
     itemIconStyle: NoItem
     sound:
       path: /Audio/Magic/blink.ogg
       params:
         volume: 5
     priority: -12
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: blink
   - type: TargetAction
     checkCanAccess: false
+    checkCanSee: true
     range: 0
   - type: WorldTargetAction
-    event: !type:DashEvent
+    event: !type:TeleportActionEvent
+      stopBeingPulled: true
+      stopPulling: true
+  - type: ActionUserWhitelist
+    whitelist:
+      components:
+      - SpaceNinja
+  - type: ActionProviderHeld
+    onFailPopup: dash-ability-not-held
+  - type: LimitedCharges
+    maxCharges: 3
+    onFailPopup: limited-charges-no-charges
+  - type: AutoRecharge
+    rechargeDuration: 20

@@ -18,6 +18,7 @@
     # off
     - !type:DepartmentTimeRequirement
       department: Cargo
+<<<<<<< HEAD
       time: 30h # SS220-RoleTime
     - !type:RoleTimeRequirement
       role: JobSalvageSpecialist
@@ -33,10 +34,17 @@
       - Felinid #SS220-jobbans end
     #SS220 requirements end
   weight: 10
+=======
+      time: 10h
+>>>>>>> wizards/stable
   startingGear: QuartermasterGear
   experienceDefinition: QuartermasterRoleExperience # SS220-experience
   icon: "JobIconQuarterMaster"
   supervisors: job-supervisors-captain
+<<<<<<< HEAD
+=======
+  guides: [ Command ] # TODO: should have a more specific guidebook page instead of using the department itself
+>>>>>>> wizards/stable
   access:
   - Cargo
   - Salvage

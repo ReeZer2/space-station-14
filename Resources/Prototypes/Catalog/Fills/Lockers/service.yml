@@ -65,7 +65,7 @@
       - id: ReagentContainerFlour
       - id: BoxMousetrap
     - !type:AllSelector
-      rolls: 3
+      rolls: 5
       children:
       - id: FoodCondimentPacketSalt
       - id: FoodCondimentPacketPepper
@@ -90,7 +90,7 @@
     children:
     - id: WetFloorSign
       amount: 3
-    - id: LightReplacer
+    - id: LightReplacerFilled
     - id: BoxLightMixed
     - id: Holoprojector
     - id: WireBrush
@@ -148,7 +148,7 @@
     - id: ClothingHeadBandBotany
     - id: ChemistryBottleRobustHarvest
       prob: 0.3
-    - id: ClothingBeltPlant
+    - id: ClothingBeltPlantFilled
     - id: PlantBag ##Some maps don't have nutrivend
     - id: BoxMouthSwab
     - id: Dropper

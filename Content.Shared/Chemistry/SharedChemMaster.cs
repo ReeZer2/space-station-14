@@ -114,13 +114,18 @@ namespace Content.Shared.Chemistry
         U10 = 10,
         U15 = 15,
         U20 = 20,
-        U25 = 25,
         U30 = 30,
+<<<<<<< HEAD
         U50 = 50,
         //ss220 add 75u for chemmaster start
         U75 = 75,
         //ss220 add 75u for chemmaster end
         U100 = 100,
+=======
+        U40 = 40,
+        U60 = 60,
+        U120 = 120,
+>>>>>>> wizards/stable
         All,
     }
 

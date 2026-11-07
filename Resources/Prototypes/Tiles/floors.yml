@@ -1,29 +1,28 @@
 - type: tile
-  id: BaseStationTile
   abstract: true
+  id: BaseStationTile
   isSubfloor: false
   deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
   heatCapacity: 10000
+  weather: false
   baseTurf: Plating
   baseWhitelist:
-  - PlatingBrass
   - FloorAsteroidIronsand
   - FloorAsteroidSand
   - FloorAsteroidSandBorderless
   - FloorAsteroidIronsandBorderless
-  - FloorAsteroidSandRedBorderless
   - PlatingAsteroid
   - PlatingSnow
   - FloorPlanetDirt
   - FloorDesert
-  - FloorLowDesert
   - FloorPlanetGrass
   - FloorSnow
   - FloorDirt
   - PlatingRCD
   - FloorHullReinforced
+<<<<<<< HEAD
 
 - type: tile
   id: FloorSteel
@@ -39,11 +38,16 @@
 #  - 1.0
   # SS220 Tiles Retexture end
   itemDrop: FloorTileItemSteel
+=======
+  materialComposition:
+    Steel: 100 # 0.5 for lattice, 0.25 for plating, 0.25 for tile
+>>>>>>> wizards/stable
 
 - type: tile
   id: FloorSteelCheckerLight
   parent: BaseStationTile
   name: tiles-steel-floor-checker-light
+<<<<<<< HEAD
   # SS220 Tiles Retexture begin
   sprite: /Textures/SS220/Tiles/cafeteria.png
   variants: 1
@@ -53,12 +57,16 @@
 #  - 1.0
 #  - 1.0
   # SS220 Tiles Retexture end
+=======
+  sprite: /Textures/Tiles/Checker/checker-light.png
+>>>>>>> wizards/stable
   itemDrop: FloorTileItemSteelCheckerLight
 
 - type: tile
   id: FloorSteelCheckerDark
   parent: BaseStationTile
   name: tiles-steel-floor-checker-dark
+<<<<<<< HEAD
   # SS220 Tiles Retexture begin
   sprite: /Textures/SS220/Tiles/checker_dark.png
   variants: 1
@@ -261,16 +269,16 @@
   itemDrop: FloorTileItemSteel
 
 - type: tile
+=======
+  sprite: /Textures/Tiles/Checker/checker-dark.png
+  itemDrop: FloorTileItemSteelCheckerDark
+
+- type: tile
+>>>>>>> wizards/stable
   id: FloorWood
   parent: BaseStationTile
   name: tiles-wood
-  sprite: /Textures/Tiles/wood.png
-  variants: 4
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
+  sprite: /Textures/Tiles/Wood/wood.png
   footstepSounds:
     collection: FootstepWood
   barestepSounds:
@@ -278,6 +286,7 @@
   itemDrop: FloorTileItemWood
 
 - type: tile
+<<<<<<< HEAD
   id: FloorWhite
   parent: BaseStationTile
   name: tiles-white-floor
@@ -699,6 +708,8 @@
   itemDrop: FloorTileItemTechmaintDark
 
 - type: tile
+=======
+>>>>>>> wizards/stable
   id: FloorReinforced
   parent: BaseStationTile
   name: tiles-reinforced-floor
@@ -708,6 +719,7 @@
   itemDrop: PartRodMetal1
 
 - type: tile
+<<<<<<< HEAD
   id: FloorMono
   parent: BaseStationTile
   name: tiles-mono-floor
@@ -718,6 +730,8 @@
   itemDrop: FloorTileItemMono
 
 - type: tile
+=======
+>>>>>>> wizards/stable
   id: FloorLino
   parent: BaseStationTile
   name: tiles-linoleum-floor
@@ -728,6 +742,7 @@
   itemDrop: FloorTileItemLino
 
 - type: tile
+<<<<<<< HEAD
   id: FloorSteelDirty
   parent: BaseStationTile
   name: tiles-dirty-steel-floor
@@ -755,6 +770,8 @@
   itemDrop: FloorTileItemElevatorShaft
 
 - type: tile
+=======
+>>>>>>> wizards/stable
   id: FloorMetalDiamond
   parent: BaseStationTile
   name: tiles-diamond-plate-floor
@@ -765,6 +782,7 @@
   itemDrop: FloorTileItemMetalDiamond
 
 - type: tile
+<<<<<<< HEAD
   id: FloorRockVault
   parent: BaseStationTile
   name: tiles-rock-floor
@@ -794,6 +812,8 @@
   itemDrop: FloorTileItemRockVault
 
 - type: tile
+=======
+>>>>>>> wizards/stable
   id: FloorBlue
   parent: BaseStationTile
   name: tiles-blue-tile
@@ -807,6 +827,7 @@
   id: FloorSteelLime
   parent: BaseStationTile
   name: tiles-lime-floor
+<<<<<<< HEAD
   # SS220 Tiles Retexture begin
   tags: [ tile-tag-other ]
   sprite: /Textures/SS220/Tiles/lime.png
@@ -846,6 +867,11 @@
     collection: FootstepTile
   itemDrop: FloorTileItemMiningLight
 
+=======
+  sprite: /Textures/Tiles/lime.png
+  itemDrop: FloorTileItemLime
+
+>>>>>>> wizards/stable
 # Departmental
 - type: tile
   id: FloorFreezer
@@ -857,6 +883,7 @@
   itemDrop: FloorTileItemFreezer
 
 - type: tile
+<<<<<<< HEAD
   id: FloorShowroom
   parent: BaseStationTile
   name: tiles-showroom-floor
@@ -885,30 +912,48 @@
 #  - 1.0
 #  - 1.0
   # SS220 Tiles Retexture end
+=======
+  id: FloorBar
+  parent: BaseStationTile
+  name: tiles-bar-floor
+  sprite: /Textures/Tiles/Checker/checker-bar.png
+>>>>>>> wizards/stable
   itemDrop: FloorTileItemBar
 
 - type: tile
   id: FloorClown
   parent: BaseStationTile
   name: tiles-clown-floor
+<<<<<<< HEAD
   tags: [ tile-tag-other ] # SS220 Tiles Resprite
   sprite: /Textures/SS220/Tiles/clown.png # SS220 Tiles Retexture
+=======
+  sprite: /Textures/Tiles/Checker/checker-clown.png
+>>>>>>> wizards/stable
   itemDrop: FloorTileItemClown
 
 - type: tile
   id: FloorMime
   parent: BaseStationTile
   name: tiles-mime-floor
+<<<<<<< HEAD
   tags: [ tile-tag-other ] # SS220 Tiles Resprite
   sprite: /Textures/SS220/Tiles/mime.png # SS220 Tiles Retexture
+=======
+  sprite: /Textures/Tiles/Checker/checker-mime.png
+>>>>>>> wizards/stable
   itemDrop: FloorTileItemMime
 
 - type: tile
   id: FloorKitchen
   parent: BaseStationTile
   name: tiles-kitchen-floor
+<<<<<<< HEAD
   tags: [ tile-tag-other ] # SS220 Tiles Resprite
   sprite: /Textures/SS220/Tiles/kitchen.png # SS220 Tiles Retexture
+=======
+  sprite: /Textures/Tiles/Checker/checker-kitchen.png
+>>>>>>> wizards/stable
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemKitchen
@@ -917,12 +962,17 @@
   id: FloorLaundry
   parent: BaseStationTile
   name: tiles-laundry-floor
+<<<<<<< HEAD
   tags: [ tile-tag-other ] # SS220 Tiles Resprite
   sprite: /Textures/SS220/Tiles/laundry.png # SS220 Tiles Retexture
+=======
+  sprite: /Textures/Tiles/Checker/checker-laundry.png
+>>>>>>> wizards/stable
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemLaundry
 
+<<<<<<< HEAD
 - type: tile
   id: FloorSteelDamaged
   parent: BaseStationTile
@@ -1073,6 +1123,8 @@
     collection: FootstepTile
   itemDrop: FloorTileItemOldConcreteSmooth
 
+=======
+>>>>>>> wizards/stable
 # Carpets (non smoothing)
 - type: tile
   id: FloorArcadeBlue
@@ -1087,18 +1139,6 @@
   itemDrop: FloorTileItemArcadeBlue
 
 - type: tile
-  id: FloorArcadeBlue2
-  parent: BaseStationTile
-  name: tiles-blue-arcade-floor
-  sprite: /Textures/Tiles/arcadeblue2.png
-  footstepSounds:
-    collection: FootstepCarpet
-  barestepSounds:
-    collection: BarestepCarpet
-  friction: 1.25
-  itemDrop: FloorTileItemArcadeBlue2
-
-- type: tile
   id: FloorArcadeRed
   parent: BaseStationTile
   name: tiles-red-arcade-floor
@@ -1111,6 +1151,7 @@
   itemDrop: FloorTileItemArcadeRed
 
 - type: tile
+<<<<<<< HEAD
   id: FloorEighties
   parent: BaseStationTile
   name: tiles-eighties-floor
@@ -1124,6 +1165,8 @@
   itemDrop: FloorTileItemEighties
 
 - type: tile
+=======
+>>>>>>> wizards/stable
   id: FloorCarpetClown
   parent: BaseStationTile
   name: tiles-clown-carpet-floor
@@ -1156,11 +1199,6 @@
   tags: [ tile-tag-other ] # SS220 Tiles Resprite
   sprite: /Textures/Tiles/boxing.png
   variants: 4
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
   friction: 1.25
   itemDrop: FloorTileItemBoxing
 
@@ -1171,14 +1209,10 @@
   tags: [ tile-tag-other ] # SS220 Tiles Resprite
   sprite: /Textures/Tiles/gym.png
   variants: 4
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
   friction: 1.25
   itemDrop: FloorTileItemGym
 
+<<<<<<< HEAD
 # Shuttle
 - type: tile
   id: FloorShuttleWhite
@@ -1279,6 +1313,8 @@
   itemDrop: FloorTileItemShuttleRed
 
 
+=======
+>>>>>>> wizards/stable
 # Materials
 - type: tile
   id: FloorGold
@@ -1301,6 +1337,7 @@
   itemDrop: FloorTileItemSilver
 
 - type: tile
+<<<<<<< HEAD
   id: FloorGlass
   parent: BaseStationTile
   name: tiles-glass-floor
@@ -1335,11 +1372,14 @@
   itemDrop: SheetRGlass1
 
 - type: tile
+=======
+>>>>>>> wizards/stable
   id: FloorMetalFoam
   parent: BaseStationTile
   name: tiles-metal-foam
   tags: [ tile-tag-other ] # SS220 Tiles Resprite
   sprite: /Textures/Tiles/foammetal.png
+<<<<<<< HEAD
   variants: 1
 #  placementVariants:
 #  - 1.0
@@ -1348,10 +1388,13 @@
 #  - 1.0
   placementVariants:
   - 1.0
+=======
+>>>>>>> wizards/stable
   footstepSounds:
     collection: FootstepHull
   itemDrop: SheetSteel1
 
+<<<<<<< HEAD
 # Circuits
 - type: tile
   id: FloorGreenCircuit
@@ -1723,10 +1766,13 @@
     North: /Textures/Tiles/Asteroid/iron_double_edge.png
     West: /Textures/Tiles/Asteroid/iron_double_edge.png
 
+=======
+>>>>>>> wizards/stable
 # Caves
 - type: tile
   id: FloorCave
   name: tiles-cave
+<<<<<<< HEAD
   tags: [ tile-tag-nature ] # SS220 Tiles Resprite
   sprite: /Textures/Tiles/cave.png
   variants: 7
@@ -1759,6 +1805,19 @@
   - 1.0
   - 1.0
   - 1.0
+=======
+  sprite: /Textures/Tiles/Cave/cave.png
+  edgeSpritePriority: 5
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Cave/single_edge_SE.png
+    NorthEast: /Textures/Tiles/Cave/single_edge_NE.png
+    NorthWest: /Textures/Tiles/Cave/single_edge_NW.png
+    SouthWest: /Textures/Tiles/Cave/single_edge_SW.png
+    South: /Textures/Tiles/Cave/double_edge_S.png
+    East: /Textures/Tiles/Cave/double_edge_E.png
+    North: /Textures/Tiles/Cave/double_edge_N.png
+    West: /Textures/Tiles/Cave/double_edge_W.png
+>>>>>>> wizards/stable
   baseTurf: Space
   isSubfloor: true
   footstepSounds:
@@ -1771,18 +1830,14 @@
   name: tiles-flesh-floor
   tags: [ tile-tag-other ] # SS220 Tiles Resprite
   sprite: /Textures/Tiles/meat.png
-  variants: 4
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
+  variants: 2
   footstepSounds:
     collection: FootstepBlood
   itemDrop: FloorTileItemFlesh
   friction: 0.25 #slippy
 
 - type: tile
+<<<<<<< HEAD
   id: FloorTechMaint2
   parent: BaseStationTile
   name: tiles-techmaint2-floor
@@ -1804,6 +1859,12 @@
 #  - 1.0
 #  - 1.0
   # SS220 Tiles Retexture end
+=======
+  id: FloorTechMaint3
+  parent: BaseStationTile
+  name: tiles-techmaint3-floor
+  sprite: /Textures/Tiles/grating-maint.png
+>>>>>>> wizards/stable
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemGratingMaint
@@ -1812,6 +1873,7 @@
   id: FloorWoodTile
   parent: BaseStationTile
   name: tiles-wood2
+<<<<<<< HEAD
   sprite: /Textures/SS220/Tiles/wood_tile.png # SS220 Tiles Retexture
   variants: 4
   placementVariants:
@@ -1819,6 +1881,9 @@
   - 1.0
   - 1.0
   - 1.0
+=======
+  sprite: /Textures/Tiles/Wood/wood-tile.png
+>>>>>>> wizards/stable
   footstepSounds:
     collection: FootstepWood
   barestepSounds:
@@ -1829,16 +1894,12 @@
   id: FloorBrokenWood
   parent: BaseStationTile
   name: tiles-wood3
+<<<<<<< HEAD
   sprite: /Textures/SS220/Tiles/wood_broken.png # SS220 Tiles Retexture
+=======
+  sprite: /Textures/Tiles/Wood/wood-broken.png
+>>>>>>> wizards/stable
   variants: 7
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
   footstepSounds:
     collection: FootstepWood
   barestepSounds:
@@ -1846,11 +1907,26 @@
   itemDrop: MaterialWoodPlank1
 
 - type: tile
+  id: FloorWoodLarge
+  parent: BaseStationTile
+  name: tiles-wood-large
+  sprite: /Textures/Tiles/Wood/wood-large.png
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: FloorTileItemWoodLarge
+
+- type: tile
   id: FloorWebTile
   parent: BaseStationTile
   name: tiles-web
+<<<<<<< HEAD
   tags: [ tile-tag-other ] # SS220 Tiles Resprite
   sprite: /Textures/Tiles/Misc/Web/web_tile.png
+=======
+  sprite: /Textures/Tiles/web.png
+>>>>>>> wizards/stable
   footstepSounds:
     collection: FootstepCarpet
   barestepSounds:
@@ -1860,6 +1936,7 @@
 - type: tile
   id: FloorChromite
   name: tiles-chromite
+<<<<<<< HEAD
   tags: [ tile-tag-nature ] # SS220 Tiles Resprite
   sprite: /Textures/Tiles/chromite.png
   variants: 7
@@ -1871,6 +1948,19 @@
   - 1.0
   - 1.0
   - 1.0
+=======
+  sprite: /Textures/Tiles/Chromite/chromite.png
+  edgeSpritePriority: 5
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Chromite/single_edge_SE.png
+    NorthEast: /Textures/Tiles/Chromite/single_edge_NE.png
+    NorthWest: /Textures/Tiles/Chromite/single_edge_NW.png
+    SouthWest: /Textures/Tiles/Chromite/single_edge_SW.png
+    South: /Textures/Tiles/Chromite/double_edge_S.png
+    East: /Textures/Tiles/Chromite/double_edge_E.png
+    North: /Textures/Tiles/Chromite/double_edge_N.png
+    West: /Textures/Tiles/Chromite/double_edge_W.png
+>>>>>>> wizards/stable
   baseTurf: Space
   isSubfloor: true
   footstepSounds:
@@ -1898,6 +1988,7 @@
     collection: FootstepHull
   itemDrop: PartRodMetal1 #same case as FloorHull
 
+<<<<<<< HEAD
 # Faux sci tiles
 
 # Grass
@@ -2194,3 +2285,5 @@
     collection: FootstepTile
   friction: 0.8
   itemDrop: FloorTileItemUraniumMarble
+=======
+>>>>>>> wizards/stable

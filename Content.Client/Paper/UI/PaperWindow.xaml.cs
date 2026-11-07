@@ -27,6 +27,7 @@ namespace Content.Client.Paper.UI
     [GenerateTypedNameReferences, Virtual]
     public partial class PaperWindow : BaseWindow, IPinnableWindow // ss220 add pin for ui
     {
+<<<<<<< HEAD
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IResourceCache _resCache = default!;
         [Dependency] private readonly IPlayerManager _player = default!; // SS220 languages
@@ -41,6 +42,16 @@ namespace Content.Client.Paper.UI
         private readonly ProtoId<SkillPrototype> _allMarkupShowingSkill = "BureaucracyTrained"; // ss220-experience-update
 
         // <summary>
+=======
+        [Dependency] private IInputManager _inputManager = default!;
+        [Dependency] private IResourceCache _resCache = default!;
+
+        private static Color DefaultTextColor = new(25, 25, 25);
+
+        // Default color for text which hasn't been changed using markup
+        private Color _writtenTextColor = DefaultTextColor;
+
+>>>>>>> wizards/stable
         // Size of resize handles around the paper
         private const int DRAG_MARGIN_SIZE = 16;
 
@@ -196,8 +207,7 @@ namespace Content.Client.Paper.UI
                     visuals.FooterMargin.Right, visuals.FooterMargin.Bottom);
 
             PaperContent.ModulateSelfOverride = visuals.ContentImageModulate;
-            WrittenTextLabel.ModulateSelfOverride = visuals.FontAccentColor;
-            FillStatus.ModulateSelfOverride = visuals.FontAccentColor;
+            _writtenTextColor = visuals.DefaultTextColor ?? DefaultTextColor;
 
             var contentImage = visuals.ContentImagePath != null ? _resCache.GetResource<TextureResource>(visuals.ContentImagePath) : null;
             if (contentImage != null)
@@ -338,6 +348,7 @@ namespace Content.Client.Paper.UI
             {
                 msg.AddMarkupPermissive("\r\n");
             }
+<<<<<<< HEAD
 
             _languageSystem.FindAndRequestNodeInfoForMarkups(msg.ToMarkup()); // SS220 languages
             WrittenTextLabel.RemoveAllChildren(); // SS220 Markups control on paper fix
@@ -348,6 +359,9 @@ namespace Content.Client.Paper.UI
             else
                 WrittenTextLabel.SetMessage(msg, UserFormattableTags.BaseAllowedTags, DefaultTextColor);
             // SS220-bureaucracy-skill-end
+=======
+            WrittenTextLabel.SetMessage(msg, UserFormattableTags.BaseAllowedTags, _writtenTextColor);
+>>>>>>> wizards/stable
 
             WrittenTextLabel.Visible = !isEditing && state.Text.Length > 0;
             BlankPaperIndicator.Visible = !isEditing && state.Text.Length == 0;

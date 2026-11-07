@@ -118,5 +118,5 @@
       storagebase: !type:AllSelector
         children:
         - id: SyndimovCircuitBoard
-        - id: SyndicateIDCard
+        - id: SyndicateIDCardAdaptive
 

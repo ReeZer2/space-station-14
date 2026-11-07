@@ -1,4 +1,4 @@
-﻿- type: accessLevel
+- type: accessLevel
   id: Wizard
   name: id-card-access-level-wizard
   canBeSwitchableInReader: false #SS220 DoorElectronicsConfiguratorFix

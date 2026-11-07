@@ -1,4 +1,4 @@
-﻿- type: tile
+- type: tile
   id: BasePlating
   abstract: true
   friction: 1.5
@@ -6,9 +6,9 @@
   isSubfloor: true
   footstepSounds:
     collection: FootstepPlating
+  materialComposition:
+    Steel: 75 # 0.75 sheets; 0.5 for the lattice, 0.25 for the tile
   baseTurf: Lattice
-  baseWhitelist:
-    - TrainLattice
 
 - type: tile
   id: Plating
@@ -19,15 +19,20 @@
   deconstructTools: [ PlatingCutting ] #SS220 JOL TilePryingng && tools-tile-prying-fix
 
 - type: tile
+  id: PlatingDamaged
+  parent: BasePlating
+  name: tiles-plating
+  sprite: /Textures/Tiles/plating-damaged.png
+  variants: 4
+
+- type: tile
   id: PlatingRCD
   parent: Plating
   name: tiles-rcd-plating
   baseWhitelist:
     - Space
-    - TrainLattice
     - FloorPlanetDirt
     - FloorDesert
-    - FloorLowDesert
     - FloorPlanetGrass
     - FloorSnow
     - FloorDirt
@@ -35,14 +40,13 @@
     - FloorAsteroidSand
     - FloorAsteroidSandBorderless
     - FloorAsteroidIronsandBorderless
-    - FloorAsteroidSandRedBorderless
 
 - type: tile
   id: FloorHullReinforced
   tags: [ tile-tag-other ] # SS220 Tiles Resprite
   parent: BasePlating
   name: tiles-hull-reinforced
-  sprite: /Textures/Tiles/hull_reinforced.png
+  sprite: /Textures/Tiles/debug-indestructible.png
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemSteel
@@ -51,6 +55,7 @@
   isSubfloor: true # SS220 04.11 Mapping Update, tile under SuperMatterCrystal
 
 - type: tile
+<<<<<<< HEAD
   id: PlatingDamaged
   parent: BasePlating
   name: tiles-plating
@@ -75,11 +80,18 @@
   parent: BasePlating
   name: tiles-brass-plating
   sprite: /Textures/Tiles/Misc/clockwork/clockwork_floor.png
+=======
+  id: PlatingAsteroid
+  parent: BasePlating
+  name: tiles-asteroid-plating
+  sprite: /Textures/Tiles/Asteroid/asteroid-plating.png
+>>>>>>> wizards/stable
 
 - type: tile
   id: PlatingSnow
   name: tiles-snow-plating
   parent: BasePlating
+<<<<<<< HEAD
   tags: [ tile-tag-nature ] # SS220 Tiles Resprite
   sprite: /Textures/Tiles/snow_plating.png #Not in the snow planet RSI because it doesn't have any metadata. Should probably be moved to its own folder later.
   friction: 0.75 #a little less then actual snow
@@ -97,6 +109,12 @@
   heatCapacity: 10000
 
 - type: tile
+=======
+  sprite: /Textures/Tiles/Snow/snow-plating.png #Not in the snow planet RSI because it doesn't have any metadata. Should probably be moved to its own folder later.
+  friction: 0.75 #a little less then actual snow
+
+- type: tile
+>>>>>>> wizards/stable
   id: Lattice
   name: tiles-lattice
   tags: [ tile-tag-musthave ]  # SS220 Tiles Resprite
@@ -112,6 +130,7 @@
   itemDrop: PartRodMetal1
   heatCapacity: 10000
   mass: 200
+<<<<<<< HEAD
 
 - type: tile
   id: TrainLattice
@@ -121,3 +140,8 @@
   sprite: /Textures/Tiles/latticeTrain.png
   footstepSounds:
     collection: FootstepPlating
+=======
+  variants: 3
+  materialComposition:
+    Steel: 50 # 0.5 sheets = 1 rod
+>>>>>>> wizards/stable

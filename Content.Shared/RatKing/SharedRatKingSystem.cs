@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
+<<<<<<< HEAD
 using Content.Shared.DoAfter;
 using Content.Shared.Item;
 using Content.Shared.Mobs;
@@ -9,14 +10,17 @@ using Content.Shared.RatKing.Systems;
 using Content.Shared.SS220.RatKing;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
+=======
+>>>>>>> wizards/stable
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
 
 namespace Content.Shared.RatKing;
 
-public abstract class SharedRatKingSystem : EntitySystem
+public abstract partial class SharedRatKingSystem : EntitySystem
 {
+<<<<<<< HEAD
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
     [Dependency] private readonly SharedActionsSystem _action = default!;
@@ -25,6 +29,10 @@ public abstract class SharedRatKingSystem : EntitySystem
     [Dependency] private readonly TagSystem _tagSystem = default!; // SS220 make ratking rats Trash after death
 
     private static readonly ProtoId<TagPrototype> TrashTag = "Trash"; // SS220 RatKing Tweaks and Changes
+=======
+    [Dependency] protected IRobustRandom Random = default!;
+    [Dependency] private SharedActionsSystem _action = default!;
+>>>>>>> wizards/stable
 
     /// <inheritdoc/>
     public override void Initialize()

@@ -75,6 +75,7 @@ public sealed partial class BatteryComponent : Component
     [ViewVariables, AutoNetworkedField]
     public BatteryState State = BatteryState.Neither;
 
+<<<<<<< HEAD
     //SS220-smes-overcharge begin
     /// <summary>
     /// Use this if you set current charge more than max charge.
@@ -84,6 +85,13 @@ public sealed partial class BatteryComponent : Component
     [DataField]
     public bool IsOvercharged = false;
     //SS220-smes-overcharge end
+=======
+    /// <summary>
+    /// If it should show the battery percentage in the item status.
+    /// </summary>
+    [DataField]
+    public bool ShowItemStatus = true;
+>>>>>>> wizards/stable
 }
 
 /// <summary>

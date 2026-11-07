@@ -159,11 +159,10 @@
     speechSounds: Vulpkanin
     speechVerb: Vulpkanin
     allowedEmotes: [ 'Bark', 'Snarl', 'Whine', 'Howl', 'Growl' ]
+  - type: TypingIndicator
+    proto: vulpkanin
   - type: Vocal
-    sounds:
-      Male: MaleVulpkanin
-      Female: FemaleVulpkanin
-      Unsexed: MaleVulpkanin
+    emoteSounds: MaleVulpkanin
   - type: Damageable
     damageModifierSet: Vulpkanin
   - type: MeleeWeapon
@@ -172,6 +171,7 @@
     animation: WeaponArcClaw
     damage:
       types:
+<<<<<<< HEAD
         #SS220-port-vulpkanins-begin
         # Piercing: 2
         # Slash: 3
@@ -179,6 +179,10 @@
         #SS220-port-vulpkanins-end
   - type: Temperature
     specificHeat: 44
+=======
+        Piercing: 2
+        Slash: 3
+>>>>>>> wizards/stable
   - type: TemperatureDamage
     heatDamageThreshold: 320
     coldDamageThreshold: 230
@@ -189,11 +193,15 @@
       types:
         Heat: 2.5 # Per second, scales with temperature & other constants
   - type: Wagging
+<<<<<<< HEAD
     # action: ActionToggleWaggingVulpkanin # SS220-smtng-happend-here
     action: ActionToggleWaggingVulp # SS220-smtng-happend-here
   - type: TemperatureProtection
     heatingCoefficient: 1.2
     coolingCoefficient: 0.3
+=======
+    action: ActionToggleWaggingVulpkanin
+>>>>>>> wizards/stable
   - type: JumpAbility
     action: ActionVulpkaninGravityJump
     canCollide: true
@@ -208,6 +216,7 @@
     bloodReferenceSolution:
       reagents:
       - ReagentId: SulfurBlood
+<<<<<<< HEAD
         Quantity: 300
   # SS220-port-vulpkanins-begin
   - type: VulpkaninAccent
@@ -217,13 +226,16 @@
     - id: Galactic
     - id: Canilunzt
   # SS220-port-vulpkanins-end
+=======
+        Quantity: 600
+>>>>>>> wizards/stable
   - type: CreamPied
     sprite:
       sprite: Effects/creampie.rsi
       state: creampie_vulpkanin
 
 - type: entity
-  parent: OrganBase
+  parent: OrganBaseOrganic
   id: OrganVulpkanin
   abstract: true
   suffix: vulpkanin
@@ -326,12 +338,19 @@
 - type: entity
   parent: [ OrganVulpkaninVisual, OrganSpriteHumanInternal, OrganBaseEyes, OrganVulpkaninInternal ] # SS220 Vulplkanin sprites
   id: OrganVulpkaninEyes
+<<<<<<< HEAD
   # SS220 Vulplkanin sprites start
   components:
   - type: VisualOrgan
     data:
       sprite: Mobs/Customization/eyes.rsi
   # SS220 Vulplkanin sprites end
+=======
+  components:
+  - type: EyeBlinking
+    eyelidsSprite: /Textures/Mobs/Species/Vulpkanin/parts.rsi
+  - type: Appearance
+>>>>>>> wizards/stable
 
 - type: entity
   parent: [ OrganBaseTongue, OrganSpriteHumanInternal, OrganVulpkaninInternal ] # SS220 Vulplkanin sprites

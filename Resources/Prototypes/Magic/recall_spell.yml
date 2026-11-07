@@ -15,9 +15,16 @@
         pitch: 1.2
         maxDistance: 5
         variation: 0.2
+<<<<<<< HEAD
     icon:
       sprite: SS220/Interface/Actions/magic_spells_other.rsi # SS220 Wizard getting used to
       state: item_recall
+=======
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: item_recall
+>>>>>>> wizards/stable
   - type: InstantAction
     event: !type:OnItemRecallActionEvent
   - type: ItemRecall

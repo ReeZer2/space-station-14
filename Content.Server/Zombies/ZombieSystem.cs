@@ -4,15 +4,19 @@ using Content.Server.Body.Systems;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Emoting.Systems;
-using Content.Server.Speech.EntitySystems;
+using Content.Shared.Speech.EntitySystems;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Armor;
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Body.Systems;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Chat;
 using Content.Shared.Damage.Systems;
+<<<<<<< HEAD
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
+=======
+>>>>>>> wizards/stable
 using Content.Shared.Inventory;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -22,7 +26,11 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.NameModifier.Components;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
+<<<<<<< HEAD
 using Content.Shared.Tag;
+=======
+using Content.Shared.Revolutionary;
+>>>>>>> wizards/stable
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
 using Content.Shared.Weapons.Melee.Events;
@@ -30,23 +38,25 @@ using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Server.Ghost.Roles.Components;
+using Content.Shared.Medical;
+using Content.Shared.Construction.Steps;
 
 namespace Content.Server.Zombies
 {
     public sealed partial class ZombieSystem : SharedZombieSystem
     {
-        [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly IPrototypeManager _protoManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
-        [Dependency] private readonly DamageableSystem _damageable = default!;
-        [Dependency] private readonly ChatSystem _chat = default!;
-        [Dependency] private readonly ActionsSystem _actions = default!;
-        [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
-        [Dependency] private readonly EmoteOnDamageSystem _emoteOnDamage = default!;
-        [Dependency] private readonly MobStateSystem _mobState = default!;
-        [Dependency] private readonly SharedPopupSystem _popup = default!;
-        [Dependency] private readonly SharedRoleSystem _role = default!;
+        [Dependency] private IGameTiming _timing = default!;
+        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private BloodstreamSystem _bloodstream = default!;
+        [Dependency] private DamageableSystem _damageable = default!;
+        [Dependency] private ChatSystem _chat = default!;
+        [Dependency] private ActionsSystem _actions = default!;
+        [Dependency] private AutoEmoteSystem _autoEmote = default!;
+        [Dependency] private EmoteOnDamageSystem _emoteOnDamage = default!;
+        [Dependency] private MobStateSystem _mobState = default!;
+        [Dependency] private SharedPopupSystem _popup = default!;
+        [Dependency] private SharedRoleSystem _role = default!;
 
         private const string ZombifyableTag = "ZombifyableByMelee"; // SS220-add-animal-not-zombiefying
         public readonly ProtoId<NpcFactionPrototype> Faction = "Zombie";
@@ -76,6 +86,7 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<ZombieComponent, GetCharacterUnrevivableIcEvent>(OnGetCharacterUnrevivableIC);
             SubscribeLocalEvent<ZombieComponent, MindAddedMessage>(OnMindAdded);
             SubscribeLocalEvent<ZombieComponent, MindRemovedMessage>(OnMindRemoved);
+            SubscribeLocalEvent<ZombieComponent, AttemptConvertRevolutionaryEvent>(OnAttemptConvert);
 
             SubscribeLocalEvent<PendingZombieComponent, MapInitEvent>(OnPendingMapInit);
             SubscribeLocalEvent<PendingZombieComponent, BeforeRemoveAnomalyOnDeathEvent>(OnBeforeRemoveAnomalyOnDeath);
@@ -188,7 +199,7 @@ namespace Content.Server.Zombies
             if (args.Handled)
                 return;
 
-            _protoManager.Resolve(component.EmoteSoundsId, out var sounds);
+            ProtoMan.Resolve(component.EmoteSoundsId, out var sounds);
 
             args.Handled = _chat.TryPlayEmoteSound(uid, sounds, args.Emote);
         }
@@ -294,8 +305,9 @@ namespace Content.Server.Zombies
         /// <param name="target">the entity you want to unzombify (different from source in case of cloning, for example)</param>
         /// <param name="zombiecomp"></param>
         /// <remarks>
-        ///     this currently only restore the skin/eye color from before zombified
+        ///     this currently only restores the skin/eye color from before zombified + removes clumsy zombie status effect
         ///     TODO: completely rethink how zombies are done to allow reversal.
+        ///     TODO: maybe move to ZombieSystem.Transform.cs?
         /// </remarks>
         public bool UnZombify(EntityUid source, EntityUid target, ZombieComponent? zombiecomp)
         {
@@ -308,6 +320,7 @@ namespace Content.Server.Zombies
             _bloodstream.ChangeBloodReagents(target, zombiecomp.BeforeZombifiedBloodReagents);
             _faction.RemoveFaction(target, ZombieFaction); // SS220 zombie-faction-fix
 
+<<<<<<< HEAD
             //SS220 ZOMBIE NAME FIX START (fix: https://github.com/SerbiaStrong-220/space-station-14/issues/1651 && https://github.com/SerbiaStrong-220/space-station-14/issues/1567)
             var targetModifierComponent = AddComp<NameModifierComponent>(target);
 
@@ -318,6 +331,18 @@ namespace Content.Server.Zombies
             //SS220 ZOMBIE NAME FIX END
 
             _nameMod.RefreshNameModifiers(target);
+=======
+            // Restore the blood refresh amount to what it was before zombification. They can't regain blood otherwise.
+            _bloodstream.ChangeBloodRefreshAmount(target, zombiecomp.BeforeZombifiedBloodRefresh);
+            _bloodstream.ChangeBloodIncreaseEnabled(target, true);
+
+            // no longer a zombie, no longer *that* clumsy
+            _statusEffects.TryRemoveStatusEffect(target, ClumsyZombieStatus);
+
+            // Remove the tags that we added during Zombification
+            _tag.RemoveTag(target, CannotSuicideTag);
+            _tag.RemoveTag(target, InvalidForGlobalSpawnSpellTag);
+>>>>>>> wizards/stable
             return true;
         }
 
@@ -334,9 +359,31 @@ namespace Content.Server.Zombies
         }
 
         // Remove the role when getting cloned, getting gibbed and borged, or leaving the body via any other method.
+        // We also need to make sure the zombie is a ghost role because zombies with minds do not get a ghostrolecomponent
         private void OnMindRemoved(Entity<ZombieComponent> ent, ref MindRemovedMessage args)
         {
             _role.MindRemoveRole<ZombieRoleComponent>((args.Mind.Owner,  args.Mind.Comp));
+            MakeGhostRole(ent.Owner);
+        }
+
+        private void OnAttemptConvert(Entity<ZombieComponent> ent, ref AttemptConvertRevolutionaryEvent args)
+        {
+            args.Cancelled = true;
+        }
+
+        /// <summary>
+        /// Makes the target entity a zombie ghost role. Should only be fired when the entity does not have a mind.
+        /// </summary>
+        private void MakeGhostRole(EntityUid ent)
+        {
+            //yet more hardcoding. Visit zombie.ftl for more information.
+            var ghostRole = EnsureComp<GhostRoleComponent>(ent);
+            EnsureComp<GhostTakeoverAvailableComponent>(ent);
+
+            ghostRole.RoleName = Loc.GetString("zombie-generic");
+            ghostRole.RoleDescription = Loc.GetString("zombie-role-desc");
+            ghostRole.RoleRules = Loc.GetString("zombie-role-rules");
+            ghostRole.MindRoles.Add(MindRoleZombie);
         }
     }
 }

@@ -9,13 +9,17 @@ using Robust.Shared.Physics.Events;
 
 namespace Content.Shared.Damage.Systems;
 
-public sealed class RequireProjectileTargetSystem : EntitySystem
+public sealed partial class RequireProjectileTargetSystem : EntitySystem
 {
+<<<<<<< HEAD
     [Dependency] private readonly SharedContainerSystem _container = default!;
     //SS220 weapon overhaul begin
     [Dependency] private StandingStateSystem _standing = default!;
     [Dependency] private MobStateSystem _state = default!;
     //SS220 weapon overhaul end
+=======
+    [Dependency] private SharedContainerSystem _container = default!;
+>>>>>>> wizards/stable
 
     public override void Initialize()
     {

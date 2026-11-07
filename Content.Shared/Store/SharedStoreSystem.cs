@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
@@ -20,15 +20,22 @@ namespace Content.Shared.Store;
 /// </summary>
 public abstract partial class SharedStoreSystem : EntitySystem
 {
+<<<<<<< HEAD
     [Dependency] protected readonly IPrototypeManager Proto = default!;
     [Dependency] protected readonly SharedMindSystem Mind = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] protected readonly SharedStackSystem Stack = default!;
     [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!; //SS220-insert-currency-doafter
+=======
+    [Dependency] protected SharedMindSystem Mind = default!;
+    [Dependency] protected SharedPopupSystem Popup = default!;
+    [Dependency] protected SharedStackSystem Stack = default!;
+    [Dependency] protected SharedUserInterfaceSystem UI = default!;
+>>>>>>> wizards/stable
 
-    [Dependency] protected readonly EntityQuery<StoreComponent> StoreQuery = default!;
-    [Dependency] protected readonly EntityQuery<RemoteStoreComponent> RemoteStoreQuery = default!;
+    [Dependency] protected EntityQuery<StoreComponent> StoreQuery = default!;
+    [Dependency] protected EntityQuery<RemoteStoreComponent> RemoteStoreQuery = default!;
 
     public override void Initialize()
     {
@@ -38,9 +45,9 @@ public abstract partial class SharedStoreSystem : EntitySystem
         SubscribeLocalEvent<RemoteStoreComponent, GetStoreEvent>(OnGetStore);
         SubscribeLocalEvent<RemoteStoreComponent, ImplantRelayEvent<GetStoreEvent>>((x, ref y) =>
         {
-            var ev = y.Event;
+            var ev = y.Args;
             OnGetStore(x, ref ev);
-            y.Event = ev;
+            y.Args = ev;
         });
         SubscribeLocalEvent<RemoteStoreComponent, ImplantRelayEvent<CurrencyInsertAttemptEvent>>(OnImplantInsertAttempt);
         SubscribeLocalEvent<StoreComponent, IntrinsicStoreActionEvent>(OnIntrinsicStoreAction);
@@ -62,7 +69,7 @@ public abstract partial class SharedStoreSystem : EntitySystem
 
     private void OnImplantInsertAttempt(Entity<RemoteStoreComponent> implant, ref ImplantRelayEvent<CurrencyInsertAttemptEvent> args)
     {
-        var ev = args.Event;
+        var ev = args.Args;
 
         // Only allow insertion if the person implanted is doing the action.
         if (ev.User == ev.Target)
@@ -70,7 +77,7 @@ public abstract partial class SharedStoreSystem : EntitySystem
         else
             ev.Cancel();
 
-        args.Event = ev;
+        args.Args = ev;
     }
 
     private void OnAfterInteract(EntityUid uid, CurrencyComponent component, AfterInteractEvent args)
@@ -176,7 +183,7 @@ public abstract partial class SharedStoreSystem : EntitySystem
     /// <param name="uid"></param>
     /// <param name="component"></param>
     /// <returns>The value of the currency</returns>
-    public Dictionary<string, FixedPoint2> GetCurrencyValue(EntityUid uid, CurrencyComponent component)
+    public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> GetCurrencyValue(EntityUid uid, CurrencyComponent component)
     {
         var amount = EntityManager.GetComponentOrNull<StackComponent>(uid)?.Count ?? 1;
         return component.Price.ToDictionary(v => v.Key, p => p.Value * amount);
@@ -220,7 +227,7 @@ public abstract partial class SharedStoreSystem : EntitySystem
     /// <param name="uid"></param>
     /// <param name="store">The store to add it to</param>
     /// <returns>Whether or not the currency was succesfully added</returns>
-    public bool TryAddCurrency(Dictionary<string, FixedPoint2> currency, EntityUid uid, StoreComponent? store = null)
+    public bool TryAddCurrency(Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> currency, EntityUid uid, StoreComponent? store = null)
     {
         if (!Resolve(uid, ref store))
             return false;
@@ -238,6 +245,7 @@ public abstract partial class SharedStoreSystem : EntitySystem
                 store.Balance[type.Key] += type.Value;
         }
 
+        DirtyField(uid, store, nameof(StoreComponent.Balance));
         UpdateUserInterface(null, uid, store);
         return true;
     }
@@ -245,6 +253,13 @@ public abstract partial class SharedStoreSystem : EntitySystem
     private void OnIntrinsicStoreAction(Entity<StoreComponent> ent, ref IntrinsicStoreActionEvent args)
     {
         ToggleUi(args.Performer, ent.Owner, ent.Comp);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        UpdateGenerator(frameTime);
     }
 }
 

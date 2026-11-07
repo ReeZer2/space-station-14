@@ -1,0 +1,30 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Original work created for this item by Chaisftw",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+<<<<<<< HEAD:Resources/Textures/Structures/Windows/plasma_diagonal.rsi/meta.json
+    "license": "EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt",
+    "copyright": "by MIXnikita for SS220",
+    "states": [
+        {
+            "name": "state0",
+            "directions": 4
+        },
+        {
+            "name": "state1",
+            "directions": 4
+=======
+    "states": [
+        {
+            "name": "franks-fertilizer"
+        },
+        {
+            "name": "franks-fertilizer_open"
+>>>>>>> wizards/stable:Resources/Textures/Objects/Specific/Hydroponics/Equipment/franks_fertilizer.rsi/meta.json
+        }
+    ]
+}

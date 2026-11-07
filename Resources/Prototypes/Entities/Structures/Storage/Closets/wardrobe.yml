@@ -1,16 +1,16 @@
 # Base
 - type: entity
-  id: WardrobeBase
-  parent: ClosetSteelBase
   abstract: true
+  parent: ClosetSteelBase
+  id: WardrobeBase
   description: It's a storage unit for standard-issue Nanotrasen attire.
 
 # Colored
 
 # Blue wardrobe
 - type: entity
-  id: WardrobeBlue
   parent: WardrobeBase
+  id: WardrobeBlue
   name: blue wardrobe
   description: "A wardrobe packed with stylish blue clothing."
   components:
@@ -22,8 +22,8 @@
 
 # Pink wardrobe
 - type: entity
-  id: WardrobePink
   parent: WardrobeBase
+  id: WardrobePink
   name: pink wardrobe
   description: "A wardrobe packed with fabulous pink clothing."
   components:
@@ -35,8 +35,8 @@
 
 # Black wardrobe
 - type: entity
-  id: WardrobeBlack
   parent: WardrobeBase
+  id: WardrobeBlack
   name: black wardrobe
   description: "A wardrobe packed with stylish black clothing."
   components:
@@ -48,8 +48,8 @@
 
 # Green wardrobe
 - type: entity
-  id: WardrobeGreen
   parent: WardrobeBase
+  id: WardrobeGreen
   name: green wardrobe
   description: "A wardrobe packed with stylish green clothing."
   components:
@@ -61,8 +61,8 @@
 
 # Prison wardrobe
 - type: entity
-  id: WardrobePrison
   parent: WardrobeBase
+  id: WardrobePrison
   name: prison wardrobe
   components:
   - type: Appearance
@@ -73,8 +73,8 @@
 
 # Yellow wardrobe
 - type: entity
-  id: WardrobeYellow
   parent: WardrobeBase
+  id: WardrobeYellow
   name: yellow wardrobe
   description: "A wardrobe packed with stylish yellow clothing."
   components:
@@ -86,8 +86,8 @@
 
 # White wardrobe
 - type: entity
-  id: WardrobeWhite
   parent: WardrobeBase
+  id: WardrobeWhite
   name: white wardrobe
   description: "A wardrobe packed with stylish white clothing."
   components:
@@ -99,8 +99,8 @@
 
 # Grey wardrobe
 - type: entity
-  id: WardrobeGrey
   parent: WardrobeBase
+  id: WardrobeGrey
   name: grey wardrobe
   description: "A wardrobe packed with a tide of grey clothing."
   components:
@@ -112,8 +112,8 @@
 
 # Mixed wardrobe
 - type: entity
-  id: WardrobeMixed
   parent: WardrobeBase
+  id: WardrobeMixed
   name: mixed wardrobe
   description: "A wardrobe packed with a mix of colorful clothing."
   components:
@@ -126,8 +126,8 @@
 # Jobs
 
 - type: entity
-  id: WardrobeSecurity
   parent: WardrobeBase
+  id: WardrobeSecurity
   name: security wardrobe
   components:
   - type: Appearance
@@ -137,8 +137,8 @@
     stateDoorClosed: securityofficer_wardrobe_door #SS220-Closet-Resprite-end
 
 - type: entity
-  id: WardrobeAtmospherics
   parent: WardrobeBase
+  id: WardrobeAtmospherics
   name: atmospherics wardrobe
   components:
   - type: Appearance
@@ -148,8 +148,13 @@
     stateDoorClosed: atmos_wardrobe_door
 
 - type: entity
+<<<<<<< HEAD
   id: ClosetJanitor
   parent: WardrobeBase #SS220-Closet-Resprite
+=======
+  parent: WardrobeMixed
+  id: ClosetJanitor
+>>>>>>> wizards/stable
   name: custodial closet
   description: It's a storage unit for janitorial clothes and gear.
   components: #SS220-Closet-Resprite-start
@@ -160,14 +165,19 @@
     stateDoorClosed: janitor_wardrobe_door #SS220-Closet-Resprite-end
 
 - type: entity
-  id: WardrobeFormal
   parent: WardrobeBlack
+  id: WardrobeFormal
   name: formal closet
   description: It's a storage unit for formal clothing.
 
 - type: entity
+<<<<<<< HEAD
   id: ClosetChef
   parent: WardrobeBase #SS220-Closet-Resprite
+=======
+  parent: WardrobeBlack
+  id: ClosetChef
+>>>>>>> wizards/stable
   name: chef's closet
   description: It's a storage unit for foodservice garments and mouse traps.
   components: #SS220-Closet-Resprite-start
@@ -178,8 +188,13 @@
     stateDoorClosed: chef_wardrobe_door #SS220-Closet-Resprite-end
 
 - type: entity
+<<<<<<< HEAD
   id: WardrobeChapel
   parent: WardrobeBase #SS220-Closet-Resprite
+=======
+  parent: WardrobeBlack
+  id: WardrobeChapel
+>>>>>>> wizards/stable
   name: chaplain's wardrobe
   description: It's a storage unit for Nanotrasen-approved religious attire.
   components: #SS220-Closet-Resprite-start
@@ -190,8 +205,13 @@
     stateDoorClosed: chaplain_wardrobe_door #SS220-Closet-Resprite-end
 
 - type: entity
+<<<<<<< HEAD
   id: ClosetLegal
   parent: WardrobeBase #SS220-Closet-Resprite
+=======
+  parent: WardrobeBlue
+  id: ClosetLegal
+>>>>>>> wizards/stable
   name: legal closet
   description: It's a storage unit for courtroom apparel and items.
   components: #SS220-Closet-Resprite-start
@@ -202,8 +222,13 @@
     stateDoorClosed: lawyer_wardrobe_door #SS220-Closet-Resprite-end
 
 - type: entity
+<<<<<<< HEAD
   id: WardrobeCargo
   parent: WardrobeBase #SS220-Closet-Resprite
+=======
+  parent: WardrobePrison
+  id: WardrobeCargo
+>>>>>>> wizards/stable
   name: cargo wardrobe
   components: #SS220-Closet-Resprite-start
   - type: Appearance
@@ -213,8 +238,13 @@
     stateDoorClosed: cargotechnician_wardrobe_door #SS220-Closet-Resprite-end
 
 - type: entity
+<<<<<<< HEAD
   id: WardrobeSalvage
   parent: WardrobeBase #SS220-Closet-Resprite
+=======
+  parent: WardrobeMixed
+  id: WardrobeSalvage
+>>>>>>> wizards/stable
   name: salvage wardrobe
   description: Notably not salvaged.
   components: #SS220-Closet-Resprite-start
@@ -225,8 +255,13 @@
     stateDoorClosed: miner_wardrobe_door #SS220-Closet-Resprite-end
 
 - type: entity
+<<<<<<< HEAD
   id: WardrobeEngineering
   parent: WardrobeBase #SS220-Closet-Resprite
+=======
+  parent: WardrobeYellow
+  id: WardrobeEngineering
+>>>>>>> wizards/stable
   name: engineering wardrobe
   components: #SS220-Closet-Resprite-start
   - type: Appearance
@@ -236,8 +271,13 @@
     stateDoorClosed: engineer_wardrobe_door #SS220-Closet-Resprite-end
 
 - type: entity
+<<<<<<< HEAD
   id: WardrobeMedicalDoctor
   parent: WardrobeBase #SS220-Closet-Resprite
+=======
+  parent: WardrobeWhite
+  id: WardrobeMedicalDoctor
+>>>>>>> wizards/stable
   name: medical doctor's wardrobe
   components: #SS220-Closet-Resprite-start
   - type: Appearance
@@ -247,8 +287,13 @@
     stateDoorClosed: medic_wardrobe_door #SS220-Closet-Resprite-end
 
 - type: entity
+<<<<<<< HEAD
   id: WardrobeRobotics
   parent: WardrobeBase #SS220-Closet-Resprite
+=======
+  parent: WardrobeBlack
+  id: WardrobeRobotics
+>>>>>>> wizards/stable
   name: robotics wardrobe
   components: #SS220-Closet-Resprite-start
   - type: Appearance
@@ -258,8 +303,13 @@
     stateDoorClosed: roboticist_wardrobe_door #SS220-Closet-Resprite-end
 
 - type: entity
+<<<<<<< HEAD
   id: WardrobeChemistry
   parent: WardrobeBase #SS220-Closet-Resprite
+=======
+  parent: WardrobeWhite
+  id: WardrobeChemistry
+>>>>>>> wizards/stable
   name: chemistry wardrobe
   components: #SS220-Closet-Resprite-start
   - type: Appearance
@@ -269,8 +319,13 @@
     stateDoorClosed: chemist_wardrobe_door #SS220-Closet-Resprite-end
 
 - type: entity
+<<<<<<< HEAD
   id: WardrobeGenetics
   parent: WardrobeBase #SS220-Closet-Resprite
+=======
+  parent: WardrobeWhite
+  id: WardrobeGenetics
+>>>>>>> wizards/stable
   name: genetics wardrobe
   components: #SS220-Closet-Resprite-start
   - type: Appearance
@@ -280,8 +335,13 @@
     stateDoorClosed: geneticist_wardrobe_door #SS220-Closet-Resprite-end
 
 - type: entity
+<<<<<<< HEAD
   id: WardrobeVirology
   parent: WardrobeBase #SS220-Closet-Resprite
+=======
+  parent: WardrobeWhite
+  id: WardrobeVirology
+>>>>>>> wizards/stable
   name: virology wardrobe
   components: #SS220-Closet-Resprite-start
   - type: Appearance
@@ -291,8 +351,13 @@
     stateDoorClosed: virologist_wardrobe_door #SS220-Closet-Resprite-end
 
 - type: entity
+<<<<<<< HEAD
   id: WardrobeScience
   parent: WardrobeBase #SS220-Closet-Resprite
+=======
+  parent: WardrobeWhite
+  id: WardrobeScience
+>>>>>>> wizards/stable
   name: science wardrobe
   components: #SS220-Closet-Resprite-start
   - type: Appearance
@@ -302,8 +367,13 @@
     stateDoorClosed: scientist_wardrobe_door #SS220-Closet-Resprite-end
 
 - type: entity
+<<<<<<< HEAD
   id: WardrobeBotanist
   parent: WardrobeBase #SS220-Closet-Resprite
+=======
+  parent: WardrobeGreen
+  id: WardrobeBotanist
+>>>>>>> wizards/stable
   name: botanist wardrobe
   components: #SS220-Closet-Resprite-start
   - type: Appearance

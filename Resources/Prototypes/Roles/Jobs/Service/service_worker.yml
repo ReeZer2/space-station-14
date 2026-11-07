@@ -1,0 +1,51 @@
+- type: job
+  id: ServiceWorker
+  name: job-name-serviceworker
+  description: job-description-serviceworker
+  playTimeTracker: JobServiceWorker
+  requirements:
+<<<<<<< HEAD:Resources/Prototypes/Roles/Jobs/Civilian/service_worker.yml
+    - !type:OverallPlaytimeRequirement
+      time: 1h # SS220-RoleTime 2
+=======
+  - !type:DepartmentTimeRequirement
+    department: Service
+    time: 0.5h
+>>>>>>> wizards/stable:Resources/Prototypes/Roles/Jobs/Service/service_worker.yml
+  startingGear: ServiceWorkerGear
+  experienceDefinition: ServiceWorkerRoleExperience # SS220-experience
+  icon: "JobIconServiceWorker"
+  supervisors: job-supervisors-service
+<<<<<<< HEAD:Resources/Prototypes/Roles/Jobs/Civilian/service_worker.yml
+  canBeAntag: true #SS220 https://github.com/SerbiaStrong-220/space-station-14/pull/564
+=======
+  guides: [ Service ] # TODO: should have a more specific guidebook page instead of using the department itself
+>>>>>>> wizards/stable:Resources/Prototypes/Roles/Jobs/Service/service_worker.yml
+  access:
+  - Service
+  - Maintenance
+  - Bar
+  - Kitchen
+  extendedAccess:
+  - Hydroponics
+
+- type: startingGear
+  id: ServiceWorkerGear
+  equipment:
+    shoes: ClothingShoesColorBlack
+    id: ServiceWorkerPDA
+    ears: ClothingHeadsetService
+  #storage:
+    #back:
+    #- Stuff
+
+- type: chameleonOutfit
+  id: ServiceWorkerChameleonOutfit
+  job: ServiceWorker
+  equipment:
+    head: ClothingHeadHatBowlerHat
+    eyes: ClothingEyesGlassesSunglasses
+    mask: ClothingMaskGas
+    neck: ClothingNeckScarfStripedBrown
+    outerClothing: ClothingOuterVest
+    gloves: ClothingHandsGlovesColorBlack

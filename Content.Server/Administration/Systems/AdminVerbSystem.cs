@@ -1,19 +1,19 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.UI;
-using Content.Server.Disposal.Tube;
+using Content.Server.Afk;
 using Content.Server.EUI;
 using Content.Server.Ghost.Roles;
 using Content.Server.Mind;
 using Content.Server.Prayer;
 using Content.Server.Silicons.Laws;
-using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Systems;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Configurable;
 using Content.Shared.Database;
+using Content.Shared.Disposal.Tube;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
@@ -30,14 +30,17 @@ using Robust.Shared.Console;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
 using System.Linq;
+<<<<<<< HEAD
 using Content.Shared.Buckle;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Construction;
+=======
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Station.Systems;
+>>>>>>> wizards/stable
 using static Content.Shared.Configurable.ConfigurationComponent;
 using Content.Shared.SS220.Experience;
 
@@ -48,6 +51,7 @@ namespace Content.Server.Administration.Systems
     /// </summary>
     public sealed partial class AdminVerbSystem : EntitySystem
     {
+<<<<<<< HEAD
         [Dependency] private readonly IConGroupController _groupController = default!;
         [Dependency] private readonly IConsoleHost _console = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
@@ -73,6 +77,31 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly SharedBuckleSystem _buckle = default!;
         [Dependency] private readonly SharedFlatpackSystem _flatpack = default!;
 
+=======
+        [Dependency] private IConGroupController _groupController = default!;
+        [Dependency] private IConsoleHost _console = default!;
+        [Dependency] private IAdminLogManager _adminLogs = default!;
+        [Dependency] private IAdminManager _adminManager = default!;
+        [Dependency] private SharedMapSystem _map = default!;
+        [Dependency] private AdminSystem _adminSystem = default!;
+        [Dependency] private DisposalTubeSystem _disposalTubes = default!;
+        [Dependency] private EuiManager _euiManager = default!;
+        [Dependency] private GhostRoleSystem _ghostRoleSystem = default!;
+        [Dependency] private UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private ServerPrayerSystem _prayerSystem = default!;
+        [Dependency] private MindSystem _mindSystem = default!;
+        [Dependency] private ToolshedManager _toolshed = default!;
+        [Dependency] private RejuvenateSystem _rejuvenate = default!;
+        [Dependency] private SharedPopupSystem _popup = default!;
+        [Dependency] private StationSystem _stations = default!;
+        [Dependency] private StationSpawningSystem _spawning = default!;
+        [Dependency] private ExamineSystemShared _examine = default!;
+        [Dependency] private AdminFrozenSystem _freeze = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private SiliconLawSystem _siliconLawSystem = default!;
+        [Dependency] private AfkConfirmSystem _afkConfirm = default!;
+        [Dependency] private SharedTransformSystem _transformSystem = default!;
+>>>>>>> wizards/stable
 
         private readonly Dictionary<ICommonSession, List<EditSolutionsEui>> _openSolutionUis = new();
 
@@ -80,14 +109,17 @@ namespace Content.Server.Administration.Systems
         {
             SubscribeLocalEvent<GetVerbsEvent<Verb>>(GetVerbs);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeLocalEvent<SolutionContainerManagerComponent, SolutionContainerChangedEvent>(OnSolutionChanged);
+
+            // TODO: This is genuinely terrible, solutions are already networked and we shouldn't need to update the BUI like this.
+            SubscribeLocalEvent<SolutionComponent, SolutionChangedEvent>((x, ref _) => OnSolutionChanged(x.Owner));
+            SubscribeLocalEvent<SolutionManagerComponent, SolutionChangedEvent>((x, ref _) => OnSolutionChanged(x.Owner));
         }
 
         private void GetVerbs(GetVerbsEvent<Verb> ev)
         {
             AddAdminVerbs(ev);
             AddDebugVerbs(ev);
-            AddSmiteVerbs(ev);
+            AddPrototypeVerbs(ev);
             AddTricksVerbs(ev);
             AddAntagVerbs(ev);
         }
@@ -139,7 +171,14 @@ namespace Content.Server.Administration.Systems
                     // Erase
                     if (_adminManager.HasAdminFlag(player, AdminFlags.Ban)) // SS220 Mentor buttons restrict
                     {
+<<<<<<< HEAD
                         args.Verbs.Add(new Verb
+=======
+                        Text = Loc.GetString("admin-player-actions-spawn"),
+                        Message = Loc.GetString("admin-player-actions-spawn-message"),
+                        Category = VerbCategory.Admin,
+                        Act = () =>
+>>>>>>> wizards/stable
                         {
                             Text = Loc.GetString("admin-verbs-erase"),
                             Message = Loc.GetString("admin-verbs-erase-description"),
@@ -202,7 +241,14 @@ namespace Content.Server.Administration.Systems
                     // Clone - Spawn but without the mind transfer, also spawns at the user's coordinates not the target's
                     if (_adminManager.HasAdminFlag(player, AdminFlags.Ban)) // SS220 Mentor buttons restrict
                     {
+<<<<<<< HEAD
                         args.Verbs.Add(new Verb()
+=======
+                        Text = Loc.GetString("admin-player-actions-clone"),
+                        Message = Loc.GetString("admin-player-actions-clone-message"),
+                        Category = VerbCategory.Admin,
+                        Act = () =>
+>>>>>>> wizards/stable
                         {
                             Text = Loc.GetString("admin-player-actions-clone"),
                             Category = VerbCategory.Admin,
@@ -232,6 +278,14 @@ namespace Content.Server.Administration.Systems
                         Act = () => _console.ExecuteCommand(player, $"playerpanel \"{targetActor.PlayerSession.UserId}\""),
                         Impact = LogImpact.Low
                     });
+
+                    args.Verbs.Add(new Verb
+                    {
+                        Text = Loc.GetString("admin-player-actions-check-afk"),
+                        Category = VerbCategory.Admin,
+                        Act = () => _afkConfirm.TryStartConfirmation(targetActor.PlayerSession, requireAttached: true),
+                        Impact = LogImpact.Low
+                    });
                 }
 
                 if (_mindSystem.TryGetMind(args.Target, out var mindId, out var mindComp) && mindComp.UserId != null)
@@ -256,6 +310,7 @@ namespace Content.Server.Administration.Systems
                     args.Verbs.Add(new Verb
                     {
                         Text = Loc.GetString("admin-player-actions-respawn"),
+                        Message = Loc.GetString("admin-player-actions-respawn-message"),
                         Category = VerbCategory.Admin,
                         Act = () =>
                         {
@@ -272,6 +327,22 @@ namespace Content.Server.Administration.Systems
                         Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/sentient.svg.192dpi.png")),
                         Category = VerbCategory.Debug,
                         Act = () => _console.RemoteExecuteCommand(player, $"vv {GetNetEntity(mindId)}"),
+                    });
+                }
+
+                // Player Admin Logs. this is distinct from entity logs above as it will get the logs of the _player_
+                // that last owned the mind of the entity you are right-clicking on. words.
+                if (_mindSystem.TryGetLastMindOwner(args.Target, out var lastOwner))
+                {
+                    args.Verbs.Add(new Verb()
+                    {
+                        Priority = -3,
+                        Text = Loc.GetString("admin-verbs-admin-logs-player"),
+                        Category = VerbCategory.Admin,
+                        Act = () =>
+                        {
+                            _adminLogs.OpenEui(player, targetPlayer: lastOwner);
+                        },
                     });
                 }
 
@@ -505,7 +576,7 @@ namespace Content.Server.Administration.Systems
             }
 
             // Control mob verb
-            if ((_toolshed.ActivePermissionController?.CheckInvokable(new CommandSpec(_toolshed.DefaultEnvironment.GetCommand("mind"), "control"), player, out _) ?? false) &&
+            if (_toolshed.ActivePermissionController?.CheckInvokable(new CommandSpec(_toolshed.DefaultEnvironment.GetCommand("mind"), "control"), player, out _) ?? false &&
                 args.User != args.Target)
             {
                 Verb verb = new()
@@ -617,7 +688,7 @@ namespace Content.Server.Administration.Systems
                     Text = Loc.GetString("tube-direction-verb-get-data-text"),
                     Category = VerbCategory.Debug,
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/information.svg.192dpi.png")),
-                    Act = () => _disposalTubes.PopupDirections(args.Target, tube, args.User)
+                    Act = () => _disposalTubes.PopupDirections((args.Target, tube), args.User)
                 };
                 args.Verbs.Add(verb);
             }
@@ -651,7 +722,7 @@ namespace Content.Server.Administration.Systems
 
             // Add verb to open Solution Editor
             if (_groupController.CanCommand(player, "addreagent") &&
-                HasComp<SolutionContainerManagerComponent>(args.Target))
+                (HasComp<SolutionManagerComponent>(args.Target) || HasComp<SolutionComponent>(args.Target)))
             {
                 Verb verb = new()
                 {
@@ -685,13 +756,13 @@ namespace Content.Server.Administration.Systems
         }
 
         #region SolutionsEui
-        private void OnSolutionChanged(Entity<SolutionContainerManagerComponent> entity, ref SolutionContainerChangedEvent args)
+        private void OnSolutionChanged(EntityUid uid)
         {
             foreach (var list in _openSolutionUis.Values)
             {
                 foreach (var eui in list)
                 {
-                    if (eui.Target == entity.Owner)
+                    if (eui.Target == uid)
                         eui.StateDirty();
                 }
             }

@@ -12,7 +12,6 @@
   - type: Tag
     tags:
     - FireAxe
-  - type: Sharp
   - type: Execution
     doAfterDuration: 4.0
   - type: Sprite
@@ -27,7 +26,11 @@
         # axes are kinda like sharp hammers, you know?
         Blunt: 5
         Slash: 10
+<<<<<<< HEAD
         Structural: 35 #ss220
+=======
+        Structural: 3
+>>>>>>> wizards/stable
     soundHit:
       collection: MetalThud
   - type: Wieldable
@@ -35,24 +38,42 @@
     damage:
       types:
         Slash: 10
+<<<<<<< HEAD
         Structural: 135 #ss220
+=======
+        Structural: 15
+>>>>>>> wizards/stable
   - type: Item
+    shape:
+    - 1,0,2,5
+    - 0,0,0,2
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/fireaxe.rsi
     size: Ginormous
   - type: Clothing
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     quickEquip: false
     slots:
     - back
+    - suitStorage
   - type: Tool
     qualities:
+<<<<<<< HEAD
       - Prying
       - PlatingCutting #SS220-tools-tile-prying-fix
+=======
+    - Prying
+    - Slicing
+    - Sawing
+>>>>>>> wizards/stable
   - type: ToolTileCompatible
   - type: Prying
   - type: UseDelay
     delay: 1
   - type: StealTarget
-    stealGroup: FireAxe
+    stealGroup:
+    - FireAxe
   - type: IgniteOnMeleeHit
     fireStacks: -4
   #SS220 melee weapon block added begin
@@ -89,11 +110,24 @@
 - type: entity
   id: FireAxeFlaming
   name: fire axe
+<<<<<<< HEAD
   parent: [ FireAxe ] #SS220-remove-contraband
+=======
+  parent: [ BaseSyndicateContraband, FireAxe ]
+>>>>>>> wizards/stable
   description: Why fight fire with an axe when you can fight with fire and axe? Now featuring rugged rubberized handle!
   components:
   - type: MeleeWeapon
-    wideAnimationRotation: 90
+    wideAnimationRotation: 135
+    swingLeft: true
+  - type: Item
+    shape:
+    - 1,0,2,5
+    - 0,0,0,2
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/fireaxeflaming.rsi
+    size: Ginormous
   - type: IgniteOnMeleeHit
     fireStacks: 1
   - type: Sprite
@@ -104,6 +138,7 @@
     quickEquip: false
     slots:
     - back
+<<<<<<< HEAD
 # SS220-hidden-desc-begin
   - type: HiddenDescription
     entries:
@@ -114,3 +149,6 @@
     - [ScienceKnowledge, null]
     hiddenName: ent-FireAxe
 # SS220-hidden-desc-end
+=======
+    - suitStorage
+>>>>>>> wizards/stable

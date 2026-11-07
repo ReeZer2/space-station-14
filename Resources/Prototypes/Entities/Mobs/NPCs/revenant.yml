@@ -28,8 +28,9 @@
     allowed:
     - Corporeal
   - type: Damageable
-    damageContainer: ManifestedSpirit
     damageModifierSet: ManifestedSpirit
+  - type: Injurable
+    damageContainer: ManifestedSpirit
   - type: NoSlip
   - type: TTS # Corvax-TTS
     randomVoicesList: Demons
@@ -40,8 +41,6 @@
       - Ghost
   - type: ContentEye
     maxZoom: 1.2, 1.2
-  - type: NameIdentifier
-    group: GenericNumber
   - type: GhostRole
     makeSentient: true
     name: ghost-role-information-revenant-name
@@ -90,6 +89,9 @@
     - NamesRevenantAdjective
     - NamesRevenantTheme
     nameFormat: name-format-revenant
+  - type: Grammar
+    attributes:
+      proper: true
   - type: Speech
     speechVerb: Ghost
   #ss220 spec fix start
@@ -138,6 +140,7 @@
     tags:
     - SlowImmune
     - KnockdownImmune
+<<<<<<< HEAD
   #SS220 Cult hotfix 17 #3641 start
   - type: DamageCorruptInteraction
     damageSound: /Audio/Items/welder.ogg #for now, cause no sound
@@ -145,3 +148,6 @@
       types:
         Heat: 30
   #SS220 Cult hotfix 17 #3641 end
+=======
+    - AllowPortalTraversal
+>>>>>>> wizards/stable

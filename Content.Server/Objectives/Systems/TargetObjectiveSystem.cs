@@ -12,10 +12,10 @@ namespace Content.Server.Objectives.Systems;
 /// <summary>
 /// Provides API for other components and handles setting the title.
 /// </summary>
-public sealed class TargetObjectiveSystem : EntitySystem
+public sealed partial class TargetObjectiveSystem : EntitySystem
 {
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly SharedJobSystem _job = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private SharedJobSystem _job = default!;
 
     // ss220 add custom antag goals start
     [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
@@ -92,7 +92,21 @@ public sealed class TargetObjectiveSystem : EntitySystem
             jobName = Loc.GetString("job-name-unknown");
         // ss220 add custom antag goals end
 
+<<<<<<< HEAD
         return Loc.GetString(title, ("targetName", targetName), ("job", jobName));
+=======
+        var jobName = _job.MindTryGetJobName(target);
+
+        var deptName = Loc.GetString("department-Unknown");
+        if (_job.MindTryGetJobId(target, out var jobId))
+        {
+            if (jobId.HasValue && _job.TryGetDepartment(jobId.Value, out var deptProto))
+            {
+                deptName = Loc.GetString(deptProto.Name);
+            }
+        }
+        return Loc.GetString(title, ("targetName", targetName), ("job", jobName), ("department", deptName));
+>>>>>>> wizards/stable
     }
 
 }

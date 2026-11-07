@@ -1,4 +1,4 @@
-﻿using Content.Server.GameTicking.Rules.VariationPass.Components;
+using Content.Server.GameTicking.Rules.VariationPass.Components;
 using Content.Shared.Storage;
 using Robust.Shared.Random;
 using Content.Shared.Whitelist;
@@ -6,7 +6,7 @@ using Content.Shared.Whitelist;
 namespace Content.Server.GameTicking.Rules.VariationPass;
 
 /// <inheritdoc cref="EntitySpawnVariationPassComponent"/>
-public sealed class EntitySpawnVariationPassSystem : VariationPassSystem<EntitySpawnVariationPassComponent>
+public sealed partial class EntitySpawnVariationPassSystem : VariationPassSystem<EntitySpawnVariationPassComponent>
 {
     // SS220 SM garbage fix begin
     [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
@@ -22,7 +22,7 @@ public sealed class EntitySpawnVariationPassSystem : VariationPassSystem<EntityS
 
         for (var i = 0; i < trashTiles; i++)
         {
-            if (!TryFindRandomTileOnStation(args.Station, out _, out _, out var coords))
+            if (!Stations.TryFindRandomTileOnStation(args.Station, out _, out _, out var coords))
                 continue;
 
             // SS220 SM garbage fix begin

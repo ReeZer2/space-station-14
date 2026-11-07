@@ -88,6 +88,9 @@
     interfaces:
       enum.DeimplantUiKey.Key:
         type: DeimplantBoundUserInterface
+  - type: Tag
+    tags:
+    - SmeltingImmune
 
 - type: entity
   id: Implanter
@@ -137,6 +140,7 @@
   description: A compact disposable syringe exclusively designed for the injection of subdermal implants. Make sure to scrub it with soap to remove residual DNA after use!
   abstract: true
   components:
+<<<<<<< HEAD
     - type: Item
       #sprite: Objects/Specific/Medical/syndi_implanter.rsi
       sprite: Objects/Specific/Medical/implanter.rsi #Corvax MRP anti-meta
@@ -162,6 +166,33 @@
             False: {state: implanter0} #ss220 implant fix
     - type: Tag
       tags: []
+=======
+  - type: Item
+    sprite: Objects/Specific/Medical/syndi_implanter.rsi
+    heldPrefix: implanter
+  - type: Sprite
+    sprite: Objects/Specific/Medical/syndi_implanter.rsi
+    state: implanter1
+    layers:
+    - state: implanter0
+      map: [ "implantFull" ]
+      visible: true
+    - state: implanter1
+      map: [ "implantOnly" ]
+  - type: GenericVisualizer
+    visuals:
+      enum.ImplanterVisuals.Full:
+        implantFull:
+          True: {visible: true}
+          False: {visible: false}
+      enum.ImplanterImplantOnlyVisuals.ImplantOnly:
+        implantOnly:
+          True: {state: broken}
+          False: {state: implanter1}
+  - type: Tag
+    tags:
+    - SmeltingImmune
+>>>>>>> wizards/stable
 
 #Fun implanters
 

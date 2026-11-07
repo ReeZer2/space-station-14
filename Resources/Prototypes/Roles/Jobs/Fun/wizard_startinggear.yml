@@ -4,10 +4,10 @@
   experienceDefinition: WizardExperience # ss220-experience-update
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorDarkBlue
-    head: ClothingHeadHatWizard
+    head: ClothingHeadHatWizardBlue
     back: ClothingBackpack # Wizard backpack?
-    outerClothing: ClothingOuterWizard
-    shoes: ClothingShoesWizard
+    outerClothing: ClothingOuterWizardBlue
+    shoes: ClothingShoesSandalsBrown
     id: WizardPDA
     ears: ClothingHeadsetAltWizard
     belt: ClothingBeltWand
@@ -24,7 +24,7 @@
   parent: WizardBlueGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorRed
-    head: ClothingHeadHatRedwizard
+    head: ClothingHeadHatWizardRed
     outerClothing: ClothingOuterWizardRed
 
 - type: startingGear
@@ -32,7 +32,7 @@
   parent: WizardBlueGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorPurple
-    head: ClothingHeadHatVioletwizard
+    head: ClothingHeadHatWizardViolet
     outerClothing: ClothingOuterWizardViolet
 
 - type: chameleonOutfit

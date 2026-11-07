@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CombatMode;
 using Content.Shared.Cuffs;
-using Content.Shared.Cuffs.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
@@ -14,6 +13,7 @@ using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.VirtualItem;
+using Content.Shared.Mind;
 using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Content.Shared.SS220.StuckOnEquip;
@@ -22,21 +22,26 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Strip;
 
-public abstract class SharedStrippableSystem : EntitySystem
+public abstract partial class SharedStrippableSystem : EntitySystem
 {
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private SharedInteractionSystem _interactionSystem = default!;
 
-    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
 
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private InventorySystem _inventorySystem = default!;
 
-    [Dependency] private readonly SharedCuffableSystem _cuffableSystem = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private SharedCuffableSystem _cuffableSystem = default!;
+    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private SharedHandsSystem _handsSystem = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private SharedMindSystem _mindSystem = default!;
 
+<<<<<<< HEAD
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedStuckOnEquipSystem _stuckOnEquip = default!; // SS220-StuckOnEquip
+=======
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+>>>>>>> wizards/stable
 
     public override void Initialize()
     {
@@ -160,7 +165,7 @@ public abstract class SharedStrippableSystem : EntitySystem
 
         if (!_handsSystem.CanDropHeld(user, user.Comp.ActiveHandId!))
         {
-            _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-drop"));
+            _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-drop"), user);
             return false;
         }
 
@@ -168,13 +173,13 @@ public abstract class SharedStrippableSystem : EntitySystem
 
         if (_inventorySystem.TryGetSlotEntity(target, slot, out _))
         {
-            _popupSystem.PopupCursor(Loc.GetString("strippable-component-item-slot-occupied", ("owner", targetIdentity)));
+            _popupSystem.PopupCursor(Loc.GetString("strippable-component-item-slot-occupied-message", ("owner", targetIdentity)), user);
             return false;
         }
 
         if (!_inventorySystem.CanEquip(user, target, held, slot, out _))
         {
-            _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-equip-message", ("owner", targetIdentity)));
+            _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-equip-message", ("owner", targetIdentity)), user);
             return false;
         }
 
@@ -206,12 +211,13 @@ public abstract class SharedStrippableSystem : EntitySystem
 
         if (!stealth)
         {
-            _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-insert",
-                                                        ("user", Identity.Entity(user, EntityManager)),
-                                                        ("item", _handsSystem.GetActiveItem((user, user.Comp))!.Value)),
-                                                        target,
-                                                        target,
-                                                        PopupType.Large);
+            _popupSystem.PopupEntity(
+                Loc.GetString("strippable-component-alert-owner-insert",
+                    ("user", Identity.Entity(user, EntityManager)),
+                    ("item", _handsSystem.GetActiveItem((user, user.Comp))!.Value)),
+                target,
+                target,
+                PopupType.Large);
         }
 
         var prefix = stealth ? "stealthily " : "";
@@ -263,7 +269,7 @@ public abstract class SharedStrippableSystem : EntitySystem
     {
         if (!_inventorySystem.TryGetSlotEntity(target, slot, out var slotItem))
         {
-            _popupSystem.PopupCursor(Loc.GetString("strippable-component-item-slot-free-message", ("owner", Identity.Entity(target, EntityManager))));
+            _popupSystem.PopupCursor(Loc.GetString("strippable-component-item-slot-free-message", ("owner", Identity.Entity(target, EntityManager))), user);
             return false;
         }
 
@@ -272,7 +278,7 @@ public abstract class SharedStrippableSystem : EntitySystem
 
         if (!_inventorySystem.CanUnequip(user, target, slot, out var reason))
         {
-            _popupSystem.PopupCursor(Loc.GetString(reason));
+            _popupSystem.PopupCursor(Loc.GetString(reason), user);
             return false;
         }
 
@@ -307,16 +313,23 @@ public abstract class SharedStrippableSystem : EntitySystem
         if (!stealth)
         {
             if (IsStripHidden(slotDef, user))
-                _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-hidden", ("slot", slot)), target, target, PopupType.Large);
+            {
+                _popupSystem.PopupEntity(
+                    Loc.GetString("strippable-component-alert-owner-hidden",
+                        ("slot", slot)),
+                    target,
+                    target,
+                    PopupType.Large);
+            }
             else
             {
-                _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner",
-                                                            ("user", Identity.Entity(user, EntityManager)),
-                                                            ("item", item)),
-                                                            target,
-                                                            target,
-                                                            PopupType.Large);
-
+                _popupSystem.PopupEntity(
+                    Loc.GetString("strippable-component-alert-owner",
+                        ("user", Identity.Entity(user, EntityManager)),
+                        ("item", item)),
+                    target,
+                    target,
+                    PopupType.Large);
             }
         }
 
@@ -358,7 +371,11 @@ public abstract class SharedStrippableSystem : EntitySystem
         RaiseLocalEvent(item, new DroppedEvent(user), true); // Gas tank internals etc.
 
         _handsSystem.PickupOrDrop(user, item, animateUser: stealth, animate: !stealth);
-        _adminLogger.Add(LogType.Stripping, LogImpact.High, $"{ToPrettyString(user):actor} has stripped the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s {slot} slot");
+        // Entities that have never been mind-controlled (mannequins, unpossessed animals) don't need to alert admins.
+        var impact = _mindSystem.TryGetLastMind(target, out _)
+            ? LogImpact.High
+            : LogImpact.Low;
+        _adminLogger.Add(LogType.Stripping, impact, $"{ToPrettyString(user):actor} has stripped the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s {slot} slot");
     }
 
     /// <summary>
@@ -382,13 +399,13 @@ public abstract class SharedStrippableSystem : EntitySystem
 
         if (!_handsSystem.CanDropHeld(user, user.Comp.ActiveHandId!))
         {
-            _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-drop"));
+            _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-drop"), user);
             return false;
         }
 
         if (!_handsSystem.CanPickupToHand(target, activeItem.Value, handName, checkActionBlocker: false, handsComp: target.Comp))
         {
-            _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-put-message", ("owner", Identity.Entity(target, EntityManager))));
+            _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-put-message", ("owner", Identity.Entity(target, EntityManager))), user);
             return false;
         }
 
@@ -417,13 +434,13 @@ public abstract class SharedStrippableSystem : EntitySystem
 
         if (!stealth)
         {
-            _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-insert-hand",
-                                                        ("user", Identity.Entity(user, EntityManager)),
-                                                        ("item", _handsSystem.GetActiveItem(user)!.Value)),
-                                                        target,
-                                                        target,
-                                                        PopupType.Large);
-
+            _popupSystem.PopupEntity(
+                Loc.GetString("strippable-component-alert-owner-insert-hand",
+                    ("user", Identity.Entity(user, EntityManager)),
+                    ("item", _handsSystem.GetActiveItem(user)!.Value)),
+                target,
+                target,
+                PopupType.Large);
         }
 
         var prefix = stealth ? "stealthily " : "";
@@ -483,7 +500,7 @@ public abstract class SharedStrippableSystem : EntitySystem
 
         if (!_handsSystem.TryGetHand(target, handName, out _))
         {
-            _popupSystem.PopupCursor(Loc.GetString("strippable-component-item-slot-free-message", ("owner", Identity.Entity(target, EntityManager))));
+            _popupSystem.PopupCursor(Loc.GetString("strippable-component-item-slot-free-message", ("owner", Identity.Entity(target, EntityManager))), user);
             return false;
         }
 
@@ -498,7 +515,7 @@ public abstract class SharedStrippableSystem : EntitySystem
 
         if (!_handsSystem.CanDropHeld(target, handName, false))
         {
-            _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-drop-message", ("owner", Identity.Entity(target, EntityManager))));
+            _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-drop-message", ("owner", Identity.Entity(target, EntityManager))), user);
             return false;
         }
 
@@ -532,11 +549,12 @@ public abstract class SharedStrippableSystem : EntitySystem
 
         if (!stealth)
         {
-            _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner",
-                                                        ("user", Identity.Entity(user, EntityManager)),
-                                                        ("item", item)),
-                                                        target,
-                                                        target);
+            _popupSystem.PopupEntity(
+                Loc.GetString("strippable-component-alert-owner",
+                    ("user", Identity.Entity(user, EntityManager)),
+                    ("item", item)),
+                target,
+                target);
         }
 
         var prefix = stealth ? "stealthily " : "";
@@ -577,7 +595,11 @@ public abstract class SharedStrippableSystem : EntitySystem
 
         _handsSystem.TryDrop(target, item, checkActionBlocker: false);
         _handsSystem.PickupOrDrop(user, item, animateUser: stealth, animate: !stealth, handsComp: user.Comp);
-        _adminLogger.Add(LogType.Stripping, LogImpact.High, $"{ToPrettyString(user):actor} has stripped the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s hands");
+        // Entities that have never been mind-controlled (mannequins, unpossessed animals) don't need to alert admins.
+        var impact = _mindSystem.TryGetLastMind(target.Owner, out _)
+            ? LogImpact.High
+            : LogImpact.Low;
+        _adminLogger.Add(LogType.Stripping, impact, $"{ToPrettyString(user):actor} has stripped the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s hands");
 
         // Hand update will trigger strippable update.
     }
@@ -608,7 +630,7 @@ public abstract class SharedStrippableSystem : EntitySystem
 
         if (ev.Event.InventoryOrHand)
         {
-            if ( ev.Event.InsertOrRemove && !CanStripInsertInventory((entity.Owner, entity.Comp), args.Target.Value, args.Used.Value, ev.Event.SlotOrHandName) ||
+            if (ev.Event.InsertOrRemove && !CanStripInsertInventory((entity.Owner, entity.Comp), args.Target.Value, args.Used.Value, ev.Event.SlotOrHandName) ||
                 !ev.Event.InsertOrRemove && !CanStripRemoveInventory(entity.Owner, args.Target.Value, args.Used.Value, ev.Event.SlotOrHandName))
             {
                 ev.Cancel();
@@ -616,7 +638,7 @@ public abstract class SharedStrippableSystem : EntitySystem
         }
         else
         {
-            if ( ev.Event.InsertOrRemove && !CanStripInsertHand((entity.Owner, entity.Comp), args.Target.Value, args.Used.Value, ev.Event.SlotOrHandName) ||
+            if (ev.Event.InsertOrRemove && !CanStripInsertHand((entity.Owner, entity.Comp), args.Target.Value, args.Used.Value, ev.Event.SlotOrHandName) ||
                 !ev.Event.InsertOrRemove && !CanStripRemoveHand(entity.Owner, args.Target.Value, args.Used.Value, ev.Event.SlotOrHandName))
             {
                 ev.Cancel();

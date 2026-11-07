@@ -4,9 +4,15 @@
 
 // namespace Content.Client.Clock;
 
+<<<<<<< HEAD
 // public sealed class ClockSystem : SharedClockSystem
 // {
 //     [Dependency] private readonly SpriteSystem _sprite = default!;
+=======
+public sealed partial class ClockSystem : SharedClockSystem
+{
+    [Dependency] private SpriteSystem _sprite = default!;
+>>>>>>> wizards/stable
 
 //     public override void Update(float frameTime)
 //     {

@@ -13,9 +13,16 @@
   - type: Action
     itemIconStyle: BigAction #SS220 I guess..
     useDelay: 15
+<<<<<<< HEAD
     icon:
       sprite: SS220/Interface/Actions/actions_revenant.rsi
       state: defile
+=======
+    itemIconStyle: BigAction
+  - type: Sprite
+    layers:
+    - texture: Interface/Actions/defile.png
+>>>>>>> wizards/stable
   - type: InstantAction
     event: !type:RevenantDefileActionEvent
 
@@ -26,13 +33,20 @@
   description: Costs 40 Essence.
   components:
   - type: Action
+<<<<<<< HEAD
     #SS220 revenant-sprite-port begin
     itemIconStyle: BigAction
     icon:
       sprite: SS220/Interface/Actions/actions_revenant.rsi
       state: overloadlight
     #SS220 revenant-sprite-port end
+=======
+>>>>>>> wizards/stable
     useDelay: 20
+    itemIconStyle: BigAction
+  - type: Sprite
+    layers:
+    - texture: Interface/Actions/overloadlight.png
   - type: InstantAction
     event: !type:RevenantOverloadLightsActionEvent
 
@@ -55,12 +69,19 @@
   description: Costs 60 Essence.
   components:
   - type: Action
+<<<<<<< HEAD
     #SS220 revenant-sprite-port begin
     itemIconStyle: BigAction
     icon:
       sprite: SS220/Interface/Actions/actions_revenant.rsi
       state: malfunction
     #SS220 revenant-sprite-port end
+=======
+>>>>>>> wizards/stable
     useDelay: 20
+    itemIconStyle: BigAction
+  - type: Sprite
+    layers:
+    - texture: Interface/Actions/malfunction.png
   - type: InstantAction
     event: !type:RevenantMalfunctionActionEvent

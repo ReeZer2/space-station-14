@@ -15,8 +15,13 @@
   ## Аплинк и его активация
   [color=cyan]Аплинк[/color] — ваш самый важный инструмент как предателя. Вы можете обменять 20 [color=red]телекристаллов[/color] (TC), с которыми вы начинаете, на предметы, которые помогут вам в достижении ваших целей.
 
+<<<<<<< HEAD
   Нажав [color=yellow][bold][keybind="OpenCharacterMenu"][/bold][/color], вы увидите свой личный код аплинка. [bold]Установив этот код в качестве мелодии звонка на своем ПДА, вы откроете аплинк.[/bold]
   Нажав [color=yellow][bold][keybind="OpenCharacterMenu"] [/bold][/color] также позволяет вам просматривать свои цели и кодовые слова.
+=======
+  By pressing [color=yellow][bold][keybind="OpenCharacterMenu"][/bold][/color], you'll see your personal uplink code. To activate your uplink, set your PDA's ringtone to the code. This can be used with [bold]any PDA, and by anyone[/bold], so be wary of sharing it!
+  Pressing [color=yellow][bold][keybind="OpenCharacterMenu"][/bold][/color] also lets you view your objectives and the codewords.
+>>>>>>> wizards/stable
 
   Если у вас нет КПК при активации, вам будет предоставлен [color=cyan]имплант связи[/color] [bold]за полную [color=red]TC[/color] стоимость импланта.[/bold]
   Активировать его можно из панели быстрого доступа.

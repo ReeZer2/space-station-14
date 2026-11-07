@@ -1,15 +1,5 @@
-using System.Linq;
-using Content.Server.Chat.Systems;
-using Content.Server.Interaction;
-using Content.Server.Popups;
-using Content.Server.Power.EntitySystems;
-using Content.Shared.Chat;
-using Content.Shared.Examine;
-using Content.Shared.Interaction;
-using Content.Shared.Power;
-using Content.Shared.Radio;
-using Content.Shared.Radio.Components;
 using Content.Shared.Radio.EntitySystems;
+<<<<<<< HEAD
 using Content.Shared.SS220.Radio;
 using Content.Shared.Speech;
 using Content.Shared.Speech.Components;
@@ -349,3 +339,10 @@ public sealed class RadioDeviceSystem : SharedRadioDeviceSystem
     }
     // SS220 HandheldRadio end
 }
+=======
+
+namespace Content.Server.Radio.EntitySystems;
+
+/// <inheritdoc/>
+public sealed partial class RadioDeviceSystem : SharedRadioDeviceSystem;
+>>>>>>> wizards/stable

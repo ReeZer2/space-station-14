@@ -5,6 +5,7 @@
     <GuideEntityEmbed Entity="AppearanceReptilian" Caption=""/>
   </Box>
 
+<<<<<<< HEAD
   Они могут питаться ТОЛЬКО фруктами и мясом, причём сырое мясо и кровь не причиняют им никакого вреда.
   Они предпочитают несколько более высокий температурный диапазон, чем люди.
   Они могут перетаскивать предметы хвостом, держа обе руки свободными.
@@ -12,5 +13,17 @@
   Их невооруженные атаки когтями наносят режущий урон вместо тупого.
 
   Они получают [color=#ffa500]на 30% больше урона от холода.[/color]
+=======
+  ## General Information
+
+  Reptilians can [color=lightgreen]use their tail to drag objects around[/color], keeping both their hands free.
+
+  Their sharp claws make their unarmed attacks deal Slash damage.
+
+  The reptilian digestive system [color=palevioletred]can only process fruits and meat[/color], but can [color=lightgreen]digest raw meat and blood[/color] without ill effects.
+  They are [color=palevioletred]poisoned[/color] by allicin (found in garlic and onions) and theobromine (found in caffeinated beverages and chocolate).
+
+  They take [color=palevioletred]30% more Cold damage.[/color] They prefer a somewhat warmer temperature range than humans.
+>>>>>>> wizards/stable
 
 </Document>

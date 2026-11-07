@@ -1,4 +1,4 @@
-﻿- type: job
+- type: job
   id: TechnicalAssistant
   name: job-name-technical-assistant
   description: job-description-technical-assistant
@@ -16,7 +16,11 @@
   experienceDefinition: TechnicalAssistantRoleExperience # SS220-experience
   icon: "JobIconTechnicalAssistant"
   supervisors: job-supervisors-engineering
+<<<<<<< HEAD
   canBeAntag: true
+=======
+  guides: [ Engineering ] # TODO: should have a more specific guidebook page instead of using the department itself
+>>>>>>> wizards/stable
   access:
   - Maintenance
   - Engineering

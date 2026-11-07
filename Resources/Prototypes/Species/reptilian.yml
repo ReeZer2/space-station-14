@@ -14,4 +14,14 @@
   maleFirstNames: NamesReptilianMale
   femaleFirstNames: NamesReptilianFemale
   naming: FirstDashFirst
+<<<<<<< HEAD
   buttScanTexture: /Textures/SS220/Interface/Butts/unathi.png # SS220 Photocopier
+=======
+  defaultSoundsBySex:
+  - MaleReptilian
+  - FemaleReptilian
+  - MaleReptilian
+  voices:
+  - MaleReptilian
+  - FemaleReptilian
+>>>>>>> wizards/stable

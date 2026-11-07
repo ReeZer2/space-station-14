@@ -28,6 +28,7 @@ namespace Content.Server.Administration.Managers;
 
 public sealed partial class BanManager : IBanManager, IPostInjectInit
 {
+<<<<<<< HEAD
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly IServerDbManager _db = default!;
@@ -41,6 +42,20 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     [Dependency] private readonly ITaskManager _taskManager = default!;
     [Dependency] private readonly UserDbDataManager _userDbData = default!;
     [Dependency] private readonly DiscordBanPostManager _discordBanPostManager = default!; // SS220-add-discord-post-ban-notify
+=======
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IChatManager _chat = default!;
+    [Dependency] private IServerDbManager _db = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private ILocalizationManager _localizationManager = default!;
+    [Dependency] private ILogManager _logManager = default!;
+    [Dependency] private INetManager _netManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IEntitySystemManager _systems = default!;
+    [Dependency] private ITaskManager _taskManager = default!;
+    [Dependency] private UserDbDataManager _userDbData = default!;
+>>>>>>> wizards/stable
 
     private ISawmill _sawmill = default!;
 
@@ -323,7 +338,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         {
             roundIds = [..banInfo.RoundIds];
         }
-        else if (_systems.TryGetEntitySystem<GameTicker>(out var ticker) && ticker.RoundId != 0)
+        else if (_systems.TryGetEntitySystem<ServerGameTicker>(out var ticker) && ticker.RoundId != 0)
         {
             roundIds = [ticker.RoundId];
         }
@@ -493,17 +508,17 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
             : null;
     }
 
-    public bool IsRoleBanned(ICommonSession player, List<ProtoId<JobPrototype>> jobs)
+    public bool IsRoleBanned(ICommonSession player, params List<ProtoId<JobPrototype>> jobs)
     {
         return IsRoleBanned<JobPrototype>(player, jobs);
     }
 
-    public bool IsRoleBanned(ICommonSession player, List<ProtoId<AntagPrototype>> antags)
+    public bool IsRoleBanned(ICommonSession player, params List<ProtoId<AntagPrototype>> antags)
     {
         return IsRoleBanned<AntagPrototype>(player, antags);
     }
 
-    private bool IsRoleBanned<T>(ICommonSession player, List<ProtoId<T>> roles) where T : class, IPrototype
+    private bool IsRoleBanned<T>(ICommonSession player, params List<ProtoId<T>> roles) where T : class, IPrototype
     {
         var bans = GetRoleBans(player.UserId);
 

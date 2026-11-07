@@ -13,12 +13,12 @@ using System;
 
 namespace Content.Server.Atmos.Rotting;
 
-public sealed class RottingSystem : SharedRottingSystem
+public sealed partial class RottingSystem : SharedRottingSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-    [Dependency] private readonly ContainerSystem _container = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private AtmosphereSystem _atmosphere = default!;
+    [Dependency] private ContainerSystem _container = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
 
     public override void Initialize()
     {
@@ -46,6 +46,7 @@ public sealed class RottingSystem : SharedRottingSystem
     {
         if (args.Handled)
             return;
+<<<<<<< HEAD
 
         //#ss220 Consider internal temperature for rotting begin
         float tempToCheck = Atmospherics.T20C;
@@ -60,6 +61,9 @@ public sealed class RottingSystem : SharedRottingSystem
         
         args.Handled = tempToCheck < Atmospherics.T0C + 0.85f;
         //#ss220 Consider internal temperature for rotting end
+=======
+        args.Handled = component.Temperature < Atmospherics.T0C + 0.85f;
+>>>>>>> wizards/stable
     }
 
     /// <summary>

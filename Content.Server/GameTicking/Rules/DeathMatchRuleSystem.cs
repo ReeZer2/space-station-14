@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Clothing.Systems;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.KillTracking;
@@ -6,12 +5,18 @@ using Content.Server.Mind;
 using Content.Server.Points;
 using Content.Server.RoundEnd;
 using Content.Server.Station.Systems;
+using Content.Shared.EntityTable;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.GameTicking.Rules;
 using Content.Shared.Points;
+<<<<<<< HEAD
 using Content.Shared.Storage;
 using Content.Server.Traitor.Uplink;
 using Robust.Server.GameObjects;
+=======
+using Content.Shared.Station.Systems;
+>>>>>>> wizards/stable
 using Robust.Server.Player;
 using Robust.Shared.Utility;
 using Content.Shared.Mobs.Systems;
@@ -25,8 +30,9 @@ namespace Content.Server.GameTicking.Rules;
 /// <summary>
 /// Manages <see cref="DeathMatchRuleComponent"/>
 /// </summary>
-public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponent>
+public sealed partial class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponent>
 {
+<<<<<<< HEAD
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly OutfitSystem _outfitSystem = default!;
@@ -37,6 +43,16 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
+=======
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private MindSystem _mind = default!;
+    [Dependency] private OutfitSystem _outfitSystem = default!;
+    [Dependency] private PointSystem _point = default!;
+    [Dependency] private RespawnRuleSystem _respawn = default!;
+    [Dependency] private RoundEndSystem _roundEnd = default!;
+    [Dependency] private StationSpawningSystem _stationSpawning = default!;
+    [Dependency] private EntityTableSystem _entityTable = default!;
+>>>>>>> wizards/stable
 
     int _deathMatchStartingBalance;
 
@@ -66,7 +82,7 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
         var query = EntityQueryEnumerator<DeathMatchRuleComponent, RespawnTrackerComponent, PointManagerComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var dm, out var tracker, out var point, out var rule))
         {
-            if (!GameTicker.IsGameRuleActive(uid, rule))
+            if (!GameTicker.IsGameRuleActive((uid, rule)))
                 continue;
 
             var newMind = _mind.CreateMind(ev.Player.UserId, ev.Profile.Name);
@@ -95,8 +111,9 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
         var query = EntityQueryEnumerator<DeathMatchRuleComponent, RespawnTrackerComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out _, out var tracker, out var rule))
         {
-            if (!GameTicker.IsGameRuleActive(uid, rule))
+            if (!GameTicker.IsGameRuleActive((uid, rule)))
                 continue;
+
             _respawn.AddToTracker((ev.Mob, null), (uid, tracker));
         }
     }
@@ -120,7 +137,7 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
         var query = EntityQueryEnumerator<DeathMatchRuleComponent, PointManagerComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var dm, out var point, out var rule))
         {
-            if (!GameTicker.IsGameRuleActive(uid, rule))
+            if (!GameTicker.IsGameRuleActive((uid, rule)))
                 continue;
 
             // YOU SUICIDED OR GOT THROWN INTO LAVA!
@@ -136,8 +153,10 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
             if (ev.Assist is KillPlayerSource assist && dm.Victor == null)
                 _point.AdjustPointValue(assist.PlayerId, 1, uid, point);
 
-            var spawns = EntitySpawnCollection.GetSpawns(dm.RewardSpawns).Cast<string?>().ToList();
-            EntityManager.SpawnEntities(_transform.GetMapCoordinates(ev.Entity), spawns);
+            foreach (var spawn in _entityTable.GetSpawns(dm.RewardSpawns))
+            {
+                SpawnNextToOrDrop(spawn, ev.Entity);
+            }
         }
     }
 
@@ -153,12 +172,12 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
         _roundEnd.EndRound(component.RestartDelay);
     }
 
-    protected override void AppendRoundEndText(EntityUid uid, DeathMatchRuleComponent component, GameRuleComponent gameRule, ref RoundEndTextAppendEvent args)
+    protected override void AppendRoundEndText(Entity<DeathMatchRuleComponent> entity, ref RoundEndTextAppendEvent args)
     {
-        if (!TryComp<PointManagerComponent>(uid, out var point))
+        if (!TryComp<PointManagerComponent>(entity, out var point))
             return;
 
-        if (component.Victor != null && _player.TryGetPlayerData(component.Victor.Value, out var data))
+        if (entity.Comp.Victor != null && _player.TryGetPlayerData(entity.Comp.Victor.Value, out var data))
         {
             args.AddLine(Loc.GetString("point-scoreboard-winner", ("player", data.UserName)));
             args.AddLine("");

@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 using Content.Client.Stylesheets;
 using Content.Client.SS220.UserInterface.System.Chat.Controls;
+=======
+>>>>>>> wizards/stable
 using Content.Shared.Chat;
 using Content.Shared.Input;
 using Robust.Client.UserInterface.Controls;

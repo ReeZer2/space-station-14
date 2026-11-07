@@ -1,6 +1,6 @@
-- type: entity # Starts fuse after taking 10 damage.
-  parent: BaseItem
+- type: entity
   abstract: true
+  parent: BaseItem
   id: GrenadeBase
   components:
   # SS220 new sound_drop effect begin
@@ -22,6 +22,7 @@
     slots:
     - Belt
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: Appearance
   - type: AnimationPlayer
@@ -48,8 +49,8 @@
 # SS220-place-and-pickup-sounds-2 end
 
 - type: entity # Starts fuse after taking 10 damage.
-  parent: GrenadeBase
   abstract: true
+  parent: GrenadeBase
   id: TimerGrenadeBase
   components:
   - type: TriggerOnUse
@@ -73,35 +74,23 @@
     delay: 3 # SS220 Should be equal to the TimerTrigger delay
   # SS-220 grenades timer ended
 
-- type: entity # Starts fuse after taking 10 damage.
-  parent: GrenadeBase
+- type: entity
   abstract: true
+  parent: [ GrenadeBase, VolatileGrenadeBase ]
   id: ImpactGrenadeBase
   components:
   - type: TriggerOnLand
   - type: LandAtCursor
-  - type: Destructible
-    thresholds:
-    - trigger: # immediately explode
-        !type:DamageTrigger
-        damage: 45
-      behaviors:
-      - !type:TriggerBehavior
-        keyOut: timer
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+  - type: TriggerOnCollide
+    fixtureID: fix1
+    maxTriggers: 1
 
-- type: entity # Starts fuse after taking 10 damage, instantly detonates/activates after taking 45 damage.
+- type: entity # Instantly detonates/activates after taking 45 damage.
   abstract: true
   id: VolatileGrenadeBase
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
-      behaviors:
-      - !type:TimerStartBehavior
     - trigger: # immediately explode
         !type:DamageTrigger
         damage: 45
@@ -111,17 +100,12 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
 
-- type: entity # Starts fuse after taking 10 damage, is destroyed without activating/detonating after taking 45 damage.
+- type: entity # Is destroyed without activating/detonating after taking 45 damage.
   abstract: true
   id: FragileGrenadeBase
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
-      behaviors:
-      - !type:TimerStartBehavior
     - trigger: # Disappear
         !type:DamageTrigger
         damage: 45

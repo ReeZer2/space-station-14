@@ -15,9 +15,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    heatingCoefficient: 0.001
-    coolingCoefficient: 0.001
   - type: FireProtection
     reduction: 0.8
   - type: ExplosionResistance
@@ -201,7 +198,7 @@
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
-    damageCoefficient: 0.3
+    damageCoefficient: 0.5
   - type: Armor
     modifiers:
       coefficients:
@@ -256,9 +253,6 @@
         Radiation: 0.1
   - type: ExplosionResistance
     damageCoefficient: 0.2
-  - type: TemperatureProtection
-    heatingCoefficient: 0.001
-    coolingCoefficient: 0.001
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitMaxim
 
@@ -277,7 +271,7 @@
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
-    damageCoefficient: 0.4
+    damageCoefficient: 0.5
   - type: Armor
     modifiers:
       coefficients:
@@ -355,7 +349,11 @@
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
+<<<<<<< HEAD
     damageCoefficient: 0.3 #SS220-WardenJuggernaut
+=======
+    damageCoefficient: 0.5
+>>>>>>> wizards/stable
   - type: Armor
     modifiers:
       coefficients:
@@ -391,7 +389,7 @@
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
-    damageCoefficient: 0.5
+    damageCoefficient: 0.7
   - type: Armor
     modifiers:
       coefficients:
@@ -415,10 +413,17 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #Chief Engineer's Hardsuit
 - type: entity
+<<<<<<< HEAD
   parent: [ClothingOuterHardsuitBase]
+=======
+  parent: [ TemperatureProtectionGreat, ClothingOuterHardsuitBase, BaseCommandContraband]
+>>>>>>> wizards/stable
   id: ClothingOuterHardsuitEngineeringWhite
   name: chief engineer's hardsuit
   description: A special hardsuit that protects against hazardous, low pressure environments, made for the chief engineer of the station.
@@ -466,6 +471,9 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #Chief Medical Officer's Hardsuit
 - type: entity
@@ -501,6 +509,9 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #Research Director's Hardsuit
 - type: entity
@@ -552,7 +563,9 @@
   - type: StaticPrice
     price: 750
   - type: StealTarget
-    stealGroup: ClothingOuterHardsuitRd
+    stealGroup:
+    - ClothingOuterHardsuitRd
+    - HeadHardsuit
 
 #Head of Security's Hardsuit
 - type: entity
@@ -589,6 +602,9 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurityRed
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #Luxury Mining Hardsuit
 - type: entity
@@ -648,6 +664,8 @@
     sprite: SS220/Clothing/OuterClothing/Hardsuits/syndicate.rsi  # SS220-hardsuir-resprite
   - type: Item
     size: Huge
+    shape:
+    - 0,0,3,3
   - type: Clothing
     sprite: SS220/Clothing/OuterClothing/Hardsuits/syndicate.rsi  # SS220-hardsuir-resprite
   - type: PressureProtection
@@ -768,7 +786,11 @@
 
 #Syndicate Elite Hardsuit
 - type: entity
+<<<<<<< HEAD
   parent: [ClothingOuterHardsuitBase, BaseToggleClothing] # SS220-toggle-shield
+=======
+  parent: [ TemperatureProtectionGreat, ClothingOuterHardsuitBase, BaseSyndicateContraband ]
+>>>>>>> wizards/stable
   id: ClothingOuterHardsuitSyndieElite
   name: syndicate elite hardsuit
   description: An elite version of the blood-red hardsuit, with improved radiation resistance and fireproofing. Property of Gorlex Marauders.
@@ -780,11 +802,8 @@
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    heatingCoefficient: 0.001
-    coolingCoefficient: 0.001
   - type: ExplosionResistance
-    damageCoefficient: 0.2
+    damageCoefficient: 0.3
   - type: FireProtection
     reduction: 0.8
   # - type: StaminaResistance # do not add these to other equipment or mobs, we don't want to microbalance these everywhere
@@ -821,7 +840,12 @@
   # SS220-MIT-add-field-shields-end
   - type: Item
     size: Huge
+<<<<<<< HEAD
   #ss220 elite-suitReb begin
+=======
+    shape:
+    - 0,0,3,3
+>>>>>>> wizards/stable
   - type: ClothingSpeedModifier
     walkModifier: 1.0 #ss-220 armReb
     sprintModifier: 1.0 #ss-220 armReb
@@ -924,12 +948,16 @@
   - type: PressureProtection
     highPressureMultiplier: 0.2
     lowPressureMultiplier: 1000
+<<<<<<< HEAD
   - type: TemperatureProtection #ss-220 armReb
     heatingCoefficient: 0.001 #ss-220 armReb
     coolingCoefficient: 0.001 #ss220 armReb
   - type: ExplosionResistance
     damageCoefficient: 0.2  #ss-220 armReb
   #- type: StaminaResistance # Should not have stamina resistance, this is purely so people know it was not forgotten.
+=======
+  # - type: StaminaResistance # Should not have stamina resistance, this is purely so people know it was not forgotten.
+>>>>>>> wizards/stable
   - type: Armor
     modifiers:
       coefficients:
@@ -1067,6 +1095,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/pirateeva.rsi
   - type: Item
     size: Huge
+    shape:
+    - 0,0,3,3
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/pirateeva.rsi
   - type: ExplosionResistance
@@ -1103,6 +1133,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/piratecaptain.rsi
   - type: Item
     size: Huge
+    shape:
+    - 0,0,3,3
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/piratecaptain.rsi
   - type: PressureProtection
@@ -1134,7 +1166,11 @@
 #CENTCOMM / ERT HARDSUITS
 #ERT Leader Hardsuit
 - type: entity
+<<<<<<< HEAD
   parent: [ ClothingOuterHardsuitSyndieCommander, BaseToggleClothing ] # SS220-toggle-shield
+=======
+  parent: [ BaseTaskForceContraband, ClothingOuterHardsuitSyndieCommander ]
+>>>>>>> wizards/stable
   id: ClothingOuterHardsuitERTLeader
   name: ERT leader's hardsuit
   description: A protective hardsuit worn by the leader of an emergency response team.
@@ -1142,6 +1178,7 @@
   - type: Sprite
     sprite: SS220/Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi # SS220-hardsuits-resprite
   - type: Clothing
+<<<<<<< HEAD
     sprite: SS220/Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi # SS220-hardsuits-resprite
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTLeader
@@ -1162,10 +1199,22 @@
     action: ActionTogglePersonalShield
     disableOnUnequip: true
   # SS220-MIT-add-field-shields-end
+=======
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,3,3
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitERTLeader
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
+>>>>>>> wizards/stable
 
 #ERT Chaplain Hardsuit
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndie ]
+  parent: [ BaseTaskForceContraband, ClothingOuterHardsuitSyndie ]
   id: ClothingOuterHardsuitERTChaplain
   name: ERT chaplain's hardsuit
   description: A protective hardsuit worn by the chaplains of an Emergency Response Team.
@@ -1174,12 +1223,19 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertchaplain.rsi #if you change this, please update the humanoid.yml with a better markers sprite.
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertchaplain.rsi
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,3,3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTChaplain
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #ERT Engineer Hardsuit
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieElite ]
+  parent: [ BaseTaskForceContraband, ClothingOuterHardsuitSyndieElite ]
   id: ClothingOuterHardsuitERTEngineer
   name: ERT engineer's hardsuit
   description: A protective hardsuit worn by the engineers of an emergency response team.
@@ -1187,15 +1243,30 @@
   - type: Sprite
     sprite: SS220/Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi # SS220-hardsuits-resprite
   - type: Clothing
+<<<<<<< HEAD
     sprite: SS220/Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi # SS220-hardsuits-resprite
+=======
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,3,3
+>>>>>>> wizards/stable
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTEngineer
   - type: FireProtection
     reduction: 0.8
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #ERT Medic Hardsuit
 - type: entity
+<<<<<<< HEAD
   parent: [ ClothingOuterHardsuitSyndieMedic, BaseToggleClothing ] # SS220-toggle-shield
+=======
+  parent: [ BaseTaskForceContraband, ClothingOuterHardsuitSyndieMedic ]
+>>>>>>> wizards/stable
   id: ClothingOuterHardsuitERTMedical
   name: ERT medic's hardsuit
   description: A protective hardsuit worn by the medics of an emergency response team.
@@ -1203,6 +1274,7 @@
   - type: Sprite
     sprite: SS220/Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi # SS220-hardsuits-resprite
   - type: Clothing
+<<<<<<< HEAD
     sprite: SS220/Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi # SS220-hardsuits-resprite
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTMedical
@@ -1227,6 +1299,22 @@
 #ERT Security Hardsuit
 - type: entity
   parent: [ ClothingOuterHardsuitSyndie, BaseToggleClothing ] # SS220-toggle-shield
+=======
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,3,3
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitERTMedical
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
+
+#ERT Security Hardsuit
+- type: entity
+  parent: [ BaseTaskForceContraband, ClothingOuterHardsuitSyndie ]
+>>>>>>> wizards/stable
   id: ClothingOuterHardsuitERTSecurity
   name: ERT security's hardsuit
   description: A protective hardsuit worn by the security officers of an emergency response team.
@@ -1234,13 +1322,22 @@
   - type: Sprite
     sprite: SS220/Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi # SS220-hardsuits-resprite
   - type: Clothing
+<<<<<<< HEAD
     sprite: SS220/Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi # SS220-hardsuits-resprite
+=======
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,3,3
+>>>>>>> wizards/stable
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTSecurity
   - type: Tag
     tags:
     - Hardsuit
     - WhitelistChameleon
+<<<<<<< HEAD
   # SS220-MIT-add-field-shields-begin
   - type: FieldShieldProvider
     rechargeShieldData:
@@ -1258,10 +1355,15 @@
     action: ActionTogglePersonalShield
     disableOnUnequip: true
   # SS220-MIT-add-field-shields-end
+=======
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
+>>>>>>> wizards/stable
 
 #ERT Janitor Hardsuit
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieElite ]
+  parent: [ BaseTaskForceContraband, ClothingOuterHardsuitSyndieElite ]
   id: ClothingOuterHardsuitERTJanitor
   name: ERT janitor's hardsuit
   description: A protective hardsuit worn by the janitors of an emergency response team.
@@ -1269,13 +1371,28 @@
   - type: Sprite
     sprite: SS220/Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi # SS220-hardsuits-resprite
   - type: Clothing
+<<<<<<< HEAD
     sprite: SS220/Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi # SS220-hardsuits-resprite
+=======
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,3,3
+>>>>>>> wizards/stable
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTJanitor
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #Deathsquad
 - type: entity
+<<<<<<< HEAD
   parent: [ ClothingOuterHardsuitBase ]
+=======
+  parent: [ BaseDeathSquadContraband, ClothingOuterHardsuitBase ]
+>>>>>>> wizards/stable
   id: ClothingOuterHardsuitDeathsquad
   name: death squad hardsuit
   description: An advanced hardsuit favored by commandos for use in special operations.
@@ -1283,13 +1400,19 @@
   - type: Sprite
     sprite: SS220/Clothing/OuterClothing/Hardsuits/deathsquad.rsi # SS220-hardsuits-resprite
   - type: Clothing
+<<<<<<< HEAD
     sprite: SS220/Clothing/OuterClothing/Hardsuits/deathsquad.rsi # SS220-hardsuits-resprite
+=======
+    sprite: Clothing/OuterClothing/Hardsuits/deathsquad.rsi
+  - type: Item
+    shape:
+    - 0,0,7,7
+>>>>>>> wizards/stable
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
-    heatingCoefficient: 0.001
-    coolingCoefficient: 0.001
+    coefficient: 0.001
   - type: ExplosionResistance
     damageCoefficient: 0.2
   - type: FireProtection
@@ -1330,10 +1453,17 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitDeathsquad
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #CBURN Hardsuit
 - type: entity
+<<<<<<< HEAD
   parent: [ ClothingOuterHardsuitBase, BaseToggleClothing ] # SS220-toggle-shield
+=======
+  parent: [ BaseCBURNContraband, ClothingOuterHardsuitBase ]
+>>>>>>> wizards/stable
   id: ClothingOuterHardsuitCBURN
   name: CBURN exosuit
   description: A lightweight yet strong exosuit used for special cleanup operations.
@@ -1345,10 +1475,13 @@
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
+<<<<<<< HEAD
   - type: TemperatureProtection
     heatingCoefficient: 0.001
     coolingCoefficient: 0.001
 # SS220 CBURN_stats_tweak start
+=======
+>>>>>>> wizards/stable
   - type: ExplosionResistance
     damageCoefficient: 0.7
   - type: Armor

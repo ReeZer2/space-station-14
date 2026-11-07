@@ -4,12 +4,18 @@
   id: RitualDagger
   description: A strange dagger used by sinister groups for rituals and sacrifices.
   components:
+<<<<<<< HEAD
   - type: EmitSoundOnLand
     sound:
       path: /Audio/SS220/Effects/Drop/blade.ogg ##new sound_drop effect, add MIXnikita
       params:
         volume: 2
   - type: Sharp
+=======
+  - type: Tool
+    qualities:
+    - Slicing
+>>>>>>> wizards/stable
   - type: Sprite
     sprite: Objects/Weapons/Melee/cult_dagger.rsi
     state: icon
@@ -33,12 +39,18 @@
   id: EldritchBlade
   description: A sword humming with unholy energy.
   components:
+<<<<<<< HEAD
   - type: EmitSoundOnLand
     sound:
       path: /Audio/SS220/Effects/Drop/blade.ogg ##new sound_drop effect, add MIXnikita
       params:
         volume: 2
   - type: Sharp
+=======
+  - type: Tool
+    qualities:
+    - Slicing
+>>>>>>> wizards/stable
   - type: Sprite
     sprite: Objects/Weapons/Melee/cult_blade.rsi
     state: icon
@@ -85,15 +97,21 @@
   id: UnholyHalberd
   description: A poleaxe that seems to be linked to its wielder.
   components:
+<<<<<<< HEAD
   - type: EmitSoundOnLand
     sound:
       path: /Audio/SS220/Effects/Drop/axe.ogg ##new sound_drop effect, add MIXnikita
       params:
         volume: 2
+=======
+  - type: Tool
+    qualities:
+    - Slicing
+    - Sawing
+>>>>>>> wizards/stable
   - type: Tag
     tags:
     - FireAxe
-  - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/cult_halberd.rsi
     state: icon
@@ -104,7 +122,6 @@
       types:
         Blunt: 10
         Slash: 10
-        Structural: 5
     soundHit:
       collection: MetalThud
   - type: Wieldable
@@ -113,9 +130,12 @@
       types:
         Blunt: 5
         Slash: 5
-        Structural: 10
   - type: Item
     size: Ginormous
+    shape:
+    - 0,0,2,1
+    - 1,2,1,5
+    storedRotation: -45
   - type: Clothing
     sprite: Objects/Weapons/Melee/cult_halberd.rsi
     quickEquip: false

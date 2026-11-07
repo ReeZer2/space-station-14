@@ -13,14 +13,18 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Maps;
 
+<<<<<<< HEAD
 public sealed partial class GameMapManager : IGameMapManager // SS220 add partial
+=======
+public sealed partial class GameMapManager : IGameMapManager
+>>>>>>> wizards/stable
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IResourceManager _resMan = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IConfigurationManager _configurationManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IResourceManager _resMan = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     // SS220: This is a queue of rotation maps, not previous round maps.
     [ViewVariables(VVAccess.ReadOnly)]
@@ -105,14 +109,14 @@ public sealed partial class GameMapManager : IGameMapManager // SS220 add partia
 
     public IEnumerable<GameMapPrototype> AllVotableMaps()
     {
-        var poolPrototype = _entityManager.System<GameTicker>().Preset?.MapPool ??
+        var poolPrototype = _entityManager.System<ServerGameTicker>().Preset?.MapPool ??
                    _configurationManager.GetCVar(CCVars.GameMapPool);
 
-        if (_prototypeManager.TryIndex<GameMapPoolPrototype>(poolPrototype, out var pool))
+        if (_prototypeManager.TryIndex(poolPrototype, out var pool))
         {
             foreach (var map in pool.Maps)
             {
-                if (!_prototypeManager.TryIndex<GameMapPrototype>(map, out var mapProto))
+                if (!_prototypeManager.TryIndex(map, out var mapProto))
                 {
                     _log.Error($"Couldn't index map {map} in pool {poolPrototype}");
                     continue;
@@ -197,9 +201,13 @@ public sealed partial class GameMapManager : IGameMapManager // SS220 add partia
         return map.MaxPlayers >= _playerManager.PlayerCount &&
                map.MinPlayers <= _playerManager.PlayerCount &&
                map.Conditions.All(x => x.Check(map)) &&
+<<<<<<< HEAD
                _entityManager.System<GameTicker>().IsMapEligible(map) &&
                (!_previousMaps.Contains(map.ID) || !_mapRotationEnabled) &&
                (!_playedMapQueue.Contains(map.ID) || !_playedMapMemoryEnabled); // SS220 map vote fix
+=======
+               _entityManager.System<ServerGameTicker>().IsMapEligible(map);
+>>>>>>> wizards/stable
     }
 
     private bool TryLookupMap(string gameMap, [NotNullWhen(true)] out GameMapPrototype? map)

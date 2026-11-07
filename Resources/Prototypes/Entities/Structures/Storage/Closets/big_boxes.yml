@@ -1,12 +1,13 @@
-﻿- type: entity
-  id: BaseBigBox
+- type: entity
+  parent: StructureHealthContainerFlimsy
+  id: BigBox
   name: cardboard box #it's still just a box
   description: Huh? Just a box...
-  abstract: true
   components:
     - type: Transform
       noRot: true
     - type: Clickable
+    - type: InteractionOutline
     - type: Physics
       bodyType: KinematicController
     - type: Fixtures
@@ -22,6 +23,9 @@
             - MobLayer
           hard: true
     - type: Pullable
+    - type: Vehicle
+    - type: ContainerVehicle
+      containerId: entity_storage
     - type: CardboardBox
       effectSound: /Audio/Effects/chime.ogg
     - type: InputMover
@@ -34,12 +38,17 @@
       containers:
         entity_storage: !type:Container
     - type: Damageable
+<<<<<<< HEAD
       damageContainer: Box
       # ss220 box fix begin
+=======
+      damageModifierSet: CardboardMod
+>>>>>>> wizards/stable
     - type: Destructible
       thresholds:
       - trigger:
           !type:DamageTrigger
+<<<<<<< HEAD
             damage: 60
         behaviors:
         - !type:PlaySoundBehavior
@@ -53,6 +62,18 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
       # ss220 box fix end
+=======
+          damage: 20
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            path: /Audio/Effects/poster_broken.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            MaterialCardboard1:
+              min: 1
+              max: 2
+>>>>>>> wizards/stable
     - type: Sprite
       noRot: true
       sprite: SS220/Structures/Storage/closet.rsi #SS220-Closet-Resprite
@@ -74,20 +95,29 @@
       containers:
         - entity_storage
     - type: GravityAffected
+    - type: MovementSpeedModifier
+      weightlessModifier: 0
+      acceleration: 2
+      friction: 2
+      frictionNoInput: 6
 
 - type: entity
+  parent: BigBox
   id: StealthBox
   suffix: stealth
-  parent: BaseBigBox
   description: Kept ya waiting, huh?
   components:
     - type: Damageable
-      damageModifierSet: FlimsyMetallic #Syndicate boxes should have a bit of protection
+      damageModifierSet: WoodMod #Syndicate boxes should have a bit of protection
     - type: CardboardBox
       quiet: true
     - type: Stealth
       hadOutline: true
+<<<<<<< HEAD
       # SS220 Changes invis so that box is less visible at all times.
+=======
+      shimmerFrequency: 0.05
+>>>>>>> wizards/stable
     - type: StealthOnMove
       passiveVisibilityRate: -1
       movementVisibilityRate: 0.20
@@ -102,6 +132,7 @@
       hiddenName: ent-BaseBigBox
     # SS220-hidden-desc-end
 
+<<<<<<< HEAD
 - type: entity
   id: BigBox
   parent: BaseBigBox
@@ -118,6 +149,8 @@
  #       acts: [ "Destruction" ]
   # ss220 box fix end
 
+=======
+>>>>>>> wizards/stable
 #For admin spawning only
 - type: entity
   id: GhostBox

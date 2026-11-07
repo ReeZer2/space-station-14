@@ -1,6 +1,38 @@
+- type: entity
+  abstract: true
+  parent: [SolutionFood, SolutionToolSmall, Clothing]
+  id: ClothingMedalBase
+  name: medal
+  description: A medal to show your mettle. May or may not be made out of metal.
+  components:
+  - type: Item
+    size: Small
+  - type: Clothing
+    quickEquip: true
+    slots:
+    - neck
+  - type: Sprite
+    state: icon
+  - type: PhysicalComposition # 50% of the amount of cloth you'd obtain upon butchering
+    materialComposition:
+      Cloth: 100
+  - type: Edible
+    requiresSpecialDigestion: true
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 15
+  - type: Tag
+    tags:
+    - Medal
+    - MonkeyWearable
+    - ClothMade
+    - Recyclable
+    - WhitelistChameleon
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingMedalBase
   id: ClothingNeckBronzeheart
   name: bronzeheart medal
   description: Given to crewmates for exemplary bravery in the face of danger.
@@ -8,14 +40,18 @@
   - type: Sprite
     sprite: SS220/Clothing/Neck/Medals/bronzeheart.rsi #SS220 Resprited
   - type: Clothing
+<<<<<<< HEAD
     sprite: SS220/Clothing/Neck/Medals/bronzeheart.rsi #SS220 Resprited
   - type: Tag
     tags:
       - Medal
       - WhitelistChameleon
+=======
+    sprite: Clothing/Neck/Medals/bronzeheart.rsi
+>>>>>>> wizards/stable
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingMedalBase
   id: ClothingNeckGoldmedal
   name: gold medal of crewmanship
   description: Given to crewmates who display excellent crewmanship.
@@ -25,14 +61,11 @@
   - type: Clothing
     sprite: SS220/Clothing/Neck/Medals/gold.rsi #SS220 resprited
   - type: StealTarget
-    stealGroup: ClothingNeckGoldmedal
-  - type: Tag
-    tags:
-      - Medal
-      - WhitelistChameleon
+    stealGroup:
+    - ClothingNeckGoldmedal
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingMedalBase
   id: ClothingNeckCargomedal
   name: cargo medal
   description: Given for the best work in the cargo department.
@@ -40,14 +73,18 @@
   - type: Sprite
     sprite: SS220/Clothing/Neck/Medals/cargomedal.rsi #SS220 Resprited
   - type: Clothing
+<<<<<<< HEAD
     sprite: SS220/Clothing/Neck/Medals/cargomedal.rsi #SS220 Resprited
   - type: Tag
     tags:
       - Medal
       - WhitelistChameleon
+=======
+    sprite: Clothing/Neck/Medals/cargomedal.rsi
+>>>>>>> wizards/stable
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingMedalBase
   id: ClothingNeckEngineermedal
   name: engineer medal
   description: Given for the best work in the engineering department.
@@ -55,14 +92,18 @@
   - type: Sprite
     sprite: SS220/Clothing/Neck/Medals/engineermedal.rsi #SS220 Resprited
   - type: Clothing
+<<<<<<< HEAD
     sprite: SS220/Clothing/Neck/Medals/engineermedal.rsi #SS220 Resprited
   - type: Tag
     tags:
       - Medal
       - WhitelistChameleon
+=======
+    sprite: Clothing/Neck/Medals/engineermedal.rsi
+>>>>>>> wizards/stable
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingMedalBase
   id: ClothingNeckMedicalmedal
   name: medical medal
   description: Given for the best work in the medical department.
@@ -70,14 +111,18 @@
   - type: Sprite
     sprite: SS220/Clothing/Neck/Medals/medicalmedal.rsi #SS220 Resprited
   - type: Clothing
+<<<<<<< HEAD
     sprite: SS220/Clothing/Neck/Medals/medicalmedal.rsi #SS220 Resprited
   - type: Tag
     tags:
       - Medal
       - WhitelistChameleon
+=======
+    sprite: Clothing/Neck/Medals/medicalmedal.rsi
+>>>>>>> wizards/stable
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingMedalBase
   id: ClothingNeckSciencemedal
   name: science medal
   description: Given for the best work in the science department.
@@ -85,14 +130,18 @@
   - type: Sprite
     sprite: SS220/Clothing/Neck/Medals/sciencemedal.rsi #SS220 Resprited
   - type: Clothing
+<<<<<<< HEAD
     sprite: SS220/Clothing/Neck/Medals/sciencemedal.rsi #SS220 Resprited
   - type: Tag
     tags:
       - Medal
       - WhitelistChameleon
+=======
+    sprite: Clothing/Neck/Medals/sciencemedal.rsi
+>>>>>>> wizards/stable
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingMedalBase
   id: ClothingNeckSecuritymedal
   name: security medal
   description: Given for the best work in the security department.
@@ -100,14 +149,18 @@
   - type: Sprite
     sprite: SS220/Clothing/Neck/Medals/securitymedal.rsi #SS220 Resprited
   - type: Clothing
+<<<<<<< HEAD
     sprite: SS220/Clothing/Neck/Medals/securitymedal.rsi #SS220 Resprited
   - type: Tag
     tags:
       - Medal
       - WhitelistChameleon
+=======
+    sprite: Clothing/Neck/Medals/securitymedal.rsi
+>>>>>>> wizards/stable
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingMedalBase
   id: ClothingNeckClownmedal
   name: clown medal
   description: Given for the best joke in the universe. HONK!
@@ -117,8 +170,5 @@
   - type: Clothing
     sprite: SS220/Clothing/Neck/Medals/clownmedal.rsi #SS220 Resprited
   - type: StealTarget
-    stealGroup: ClothingNeckClownmedal
-  - type: Tag
-    tags:
-      - Medal
-      - WhitelistChameleon
+    stealGroup:
+    - ClothingNeckClownmedal

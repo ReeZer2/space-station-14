@@ -206,7 +206,11 @@
     - EncryptionSecurity
 
 - type: entity
+<<<<<<< HEAD
   parent: [ EncryptionKey ]
+=======
+  parent: [ EncryptionKey, BaseServiceContraband ]
+>>>>>>> wizards/stable
   id: EncryptionKeyService
   name: service encryption key
   description: An encryption key used by the service staff, tasked with keeping the station full, happy and clean.

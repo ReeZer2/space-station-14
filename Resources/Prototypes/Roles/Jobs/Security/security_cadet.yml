@@ -22,7 +22,7 @@
   experienceDefinition: SecurityCadetRoleExperience # SS220-experience
   icon: "JobIconSecurityCadet"
   supervisors: job-supervisors-security
-  canBeAntag: false
+  guides: [ Security ] # TODO: should have a more specific guidebook page instead of using the department itself
   access:
   - Security
   - Brig

@@ -1,8 +1,12 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+<<<<<<< HEAD
                       xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                       SetSize="770 330"
+=======
+                      SetSize="650 330"
+>>>>>>> wizards/stable
                       Resizable="False">
     <!-- SS220 CHANGE SIZE FOR WINDOW -->
     <BoxContainer Orientation="Vertical">
@@ -22,7 +26,7 @@
                             <BoxContainer Orientation="Horizontal">
                                 <Label Text="{Loc 'battery-menu-in'}" HorizontalExpand="True" VerticalAlignment="Top"
                                        StyleClasses="LabelKeyText" />
-                                <controls:OnOffButton Name="InBreaker" />
+                                <controls:SwitchButton Name="InBreaker" Margin="5" />
                             </BoxContainer>
                             <Label Name="InValue" />
                         </BoxContainer>
@@ -52,7 +56,7 @@
                             <BoxContainer Orientation="Horizontal">
                                 <Label Text="{Loc 'battery-menu-out'}" HorizontalExpand="True" VerticalAlignment="Top"
                                        StyleClasses="LabelKeyText" />
-                                <controls:OnOffButton Name="OutBreaker" />
+                                <controls:SwitchButton Name="OutBreaker" Margin="5" />
                             </BoxContainer>
                             <Label Name="OutValue" />
                         </BoxContainer>
@@ -134,7 +138,7 @@
 
         <!-- Footer -->
         <BoxContainer Name="Footer" Orientation="Vertical">
-            <PanelContainer StyleClasses="LowDivider" />
+            <controls:Separator StyleClasses="LowDivider"/>
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
                 <Label Text="{Loc 'battery-menu-footer-left'}" StyleClasses="WindowFooterText" />
                 <Label Text="{Loc 'battery-menu-footer-right'}" StyleClasses="WindowFooterText"

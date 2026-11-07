@@ -1,5 +1,20 @@
 - type: entity
+<<<<<<< HEAD
   parent: [ClothingEyesBase, SS220GlassesOnForeheadBase] # SS220-glasses-on-forehead
+=======
+  abstract: true
+  parent: BaseScrewingRefinable
+  id: ClothingEyesGlassesBase
+  components:
+  - type: ToolRefinable
+    refineResult:
+    - id: GlassLens
+      amount: 2
+    - id: PartRodMetal1
+
+- type: entity
+  parent: ClothingEyesBase
+>>>>>>> wizards/stable
   id: ClothingEyesGlassesGar
   name: gar glasses
   description: Go beyond impossible and kick reason to the curb!
@@ -62,7 +77,11 @@
         Blunt: 10
 
 - type: entity
+<<<<<<< HEAD
   parent: [ClothingEyesBase, SS220GlassesOnForeheadBase] # SS220-glasses-on-forehead
+=======
+  parent: ClothingEyesGlassesGarOrange
+>>>>>>> wizards/stable
   id: ClothingEyesGlassesGarGiga
   name: giga gar glasses
   description: We evolve past the person we were a minute before. Little by little we advance with each turn. That's how a drill works!
@@ -89,10 +108,6 @@
 
   - type: Item
     heldPrefix: super
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 10
 
 - type: entity
   parent: [ClothingEyesBase, SS220GlassesOnForeheadBase] # SS220-glasses-on-forehead
@@ -128,7 +143,11 @@
     - SecDogWearable # Roxi
 
 - type: entity
+<<<<<<< HEAD
   parent: [ClothingEyesBase, SS220GlassesOnForeheadBase] # SS220-glasses-on-forehead
+=======
+  parent: [ClothingEyesBase, ClothingEyesGlassesBase]
+>>>>>>> wizards/stable
   id: ClothingEyesGlasses
   name: glasses
   description: A pair of spectacular spectacles with prescription lenses.
@@ -161,7 +180,11 @@
     - WhitelistChameleon
 
 - type: entity
+<<<<<<< HEAD
   parent: [ClothingEyesBase, SS220GlassesOnForeheadBase] # SS220-glasses-on-forehead
+=======
+  parent: [ClothingEyesBase, ClothingEyesGlassesBase]
+>>>>>>> wizards/stable
   id: ClothingEyesGlassesJensen
   name: jensen glasses
   description: A pair of yellow tinted folding glasses. You never asked for these.
@@ -193,7 +216,11 @@
     - WhitelistChameleon
 
 - type: entity
+<<<<<<< HEAD
   parent: [ClothingEyesBase, SS220GlassesOnForeheadBase] # SS220-glasses-on-forehead
+=======
+  parent: [ClothingEyesBase, ClothingEyesGlassesBase]
+>>>>>>> wizards/stable
   id: ClothingEyesGlassesJamjar
   name: jamjar glasses
   description: These retro glasses remind you of a simpler time.
@@ -230,7 +257,11 @@
     - WhitelistChameleon
 
 - type: entity
+<<<<<<< HEAD
   parent: [ClothingEyesBase, SS220GlassesOnForeheadBase] # SS220-glasses-on-forehead
+=======
+  parent: [ClothingEyesBase, ClothingEyesGlassesBase]
+>>>>>>> wizards/stable
   id: ClothingEyesGlassesOutlawGlasses
   name: outlaw glasses
   description: A must for every self-respecting undercover agent.
@@ -262,7 +293,11 @@
     price: 500
 
 - type: entity
+<<<<<<< HEAD
   parent: [ClothingEyesBase, SS220GlassesOnForeheadBase] # SS220-glasses-on-forehead
+=======
+  parent: [ClothingEyesBase, ClothingEyesGlassesBase]
+>>>>>>> wizards/stable
   id: ClothingEyesGlassesCheapSunglasses
   name: cheap sunglasses
   description: A pair of black sunglasses. Doesn't block light well, more of an accessory than something useful.
@@ -298,14 +333,11 @@
     coverage: EYES
 
 - type: entity
-  parent: ClothingEyesGlassesCheapSunglasses
+  parent: [ClothingEyesGlassesCheapSunglasses, ClothingEyesSunglassesBase]
   id: ClothingEyesGlassesSunglasses
-  name: sun glasses
+  name: sunglasses
   description: A pair of black sunglasses.
   components:
-  - type: FlashImmunity
-  - type: EyeProtection
-    protectionTime: 5
   - type: Tag
     tags:
     - Sunglasses
@@ -314,7 +346,11 @@
     - WhitelistChameleon
 
 - type: entity
+<<<<<<< HEAD
   parent: [ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband, SS220GlassesOnForeheadBase] # SS220-glasses-on-forehead
+=======
+  parent: [ClothingEyesSunglassesBase, ShowSecurityIcons, BaseSecurityContraband]
+>>>>>>> wizards/stable
   id: ClothingEyesGlassesSecurity
   name: security glasses
   description: Upgraded sunglasses that provide flash immunity and a security HUD.
@@ -322,11 +358,15 @@
   - type: Sprite
     sprite: SS220/Clothing/Eyes/Glasses/security.rsi #SS220-updated
   - type: Clothing
+<<<<<<< HEAD
     slots: [EYES, HEAD] # SS220-glasses-on-forehead
     sprite: SS220/Clothing/Eyes/Glasses/security.rsi #SS220-updated
   - type: FlashImmunity
   - type: EyeProtection
     protectionTime: 5
+=======
+    sprite: Clothing/Eyes/Glasses/secglasses.rsi
+>>>>>>> wizards/stable
   - type: Construction
     graph: GlassesSecHUD
     node: glassesSec
@@ -340,11 +380,13 @@
     guides:
     - Security
     - Antagonists
-  - type: IdentityBlocker
-    coverage: EYES
 
 - type: entity
+<<<<<<< HEAD
   parent: [ClothingEyesBase, SS220GlassesOnForeheadBase] # SS220-glasses-on-forehead
+=======
+  parent: [ClothingEyesSunglassesBase, BaseCommandContraband]
+>>>>>>> wizards/stable
   id: ClothingEyesGlassesCommand
   name: administration glasses
   description: Upgraded sunglasses that provide flash immunity and show ID card status.
@@ -354,6 +396,7 @@
   - type: Clothing
     slots: [EYES, HEAD] # SS220-glasses-on-forehead
     sprite: Clothing/Eyes/Glasses/commandglasses.rsi
+<<<<<<< HEAD
     # SS220-glasses-on-forehead-begin
     clothingVisuals:
       head:
@@ -373,17 +416,21 @@
   - type: FlashImmunity
   - type: EyeProtection
     protectionTime: 5
+=======
+>>>>>>> wizards/stable
   - type: Tag
     tags:
     - HamsterWearable
     - PetWearable
     - WhitelistChameleon
-  - type: IdentityBlocker
-    coverage: EYES
   - type: ShowJobIcons
 
 - type: entity
+<<<<<<< HEAD
   parent: [ClothingEyesBase, SS220GlassesOnForeheadBase] # SS220-glasses-on-forehead
+=======
+  parent: ClothingEyesSunglassesBase
+>>>>>>> wizards/stable
   id: ClothingEyesGlassesMercenary
   name: mercenary glasses
   description: Glasses made for combat, to protect the eyes from bright blinding flashes.
@@ -393,6 +440,7 @@
   - type: Clothing
     slots: [EYES, HEAD] # SS220-glasses-on-forehead
     sprite: Clothing/Eyes/Glasses/mercglasses.rsi
+<<<<<<< HEAD
     # SS220-glasses-on-forehead-begin
     clothingVisuals:
       head:
@@ -411,6 +459,8 @@
     protectionTime: 5
   - type: IdentityBlocker
     coverage: EYES
+=======
+>>>>>>> wizards/stable
 
 #Make a scanner category when these actually function and we get the trayson
 - type: entity
@@ -492,7 +542,11 @@
   - type: FlashImmunity
 
 - type: entity
+<<<<<<< HEAD
   parent: [ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband, SS220GlassesOnForeheadBase] # SS220-glasses-on-forehead
+=======
+  parent: [ClothingEyesSunglassesBase, ShowSecurityIcons, BaseSecurityContraband]
+>>>>>>> wizards/stable
   id: ClothingEyesGlassesNoir
   name: noir-tech glasses
   description: A pair of glasses that simulate what the world looked like before the invention of color.
@@ -502,6 +556,7 @@
   - type: Clothing
     slots: [EYES, HEAD] # SS220-glasses-on-forehead
     sprite: Clothing/Eyes/Glasses/sunglasses.rsi
+<<<<<<< HEAD
     # SS220-glasses-on-forehead-begin
     clothingVisuals:
       head:
@@ -514,6 +569,8 @@
   - type: FlashImmunity
   - type: EyeProtection
     protectionTime: 5
+=======
+>>>>>>> wizards/stable
   - type: NoirOverlay
   - type: Tag
     tags:

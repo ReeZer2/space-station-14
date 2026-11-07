@@ -2,71 +2,116 @@
   id: Common
   name: chat-radio-common
   keycode: ";"
-  frequency: 1459
+  frequency: 145.9
   color: "#2cdb2c"
 
 - type: radioChannel
   id: CentCom
   name: chat-radio-centcom
+<<<<<<< HEAD
   keycode: 'ц' # Corvax-Localization
   frequency: 1337
+=======
+  keycode: 'y'
+  frequency: 133.7
+>>>>>>> wizards/stable
   color: "#2681a5"
   longRange: true
 
 - type: radioChannel
   id: Command
   name: chat-radio-command
+<<<<<<< HEAD
   keycode: 'к' # Corvax-Localization
   frequency: 1353
+=======
+  keycode: 'c'
+  frequency: 135.3
+>>>>>>> wizards/stable
   color: "#fcdf03"
 
 - type: radioChannel
   id: Engineering
   name: chat-radio-engineering
+<<<<<<< HEAD
   keycode: 'и' # Corvax-Localization
   frequency: 1357
+=======
+  keycode: 'e'
+  frequency: 135.7
+>>>>>>> wizards/stable
   color: "#ff733c"
 
 - type: radioChannel
   id: Medical
   name: chat-radio-medical
+<<<<<<< HEAD
   keycode: 'м' # Corvax-Localization
   frequency: 1355
+=======
+  keycode: 'm'
+  frequency: 135.5
+>>>>>>> wizards/stable
   color: "#57b8f0"
 
 - type: radioChannel
   id: Science
   name: chat-radio-science
+<<<<<<< HEAD
   keycode: 'н' # Corvax-Localization
   frequency: 1351
+=======
+  keycode: 'n'
+  frequency: 135.1
+>>>>>>> wizards/stable
   color: "#cd7ccd"
 
 - type: radioChannel
   id: Security
   name: chat-radio-security
+<<<<<<< HEAD
   keycode: 'о' # Corvax-Localization
   frequency: 1359
+=======
+  keycode: 's'
+  frequency: 135.9
+>>>>>>> wizards/stable
   color: "#ff4242"
 
 - type: radioChannel
   id: Service
   name: chat-radio-service
+<<<<<<< HEAD
   keycode: 'с' # Corvax-Localization
   frequency: 1349
+=======
+  keycode: 'v'
+  frequency: 134.9
+>>>>>>> wizards/stable
   color: "#539c00"
 
 - type: radioChannel
   id: Supply
   name: chat-radio-supply
+<<<<<<< HEAD
   keycode: 'п' # Corvax-Localization
   frequency: 1347
+=======
+  keycode: 'u'
+  frequency: 134.7
+>>>>>>> wizards/stable
   color: "#b48b57"
 
 - type: radioChannel
   id: Syndicate
   name: chat-radio-syndicate
+<<<<<<< HEAD
   keycode: 'т' # Corvax-Localization
   frequency: 1213
+=======
+  keycode: 't'
+  frequency: 121.3
+>>>>>>> wizards/stable
   color: "#8f4a4b"
   longRange: true
   stealthChannel: true #SS220-synd_key_stealth
@@ -74,7 +119,7 @@
 - type: radioChannel
   id: Handheld
   name: chat-radio-handheld
-  frequency: 1330
+  frequency: 133.0
   color: "#967101"
   # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
   longRange: true
@@ -82,8 +127,13 @@
 - type: radioChannel
   id: Binary
   name: chat-radio-binary
+<<<<<<< HEAD
   keycode: 'д' # Corvax-Localization
   frequency: 1001
+=======
+  keycode: 'b'
+  frequency: 100.1
+>>>>>>> wizards/stable
   color: "#5ed7aa"
   # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
   longRange: true
@@ -91,8 +141,13 @@
 - type: radioChannel
   id: Freelance
   name: chat-radio-freelance
+<<<<<<< HEAD
   keycode: 'ф' # Corvax-Localization
   frequency: 1984
+=======
+  keycode: 'f'
+  frequency: 198.4
+>>>>>>> wizards/stable
   color: "#f6ce64"
   # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
   longRange: true
@@ -100,8 +155,13 @@
 - type: radioChannel
   id: Xenoborg
   name: chat-radio-xenoborg
+<<<<<<< HEAD
   keycode: 'ч' # SS220
   frequency: 2002
+=======
+  keycode: 'x'
+  frequency: 200.2
+>>>>>>> wizards/stable
   color: "#2288ff"
   # long range since I don't wanna make a special xenoborg telecomm server
   longRange: true
@@ -109,8 +169,13 @@
 - type: radioChannel
   id: Mothership
   name: chat-radio-mothership
+<<<<<<< HEAD
   keycode: 'я' # SS220
   frequency: 2003
+=======
+  keycode: 'z'
+  frequency: 200.3
+>>>>>>> wizards/stable
   color: "#ff2222"
   # long range since I don't wanna make a special xenoborg telecomm server
   longRange: true

@@ -1,9 +1,10 @@
 - type: entity
-  parent: BaseWallmountCabinet
+  parent: [ BaseWallmountCabinet, StructureHealthContainerWeak ]
   id: ExtinguisherCabinet
   name: extinguisher cabinet
   description: A small wall mounted cabinet designed to hold a fire extinguisher.
   components:
+<<<<<<< HEAD
     - type: Sprite
       sprite: Structures/Wallmounts/extinguisher_cabinet.rsi
       layers:
@@ -40,6 +41,42 @@
                 collection: MetalGlassBreak
                 params:
                   volume: -4
+=======
+  - type: Construction
+    graph: ExtinguisherCabinetGraph
+    node: done
+    containers:
+    - ItemCabinet
+  - type: Sprite
+    sprite: Structures/Wallmounts/extinguisher-cabinet.rsi
+    offset: 0, -0.25
+    layers:
+    - state: frame
+    - state: extinguisher
+      map: ["enum.ItemCabinetVisuals.Layer"]
+      visible: true
+    - state: closed
+      map: ["enum.OpenableVisuals.Layer"]
+  - type: ItemSlots
+    slots:
+      ItemCabinet:
+        ejectOnInteract: true
+        whitelist:
+          components:
+          - SpraySafety
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 60
+      behaviors:
+      - !type:EmptyAllContainersBehaviour
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+          params:
+            volume: -4
+>>>>>>> wizards/stable
 
 - type: entity
   parent: ExtinguisherCabinet

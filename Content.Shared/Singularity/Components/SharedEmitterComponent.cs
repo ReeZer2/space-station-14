@@ -1,6 +1,5 @@
 using System.Threading;
 using Content.Shared.DeviceLinking;
-using Content.Shared.Radio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -12,9 +11,12 @@ public sealed partial class EmitterComponent : Component
 {
     public CancellationTokenSource? TimerCancel;
 
+<<<<<<< HEAD
     // whether the power switch is in "on"
     [AutoNetworkedField] // SS220-SM-smEmitter-qol
     [ViewVariables] public bool IsOn;
+=======
+>>>>>>> wizards/stable
     // Whether the power switch is on AND the machine has enough power (so is actively firing)
     [ViewVariables] public bool IsPowered;
 
@@ -32,12 +34,6 @@ public sealed partial class EmitterComponent : Component
 
     [DataField]
     public List<EntProtoId> SelectableTypes = new();
-
-    /// <summary>
-    /// The current amount of power being used.
-    /// </summary>
-    [DataField]
-    public int PowerUseActive = 600;
 
     /// <summary>
     /// The amount of shots that are fired in a single "burst"
@@ -98,6 +94,7 @@ public sealed partial class EmitterComponent : Component
     /// </summary>
     [DataField]
     public Dictionary<ProtoId<SinkPortPrototype>, EntProtoId> SetTypePorts = new();
+<<<<<<< HEAD
 
     /// <summary>
     /// The radio channel to broadcast on when something happens to this emitter
@@ -139,6 +136,8 @@ public sealed partial class EmitterComponent : Component
     [DataField]
     public bool ActivateOnInteract = true;
     // SS220 SM-Emitter ui fix end
+=======
+>>>>>>> wizards/stable
 }
 
 [NetSerializable, Serializable]

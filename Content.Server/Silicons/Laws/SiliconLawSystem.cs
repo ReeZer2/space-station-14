@@ -5,7 +5,9 @@ using Content.Server.Chat.Managers;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chat;
+using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
@@ -27,6 +29,7 @@ using Robust.Shared.Toolshed;
 namespace Content.Server.Silicons.Laws;
 
 /// <inheritdoc/>
+<<<<<<< HEAD
 public sealed partial class SiliconLawSystem : SharedSiliconLawSystem // SS220 random lawset
 {
     [Dependency] private readonly IChatManager _chatManager = default!;
@@ -38,6 +41,17 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem // SS220 r
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!; // SS220 Antag ban fix
+=======
+public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
+{
+    [Dependency] private IChatManager _chatManager = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private SharedRoleSystem _roles = default!;
+    [Dependency] private ServerStationSystem _station = default!;
+    [Dependency] private UserInterfaceSystem _userInterface = default!;
+    [Dependency] private EmagSystem _emag = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+>>>>>>> wizards/stable
 
     // private static readonly ProtoId<SiliconLawsetPrototype> DefaultCrewLawset = "Crewsimov"; SS220 random lawset
     /// <inheritdoc/>
@@ -96,6 +110,8 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem // SS220 r
 
     private void OnLawProviderMindAdded(Entity<SiliconLawProviderComponent> ent, ref MindAddedMessage args)
     {
+        _adminLogger.Add(LogType.SiliconLaw, LogImpact.Low, $"{ent.Owner} laws at MindAdded are [{ent.Comp.Lawset?.LoggingString()}]");
+
         if (!ent.Comp.Subverted)
             return;
         EnsureSubvertedSiliconRole(args.Mind);
@@ -103,10 +119,10 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem // SS220 r
 
     private void OnLawProviderMindRemoved(Entity<SiliconLawProviderComponent> ent, ref MindRemovedMessage args)
     {
-        if (!ent.Comp.Subverted)
+        if (!ent.Comp.Subverted || args.TransferEntity == null)
             return;
-        RemoveSubvertedSiliconRole(args.Mind);
 
+        RemoveSubvertedSiliconRole(args.Mind);
     }
     // SS220 random lawset begin
     //private void OnBoundUIOpened(EntityUid uid, SiliconLawBoundComponent component, BoundUIOpenedEvent args)
@@ -128,6 +144,18 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem // SS220 r
         _userInterface.TryToggleUi(uid, SiliconLawsUiKey.Key, actor.PlayerSession);
     }
 
+<<<<<<< HEAD
+=======
+    private void OnBoundUIOpened(EntityUid uid, SiliconLawBoundComponent component, BoundUIOpenedEvent args)
+    {
+        TryComp(uid, out IntrinsicRadioTransmitterComponent? intrinsicRadio);
+        var radioChannels = intrinsicRadio?.Channels;
+
+        var state = new SiliconLawBuiState(GetLaws(uid).Laws, radioChannels, component.Version);
+        _userInterface.SetUiState(args.Entity, SiliconLawsUiKey.Key, state);
+    }
+
+>>>>>>> wizards/stable
     private void OnPlayerSpawnComplete(EntityUid uid, SiliconLawBoundComponent component, PlayerSpawnCompleteEvent args)
     {
         component.LastLawProvider = args.Station;
@@ -146,21 +174,21 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem // SS220 r
         args.Handled = true;
     }
 
-    private void OnIonStormLaws(EntityUid uid, SiliconLawProviderComponent component, ref IonStormLawsEvent args)
+    private void OnIonStormLaws(Entity<SiliconLawProviderComponent> ent, ref IonStormLawsEvent args)
     {
         // Emagged borgs are immune to ion storm
-        if (!_emag.CheckFlag(uid, EmagType.Interaction))
+        if (!_emag.CheckFlag(ent, EmagType.Interaction))
         {
-            component.Lawset = args.Lawset;
+            ent.Comp.Lawset = args.Lawset;
 
             // gotta tell player to check their laws
-            NotifyLawsChanged(uid, component.LawUploadSound);
+            NotifyLawsChanged(ent, ent.Comp.LawUploadSound);
 
             // Show the silicon has been subverted.
-            component.Subverted = true;
+            ent.Comp.Subverted = true;
 
             // new laws may allow antagonist behaviour so make it clear for admins
-            if(_mind.TryGetMind(uid, out var mindId, out _))
+            if(_mind.TryGetMind(ent, out var mindId, out _))
                 EnsureSubvertedSiliconRole(mindId);
 
         }
@@ -280,6 +308,7 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem // SS220 r
         return ev.Laws;
     }
 
+<<<<<<< HEAD
     // SS220 random lawset begin
     /*     public override void NotifyLawsChanged(EntityUid uid, SoundSpecifier? cue = null)
         {
@@ -296,20 +325,39 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem // SS220 r
                 _roles.MindPlaySound(mindId, cue);
         } */
     // SS220 random lawset end
+=======
+    public override void NotifyLawsChanged(Entity<SiliconLawProviderComponent> ent, SoundSpecifier? cue = null)
+    {
+        base.NotifyLawsChanged(ent, cue);
+
+        _adminLogger.Add(LogType.SiliconLaw, LogImpact.Low, $"{ent} laws changed to [{ent.Comp.Lawset?.LoggingString()}]");
+
+        if (!TryComp<ActorComponent>(ent, out var actor))
+            return;
+
+        var msg = Loc.GetString("laws-update-notify");
+        var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
+        UpdateLawVersion(ent.Owner);
+        _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMessage, default, false, actor.PlayerSession.Channel, colorOverride: Color.Red);
+
+        if (cue != null && _mind.TryGetMind(ent, out var mindId, out _))
+            _roles.MindPlaySound(mindId, cue);
+    }
+>>>>>>> wizards/stable
 
     /// <summary>
     /// Extract all the laws from a lawset's prototype ids.
     /// </summary>
     public SiliconLawset GetLawset(ProtoId<SiliconLawsetPrototype> lawset)
     {
-        var proto = _prototype.Index(lawset);
+        var proto = ProtoMan.Index(lawset);
         var laws = new SiliconLawset()
         {
             Laws = new List<SiliconLaw>(proto.Laws.Count)
         };
         foreach (var law in proto.Laws)
         {
-            laws.Laws.Add(_prototype.Index<SiliconLawPrototype>(law).ShallowClone());
+            laws.Laws.Add(ProtoMan.Index<SiliconLawPrototype>(law).ShallowClone());
         }
         laws.ObeysTo = proto.ObeysTo;
 
@@ -327,11 +375,17 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem // SS220 r
         if (component.Lawset == null)
             component.Lawset = new SiliconLawset();
 
+<<<<<<< HEAD
         // SS220 random lawset begin
         // Each recipient must own its laws after an upload.
         component.Lawset.Laws = newLaws.Select(law => law.ShallowClone()).ToList();
         // SS220 random lawset end
         NotifyLawsChanged(target, cue);
+=======
+        component.Lawset.Laws = newLaws;
+        RankLaws(component.Lawset.Laws);
+        NotifyLawsChanged((target,component), cue);
+>>>>>>> wizards/stable
     }
 
     // SS220 random lawset begin
@@ -354,9 +408,67 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem // SS220 r
                 }
                 SetLaws(lawset.Laws, update, provider.LawUploadSound);
             }
+<<<<<<< HEAD
         } */
     // SS220 random lawset end
 
+=======
+            SetLaws(lawset.Laws, update, provider.LawUploadSound);
+        }
+    }
+
+    /// <summary>
+    /// Updates the version on a target SiliconLawBoundComponent. This is used in the law UI as flair to show the
+    /// number of updates a silicon player's laws has had
+    /// </summary>
+    private void UpdateLawVersion(Entity<SiliconLawBoundComponent?> target)
+    {
+        if (!Resolve(target, ref target.Comp))
+            return;
+
+        target.Comp.Version++;
+    }
+
+    /// <summary>
+    /// Given a list of laws, sets all unobfuscated laws' identifier in order from highest to lowest priority.
+    /// </summary>
+    /// <param name="laws">The lawset to deduce identifiers for.</param>
+    public static void RankLaws(List<SiliconLaw> laws)
+    {
+        // Sort laws first since there can be cases where law order != list order
+        laws.Sort();
+        // Don't need to set any overrides if there are no corrupted laws and law order already makes sense
+        // (i.e. order is non-negative and monotonically increasing by 1)
+        var overrideIdentifiers = false;
+        for (var i = 0; i < laws.Count; i++)
+        {
+            if (laws[i].Corrupted
+                || laws[i].Order < 0
+                || i > 0 && laws[i].Order - laws[i - 1].Order != 1)
+            {
+                overrideIdentifiers = true;
+                break;
+            }
+        }
+        if (!overrideIdentifiers)
+        {
+            return;
+        }
+
+        var orderDeduction = -1;
+        for (var i = 0; i < laws.Count; i++)
+        {
+            if (laws[i].Corrupted)
+            {
+                orderDeduction += 1;
+            }
+            else
+            {
+                laws[i].LawIdentifierOverride = (i - orderDeduction).ToString();
+            }
+        }
+    }
+>>>>>>> wizards/stable
 }
 
 [ToolshedCommand, AdminCommand(AdminFlags.Admin)]

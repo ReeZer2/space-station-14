@@ -175,7 +175,7 @@
     bloodReferenceSolution:
       reagents:
       - ReagentId: InsectBlood
-        Quantity: 300
+        Quantity: 600
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
@@ -185,10 +185,14 @@
         sprite: Mobs/Effects/burn_damage.rsi
   - type: MothAccent
   - type: Vocal
+<<<<<<< HEAD
     sounds:
       Male: MaleMoth #ss220-fix
       Female: FemaleMoth #ss220-fix
       Unsexed: UnisexMoth
+=======
+    emoteSounds: UnisexMoth
+>>>>>>> wizards/stable
   - type: BodyEmotes
     soundsId: MothBodyEmotes
   - type: MovementSpeedModifier
@@ -199,11 +203,8 @@
     damage:
       types:
         Heat: 2.5 # moths burn more easily
-  - type: Temperature
-    currentTemperature: 310.15
-    specificHeat: 46
   - type: TemperatureDamage # Moths hate the heat and thrive in the cold.
-    heatDamageThreshold: 320
+    heatDamageThreshold: 314.15
     coldDamageThreshold: 230
     coldDamage:
       types:
@@ -233,7 +234,7 @@
   #SS220-TweakDamageSpecies-End
 
 - type: entity
-  parent: OrganBase
+  parent: OrganBaseOrganic
   id: OrganMoth
   abstract: true
   suffix: Moth
@@ -323,6 +324,10 @@
 - type: entity
   parent: [ OrganMothVisual, OrganBaseEyes, OrganMothInternal ]
   id: OrganMothEyes
+  components:
+  - type: EyeBlinking
+    eyelidsSprite: /Textures/Mobs/Species/Moth/parts.rsi
+  - type: Appearance
 
 - type: entity
   parent: [ OrganBaseTongue, OrganMothInternal ]

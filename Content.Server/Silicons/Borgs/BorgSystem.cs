@@ -1,4 +1,5 @@
 using Content.Server.Administration.Managers;
+<<<<<<< HEAD
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Hands.Systems;
 using Content.Server.SS220.Events;
@@ -11,6 +12,9 @@ using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
+=======
+using Content.Shared.DeviceNetwork.Systems;
+>>>>>>> wizards/stable
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Emag.Systems;
@@ -32,6 +36,7 @@ namespace Content.Server.Silicons.Borgs;
 /// <inheritdoc/>
 public sealed partial class BorgSystem : SharedBorgSystem
 {
+<<<<<<< HEAD
     [Dependency] private readonly IBanManager _banManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
@@ -59,6 +64,24 @@ public sealed partial class BorgSystem : SharedBorgSystem
         InitializeTransponder();
     }
 
+=======
+    [Dependency] private IBanManager _banManager = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
+    [Dependency] private TriggerSystem _trigger = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedBatterySystem _battery = default!;
+    [Dependency] private EmagSystem _emag = default!;
+    [Dependency] private MobThresholdSystem _mobThresholdSystem = default!;
+    [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private PowerCellSystem _powerCell = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+
+    public static readonly ProtoId<JobPrototype> BorgJobId = "Borg";
+
+>>>>>>> wizards/stable
     public override bool CanPlayerBeBorged(ICommonSession session)
     {
         if (_banManager.GetJobBans(session.UserId)?.Contains(BorgJobId) == true)

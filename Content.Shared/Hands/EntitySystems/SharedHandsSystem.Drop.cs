@@ -14,7 +14,7 @@ namespace Content.Shared.Hands.EntitySystems;
 
 public abstract partial class SharedHandsSystem
 {
-    [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private TagSystem _tagSystem = default!;
 
     private static readonly ProtoId<TagPrototype> BypassDropChecksTag = "BypassDropChecks";
 
@@ -54,7 +54,7 @@ public abstract partial class SharedHandsSystem
     private bool ShouldIgnoreRestrictions(EntityUid user)
     {
         //Checks if the Entity is something that shouldn't care about drop distance or walls ie Aghost
-        return !_tagSystem.HasTag(user, BypassDropChecksTag);
+        return _tagSystem.HasTag(user, BypassDropChecksTag);
     }
 
     /// <summary>
@@ -156,6 +156,7 @@ public abstract partial class SharedHandsSystem
 
         // drop the item with heavy calculations from their hands and place it at the calculated interaction range position
         // The DoDrop is handle if there's no drop target
+<<<<<<< HEAD
         DoDrop(ent, handId, doDropInteraction: doDropInteraction, suppressDropSound: suppressDropSound); // SS220-drop-and-pickup-sound-suppression
 
         // if there's no drop location stop here
@@ -167,6 +168,9 @@ public abstract partial class SharedHandsSystem
         var origin = new MapCoordinates(itemPos, itemXform.MapID);
         var target = TransformSystem.ToMapCoordinates(targetDropLocation.Value);
         TransformSystem.SetWorldPositionRotation(entity.Value, GetFinalDropCoordinates(ent, origin, target, entity.Value), itemRot);
+=======
+        DoDrop(ent, handId, doDropInteraction: doDropInteraction, targetDropLocation: targetDropLocation);
+>>>>>>> wizards/stable
         return true;
     }
 
@@ -193,6 +197,20 @@ public abstract partial class SharedHandsSystem
     }
 
     /// <summary>
+    ///     Tries to drop all currently held items.
+    /// </summary>
+    public void DropAll(Entity<HandsComponent?> ent, EntityCoordinates? targetDropLocation = null, bool checkActionBlocker = true, bool doDropInteraction = true)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return;
+
+        foreach (var hand in EnumerateHands(ent))
+        {
+            TryDrop(ent, hand, targetDropLocation, checkActionBlocker, doDropInteraction);
+        }
+    }
+
+    /// <summary>
     ///     Calculates the final location a dropped item will end up at, accounting for max drop range and collision along the targeted drop path, Does a check to see if a user should bypass those checks as well.
     /// </summary>
     private Vector2 GetFinalDropCoordinates(EntityUid user, MapCoordinates origin, MapCoordinates target, EntityUid held)
@@ -201,7 +219,7 @@ public abstract partial class SharedHandsSystem
         var requestedDropDistance = dropVector.Length();
         var dropLength = dropVector.Length();
 
-        if (ShouldIgnoreRestrictions(user))
+        if (!ShouldIgnoreRestrictions(user))
         {
             if (dropVector.Length() > SharedInteractionSystem.InteractionRange)
             {
@@ -214,6 +232,7 @@ public abstract partial class SharedHandsSystem
 
         if (dropLength < requestedDropDistance)
             return origin.Position + dropVector.Normalized() * dropLength;
+
         return target.Position;
     }
 
@@ -223,10 +242,16 @@ public abstract partial class SharedHandsSystem
     public virtual void DoDrop(Entity<HandsComponent?> ent,
         string handId,
         bool doDropInteraction = true,
+<<<<<<< HEAD
         // SS220-drop-and-pickup-sound-suppression begin
         bool log = true,
         bool suppressDropSound = false)
         // SS220-drop-and-pickup-sound-suppression end
+=======
+        bool log = true,
+        EntityCoordinates? targetDropLocation = null
+    )
+>>>>>>> wizards/stable
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;
@@ -244,6 +269,15 @@ public abstract partial class SharedHandsSystem
         {
             Log.Error($"Failed to remove {ToPrettyString(entity)} from users hand container when dropping. User: {ToPrettyString(ent)}. Hand: {handId}.");
             return;
+        }
+
+        if (targetDropLocation != null)
+        {
+            var (itemPos, itemRot) = TransformSystem.GetWorldPositionRotation(entity.Value);
+            // otherwise, also move dropped item and rotate it properly according to grid/map
+            var origin = new MapCoordinates(itemPos, Transform(entity.Value).MapID);
+            var target = TransformSystem.ToMapCoordinates(targetDropLocation.Value);
+            TransformSystem.SetWorldPositionRotation(entity.Value, GetFinalDropCoordinates(ent, origin, target, entity.Value), itemRot);
         }
 
         Dirty(ent);

@@ -80,6 +80,7 @@
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
+<<<<<<< HEAD
   #SS220 increase-automatic-rifles-spread begin
   - type: GunWieldBonus
     minAngle: -18
@@ -96,6 +97,14 @@
     angleIncrease: 4
     angleDecay: 14
     #SS220 increase-automatic-rifles-spread end
+=======
+  - type: GunWieldBonus
+    minAngle: -20
+    maxAngle: -16
+  - type: Gun
+    angleIncrease: 1.5
+    angleDecay: 9.5
+>>>>>>> wizards/stable
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
   - type: ChamberMagazineAmmoProvider
@@ -130,6 +139,7 @@
   - type: Appearance
 
 - type: entity
+<<<<<<< HEAD
   name: M90 GL
   parent: [BaseWeaponRifle]
   id: WeaponRifleM90GrenadeLauncher
@@ -173,6 +183,8 @@
   - type: Appearance
 
 - type: entity
+=======
+>>>>>>> wizards/stable
   name: Lecter
   parent: [BaseWeaponRifle, BaseSecurityContraband]
   id: WeaponRifleLecter
@@ -186,6 +198,7 @@
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
+<<<<<<< HEAD
     sprite: SS220/Objects/Weapons/Guns/Rifles/lecter.rsi #ss220 lecter resprite
   #SS220 increase-automatic-rifles-spread begin
   - type: GunWieldBonus
@@ -203,6 +216,15 @@
     angleIncrease: 2
     angleDecay: 12
     #SS220 increase-automatic-rifles-spread end
+=======
+    sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
+  - type: GunWieldBonus
+    minAngle: -20
+    maxAngle: -18
+  - type: Gun
+    angleIncrease: 1
+    angleDecay: 9.5
+>>>>>>> wizards/stable
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
   - type: ItemSlots
@@ -275,6 +297,8 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Rifles/estoc.rsi
   - type: Gun
+    minAngle: 21
+    maxAngle: 32 
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/estocshot.ogg
     shotsPerBurst: 3

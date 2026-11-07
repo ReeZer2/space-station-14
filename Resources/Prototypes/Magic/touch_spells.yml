@@ -32,9 +32,16 @@
   - type: Action
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/disintegrate.ogg
+<<<<<<< HEAD
     icon:
       sprite: SS220/Interface/Actions/magic_spells.rsi # SS220 Wizard getting used to
       state: gib
+=======
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: gib
+>>>>>>> wizards/stable
   - type: EntityTargetAction
     event: !type:SmiteSpellEvent
   - type: SpeakOnAction
@@ -60,9 +67,16 @@
     useDelay: 120
     sound: !type:SoundPathSpecifier
       path: /Audio/Items/brokenbikehorn.ogg
+<<<<<<< HEAD
     icon:
       sprite: SS220/Interface/Actions/magic_spells.rsi # SS220 Wizard getting used to
       state: cluwne # SS220 Wizard getting used to
+=======
+  - type: Sprite
+    sprite: Clothing/Mask/cluwne.rsi
+    layers:
+    - state: icon
+>>>>>>> wizards/stable
   - type: EntityTargetAction
     event: !type:ChangeComponentsSpellEvent
       toAdd:
@@ -82,9 +96,16 @@
     useDelay: 60
     sound: !type:SoundPathSpecifier
       path: /Audio/Effects/slip.ogg
+<<<<<<< HEAD
     icon:
       sprite: SS220/Interface/Actions/magic_spells.rsi # SS220 Wizard getting used to
       state: slippery # SS220 Wizard getting used to
+=======
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/soap.rsi
+    layers:
+    - state: omega-4
+>>>>>>> wizards/stable
   - type: EntityTargetAction
     event: !type:ChangeComponentsSpellEvent
       toAdd:

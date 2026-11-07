@@ -265,6 +265,7 @@
     - ClothingNeckGenderfluidPin
   groupBy: "pin"
 
+<<<<<<< HEAD
 # Canes
 # The white cane is intentionally not included here. Thats for the blind.
 - type: loadout
@@ -353,6 +354,8 @@
     - Cane
   groupBy: "canes"
 
+=======
+>>>>>>> wizards/stable
 # Towels
 - type: loadout
   id: TowelColorWhite

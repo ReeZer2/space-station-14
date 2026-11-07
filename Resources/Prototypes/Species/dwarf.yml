@@ -10,6 +10,7 @@
   # SS220 age-tweak end
   dollPrototype: AppearanceDwarf
   skinColoration: HumanToned
+<<<<<<< HEAD
   #SS220-new-species-naming begin
   maleFirstNames: NamesDwarfMale
   femaleFirstNames: NamesDwarfFemale
@@ -21,3 +22,12 @@
     back:
     - DrinkBeerCan
   #ss220 add species loadout end
+=======
+  defaultSoundsBySex:
+  - UnisexDwarf
+  - FemaleDwarf
+  - UnisexDwarf
+  voices:
+  - UnisexDwarf
+  - FemaleDwarf
+>>>>>>> wizards/stable

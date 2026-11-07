@@ -1,8 +1,11 @@
 using Content.Server.Administration;
-using Content.Server.Power.Components;
 using Content.Shared.Administration;
 using Content.Shared.Construction;
+<<<<<<< HEAD
 using Content.Shared.Doors.Components;
+=======
+using Content.Shared.Power.Components;
+>>>>>>> wizards/stable
 using Content.Shared.Tag;
 using Robust.Shared.Console;
 using Robust.Shared.Map.Components;
@@ -11,9 +14,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Construction.Commands;
 
 [AdminCommand(AdminFlags.Mapping)]
-public sealed class FixRotationsCommand : IConsoleCommand
+public sealed partial class FixRotationsCommand : IConsoleCommand
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
 
     private static readonly ProtoId<TagPrototype> ForceFixRotationsTag = "ForceFixRotations";
     private static readonly ProtoId<TagPrototype> ForceNoFixRotationsTag = "ForceNoFixRotations";
@@ -29,6 +32,7 @@ public sealed class FixRotationsCommand : IConsoleCommand
         var player = shell.Player;
         EntityUid? gridId;
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
+        var xformSystem = _entManager.System<SharedTransformSystem>();
 
         switch (args.Length)
         {
@@ -108,7 +112,7 @@ public sealed class FixRotationsCommand : IConsoleCommand
 
             if (childXform.LocalRotation != Angle.Zero)
             {
-                childXform.LocalRotation = Angle.Zero;
+                xformSystem.SetLocalRotationNoLerp(child, Angle.Zero, childXform);
                 changed++;
             }
         }

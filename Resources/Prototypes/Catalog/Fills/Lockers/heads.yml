@@ -367,12 +367,15 @@
     - id: RubberStampHos
     - id: BoxHoSCircuitboards
     - id: WeaponDisabler
+<<<<<<< HEAD
     - id: BookBusido # Corvax-Books
     - id: ClothingWristWatchGold # SS220 Wrist Watch
     - id: WeaponMultiPhaseEnergyGun #SS220 MultiPhaze Energy Gun
     - id: BodySecurityCamera #SS220-Bodycam
     - id: CigPackSEC #SS220 Cigarettes
     # - id: WeaponTaser # SS220 No tasers
+=======
+>>>>>>> wizards/stable
     - id: WantedListCartridge
     - id: DrinkHosFlask
     - id: PlushieLizardJobHeadofsecurity

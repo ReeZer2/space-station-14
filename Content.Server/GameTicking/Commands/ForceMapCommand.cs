@@ -14,12 +14,18 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.GameTicking.Commands
 {
     [AdminCommand(AdminFlags.Round)]
-    public sealed class ForceMapCommand : LocalizedCommands
+    public sealed partial class ForceMapCommand : LocalizedCommands
     {
+<<<<<<< HEAD
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IGameMapManager _gameMapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!; // SS220 additional command log
+=======
+        [Dependency] private IConfigurationManager _configurationManager = default!;
+        [Dependency] private IGameMapManager _gameMapManager = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+>>>>>>> wizards/stable
 
         public override string Command => "forcemap";
 

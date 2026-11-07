@@ -5,11 +5,16 @@
     MaxHeight="525"
     MinWidth="300">
     <ScrollContainer
+        Name="Container"
         Margin="5 5 5 5"
         ReturnMeasure="True"
         VerticalExpand="True">
+<<<<<<< HEAD
 
         <ui:HealthAnalyzerControl
             Name="HealthAnalyzer" Access="Public"/> <!-- SS220-health-analyzer-report -->
+=======
+        <ui:HealthAnalyzerControl Name="HealthAnalyzer"/>
+>>>>>>> wizards/stable
     </ScrollContainer>
 </controls:FancyWindow>

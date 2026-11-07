@@ -79,6 +79,8 @@ public partial class StatusIconData : IComparable<StatusIconData>
     /// </summary>
     [DataField]
     public bool IsShaded = false;
+
+    /// <inheritdoc/>
     public int CompareTo(StatusIconData? other)
     {
         return Priority.CompareTo(other?.Priority ?? int.MaxValue);
@@ -88,19 +90,33 @@ public partial class StatusIconData : IComparable<StatusIconData>
 /// <summary>
 /// <see cref="StatusIconData"/> but in new convenient prototype form!
 /// </summary>
-public abstract partial class StatusIconPrototype : StatusIconData, IPrototype
+[Prototype]
+public sealed partial class StatusIconPrototype : StatusIconData, IPrototype, IInheritingPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
     public string ID { get; private set; } = default!;
+
+    /// <inheritdoc />
+    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<StatusIconPrototype>))]
+    public string[]? Parents { get; private set; }
+
+    /// <inheritdoc />
+    [NeverPushInheritance]
+    [AbstractDataField]
+    public bool Abstract { get; private set; }
 }
 
 /// <summary>
-/// StatusIcons for showing jobs on the sec HUD
+/// StatusIcons for showing jobs icons.
 /// </summary>
 [Prototype]
-public sealed partial class JobIconPrototype : StatusIconPrototype, IInheritingPrototype
+public sealed partial class JobIconPrototype : StatusIconData, IPrototype, IInheritingPrototype
 {
+    /// <inheritdoc/>
+    [IdDataField]
+    public string ID { get; private set; } = default!;
+
     /// <inheritdoc />
     [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<JobIconPrototype>))]
     public string[]? Parents { get; private set; }
@@ -116,14 +132,11 @@ public sealed partial class JobIconPrototype : StatusIconPrototype, IInheritingP
     [DataField]
     public string JobName { get; private set; } = string.Empty;
 
+    /// <summary>
+    /// Localized job name to use for showing to players.
+    /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     public string LocalizedJobName => Loc.GetString(JobName);
-
-    /// <summary>
-    /// Should the agent ID or ID card console be able to use this job icon?
-    /// </summary>
-    [DataField]
-    public bool AllowSelection = true;
 
     /// <summary>
     /// Should this job icon be considered a crew job for silicons?
@@ -133,8 +146,9 @@ public sealed partial class JobIconPrototype : StatusIconPrototype, IInheritingP
 }
 
 /// <summary>
-/// StatusIcons for the med HUD
+/// The location of the status icon.
 /// </summary>
+<<<<<<< HEAD
 [Prototype]
 public sealed partial class HealthIconPrototype : StatusIconPrototype, IInheritingPrototype
 {
@@ -243,14 +257,20 @@ public sealed partial class BlockingIconPrototype : StatusIconPrototype, IInheri
 }
 //SS220 shield rework end
 
+=======
+>>>>>>> wizards/stable
 [Serializable, NetSerializable]
 public enum StatusIconLocationPreference : byte
 {
-    None,
-    Left,
-    Right,
+    None, // Aligns on left side, if there's room on either side
+    Left, // Aligns on left side, provided left side has room
+    Right, // Aligns on right side, provided right side has room
+    Fixed, // Gets set independently without considering existing status icons
 }
 
+/// <summary>
+/// Which layer the status icon should be displayed on.
+/// </summary>
 public enum StatusIconLayer : byte
 {
     Base,

@@ -94,6 +94,6 @@
     sprite: SS220/Structures/Power/Generation/Tesla/coil.rsi #ss220-engineering-update-power
     state: grounding_rod
   product: CrateEngineeringTeslaGroundingRod
-  cost: 400
+  cost: 600
   category: cargoproduct-category-name-engineering
   group: market

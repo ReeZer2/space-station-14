@@ -15,6 +15,7 @@
             - material: MetalRod
               amount: 2
               doAfter: 1
+<<<<<<< HEAD
 
         - to: clockworkGrilleDiagonal
           completed:
@@ -27,6 +28,8 @@
             - material: MetalRod
               amount: 2
               doAfter: 1
+=======
+>>>>>>> wizards/stable
 
     - node: grilleDiagonal
       entity: GrilleDiagonal
@@ -42,6 +45,7 @@
           steps:
             - tool: Cutting
               doAfter: 0.25
+<<<<<<< HEAD
 
     - node: clockworkGrilleDiagonal
       entity: ClockworkGrilleDiagonal
@@ -57,3 +61,5 @@
           steps:
             - tool: Cutting
               doAfter: 0.25
+=======
+>>>>>>> wizards/stable

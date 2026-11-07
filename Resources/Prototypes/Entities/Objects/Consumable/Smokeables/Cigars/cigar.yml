@@ -29,6 +29,7 @@
     state: burnt-icon
   - type: Smokable
     state: Burnt
+<<<<<<< HEAD
   - type: SolutionContainerManager
     solutions:
       smokable:
@@ -42,6 +43,8 @@
   - type: FlavorProfile
     flavors:
       - punishment #SS220-Eat-Cigarettes-end
+=======
+>>>>>>> wizards/stable
   - type: Tag
     tags:
       - Cigar
@@ -74,6 +77,7 @@
     state: burnt-icon
   - type: Smokable
     state: Burnt
+<<<<<<< HEAD
   - type: SolutionContainerManager
     solutions:
       smokable:
@@ -87,3 +91,5 @@
   - type: FlavorProfile
     flavors:
       - punishment #SS220-Eat-Cigarettes-end
+=======
+>>>>>>> wizards/stable

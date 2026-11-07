@@ -274,5 +274,9 @@
     clothingVisuals:
       shoes:
       - state: equipped-FEET
+<<<<<<< HEAD
         color: "#841dbf" #SS220-Gloves-Shoes-Edited
+=======
+        color: "#9C0DE1"
+>>>>>>> wizards/stable
       - state: soles-equipped-FEET

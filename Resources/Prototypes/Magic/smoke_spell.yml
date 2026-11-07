@@ -7,11 +7,18 @@
   - type: Action
     useDelay: 10
     itemIconStyle: BigAction
+<<<<<<< HEAD
     icon:
       # SS220 Wizard getting used to Begin
       sprite: SS220/Interface/Actions/magic_spells_other.rsi
       state: smoke
       # SS220 Wizard getting used to End
+=======
+  - type: Sprite
+    sprite: Actions/smokeaction.rsi
+    layers:
+    - state: smokeaction
+>>>>>>> wizards/stable
   - type: InstantAction
     event: !type:InstantSpawnSpellEvent
       prototype: WizardSmoke

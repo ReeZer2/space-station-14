@@ -1,14 +1,17 @@
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: MaterialBase
   id: ShardCrystalBase
   name: crystal shard
   description:  A small piece of crystal.
   components:
-  - type: Sharp
+  - type: Tool
+    qualities:
+    - Slicing
   - type: Execution
     doAfterDuration: 4.0
   - type: Sprite
+<<<<<<< HEAD
     sprite: Objects/Materials/Shards/crystal.rsi #SS220-Crystal-Resprite-Start
     state: shard
 #  - type: RandomSprite
@@ -17,6 +20,18 @@
 #          shard1: ""
 #          shard2: ""
 #          shard3: "" #SS220-Crystal-Resprite-End
+=======
+    layers:
+      - sprite: Objects/Materials/Shards/crystal-shard.rsi
+        state: shard1
+        map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          shard1: ""
+          shard2: ""
+          shard3: ""
+>>>>>>> wizards/stable
   - type: SpaceGarbage
   - type: MeleeWeapon
     wideAnimationRotation: -22.5
@@ -25,16 +40,7 @@
       types:
         Slash: 3.5
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Glass
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: StaticPrice
     price: 50
 

@@ -39,10 +39,15 @@
     - id: PlushieArachind
     - id: PlushiePenguin
     - id: PlushieVulp
+<<<<<<< HEAD
     #SS220-PlushieMiGo-begin
     - id: PlushieMigo #SS220
       weight: 0.15
     #SS220-PlushieMiGo-end
+=======
+    - id: PlushieSheep
+    - id: PlushieSpaceSheep
+>>>>>>> wizards/stable
     - !type:GroupSelector
       children:
       - id: PlushieBee

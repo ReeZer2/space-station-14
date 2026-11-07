@@ -20,6 +20,7 @@
       - ChemDispensable
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
+<<<<<<< HEAD
   - type: StationAiWhitelist #SS220 AI Access
   - type: Destructible
     thresholds:
@@ -34,6 +35,8 @@
         node: machineFrame
       - !type:DoActsBehavior
         acts: ["Destruction"]
+=======
+>>>>>>> wizards/stable
   - type: Machine
     board: ChemDispenserMachineCircuitboard
   - type: GuideHelp
@@ -41,7 +44,8 @@
     - Chemicals
     - Chemist
   - type: StealTarget
-    stealGroup: ChemDispenser
+    stealGroup:
+    - ChemDispenser
   - type: Fixtures
     fixtures:
       fix1:
@@ -53,6 +57,7 @@
         - MachineMask
         layer:
         - MachineLayer
+  - type: AmbientMusicMarkerMedical
 
 - type: entity
   id: ChemDispenser

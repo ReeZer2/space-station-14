@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 using System.Diagnostics.CodeAnalysis;
+=======
+>>>>>>> wizards/stable
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using Content.Server.Ghost.Roles.Components;
 using Content.Server.Speech.Components;
 using Content.Server.SS220.Language;
@@ -5,6 +6,14 @@ using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects;
 using Content.Shared.Mind.Components;
 using Content.Shared.SS220.Language.Components;
+=======
+using Content.Server.Ghost.Roles.Components;
+using Content.Server.RuntimeFun;
+using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Effects;
+using Content.Shared.Mind.Components;
+using Content.Shared.Speech.Components;
+>>>>>>> wizards/stable
 
 namespace Content.Server.EntityEffects.Effects;
 
@@ -27,6 +36,7 @@ public sealed partial class MakeSentientEntityEffectSystem : EntityEffectSystem<
             RemComp<ReplacementAccentComponent>(entity);
             // TODO: Make MonkeyAccent a replacement accent and remove MonkeyAccent code-smell.
             RemComp<MonkeyAccentComponent>(entity);
+<<<<<<< HEAD
 
             // SS220-cognizine-language-fix-begin
             if (TryComp<LanguageComponent>(entity, out var languageComp))
@@ -36,6 +46,9 @@ public sealed partial class MakeSentientEntityEffectSystem : EntityEffectSystem<
                 Dirty(entity, languageComp);
             }
             // SS220-cognizine-language-fix-end
+=======
+            RemComp<SpeakOnExceptionComponent>(entity);
+>>>>>>> wizards/stable
         }
 
         // Stops from adding a ghost role to things like people who already have a mind

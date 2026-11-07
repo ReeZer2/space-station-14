@@ -4,11 +4,15 @@ using Content.Shared.SS220.Shuttles.UI;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+<<<<<<< HEAD
 using System.Numerics;
+=======
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+>>>>>>> wizards/stable
 
 namespace Content.Shared.Projectiles;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class ProjectileComponent : Component
 {
     // SS220 add barricade begin
@@ -47,10 +51,21 @@ public sealed partial class ProjectileComponent : Component
     public EntityUid? Weapon;
 
     /// <summary>
-    ///     The projectile spawns inside the shooter most of the time, this prevents entities from shooting themselves.
+    /// How much time after being shot the projectile can collide with the shooter.
     /// </summary>
+    /// <remarks>
+    /// Since projectiles spawn inside the shooter,
+    /// they have to ignore the shooter for a little while while they fly away.
+    /// </remarks>
     [DataField, AutoNetworkedField]
-    public bool IgnoreShooter = true;
+    public TimeSpan DelayToAcknowledgeShooter = TimeSpan.FromSeconds(1);
+
+    /// <summary>
+    /// Time from which after the projectile can hit the shooter.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
+    public TimeSpan? WhenToStopIgnoringShooter;
 
     /// <summary>
     ///     The amount of damage the projectile will do.

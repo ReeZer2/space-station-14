@@ -21,6 +21,7 @@
     # off
     - !type:DepartmentTimeRequirement
       department: Command
+<<<<<<< HEAD
       time: 80h # SS220-RoleTime 2
     - !type:AgeRequirement
       requiredAge: 20
@@ -31,13 +32,20 @@
       - Felinid #SS220-jobbans end
     #SS220 requirement end
   weight: 20
+=======
+      time: 4h
+>>>>>>> wizards/stable
   startingGear: CaptainGear
   experienceDefinition: CaptainRoleExperience # SS220-experience
   icon: "JobIconCaptain"
   joinNotifyCrew: true
   supervisors: job-supervisors-centcom
+<<<<<<< HEAD
   canBeAntag: false
   radioBold: true
+=======
+  guides: [ Command ] # TODO: should have a more specific guidebook page instead of using the department itself
+>>>>>>> wizards/stable
   accessGroups:
   - AllAccess
   special:

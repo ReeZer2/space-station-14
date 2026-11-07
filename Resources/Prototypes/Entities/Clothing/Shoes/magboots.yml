@@ -72,7 +72,8 @@
   - type: StaticPrice
     price: 750
   - type: StealTarget
-    stealGroup: ClothingShoesBootsMagAdv
+    stealGroup:
+    - ClothingShoesBootsMagAdv
 
 - type: entity
   parent: [ClothingShoesBootsMagBase]
@@ -110,7 +111,7 @@
     walkModifier: 0.9
     sprintModifier: 0.9
   - type: GasTank
-    outputPressure: 42.6
+    releasePressure: 42.6
     air:
       # SS220 fix
       volume: 5
@@ -125,7 +126,7 @@
     price: 1500
 
 - type: entity
-  parent: [BaseCentcommContraband, ClothingShoesBootsMagSyndie]
+  parent: [ BaseTaskForceContraband, ClothingShoesBootsMagSyndie ]
   id: ClothingShoesBootsMagERT
   name: ERT magboots
   description: Upgraded magnetic boots utilized by Nanotrasen's Emergency Response Teams, they have a heavy magnetic pull and integrated thrusters. It can hold 0.75 L of gas.
@@ -136,12 +137,10 @@
     sprite: Clothing/Shoes/Boots/magboots-ert.rsi
 
 - type: entity
-  parent: BaseAction
+  parent: BaseToggleAction
   id: ActionToggleMagboots
   name: Toggle Magboots
   description: Toggles the magboots on and off.
   components:
   - type: Action
     itemIconStyle: BigItem
-  - type: InstantAction
-    event: !type:ToggleActionEvent

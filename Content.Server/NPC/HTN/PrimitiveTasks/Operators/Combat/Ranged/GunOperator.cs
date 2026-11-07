@@ -15,8 +15,13 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat.Ranged;
 
 public sealed partial class GunOperator : HTNOperator, IHtnConditionalShutdown
 {
+<<<<<<< HEAD
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!; //SS220 Change laser turrets AI
+=======
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private SharedCombatModeSystem _combatModeSystem = default!;
+>>>>>>> wizards/stable
 
     [DataField("shutdownState")]
     public HTNPlanState ShutdownState { get; private set; } = HTNPlanState.TaskFinished;
@@ -37,13 +42,13 @@ public sealed partial class GunOperator : HTNOperator, IHtnConditionalShutdown
     /// Do we require line of sight of the target before failing.
     /// </summary>
     [DataField("requireLOS")]
-    public bool RequireLOS = false;
+    public bool RequireLOS;
 
     /// <summary>
     /// If true, only opaque objects will block line of sight.
     /// </summary>
     [DataField("opaqueKey")]
-    public bool UseOpaqueForLOSChecks = false;
+    public bool UseOpaqueForLOSChecks;
 
     // Like movement we add a component and pass it off to the dedicated system.
 
@@ -96,7 +101,7 @@ public sealed partial class GunOperator : HTNOperator, IHtnConditionalShutdown
     public void ConditionalShutdown(NPCBlackboard blackboard)
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
-        _entManager.System<SharedCombatModeSystem>().SetInCombatMode(owner, false);
+        _combatModeSystem.SetInCombatMode(owner, false);
         _entManager.RemoveComponent<NPCRangedCombatComponent>(owner);
         blackboard.Remove<EntityUid>(TargetKey);
     }

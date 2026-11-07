@@ -8,12 +8,19 @@
   - type: Action
     priority: -9
     itemIconStyle: BigAction
+<<<<<<< HEAD
     icon:
       # SS220-resprite start
       #sprite: Interface/Actions/actions_ai.rsi
       sprite: SS220/Interface/Actions/actions_ai.rsi
       state: ai_core
       # SS220-resprite end
+=======
+  - type: Sprite
+    sprite: Interface/Actions/actions_ai.rsi
+    layers:
+    - state: ai_core
+>>>>>>> wizards/stable
   - type: InstantAction
     event: !type:JumpToCoreEvent
 
@@ -26,12 +33,19 @@
   - type: Action
     priority: -3
     itemIconStyle: NoItem
+<<<<<<< HEAD
     icon:
       # SS220-resprite start
       #sprite: SS220/Interface/Actions/actions_ai.rsi
       sprite: SS220/Interface/Actions/actions_ai.rsi
       state: state_laws
       # SS220-resprite end
+=======
+>>>>>>> wizards/stable
     useDelay: 0.5
+  - type: Sprite
+    sprite: Interface/Actions/actions_ai.rsi
+    layers:
+    - state: state_laws
   - type: InstantAction
     event: !type:ToggleLawsScreenEvent

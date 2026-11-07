@@ -4,6 +4,7 @@
   description: job-description-rd
   playTimeTracker: JobResearchDirector
   requirements:
+<<<<<<< HEAD
     - !type:DepartmentTimeRequirement
       department: Science
       time: 50h # SS220-RoleTime
@@ -15,11 +16,23 @@
       species:
       - Felinid #SS220-jobbans end
   weight: 10
+=======
+  - !type:RoleTimeRequirement
+    role: JobScientist
+    time: 5h
+  - !type:DepartmentTimeRequirement
+    department: Science
+    time: 10h
+>>>>>>> wizards/stable
   startingGear: ResearchDirectorGear
   experienceDefinition: ResearchDirectorRoleExperience # SS220-experience
   icon: "JobIconResearchDirector"
   supervisors: job-supervisors-captain
+<<<<<<< HEAD
   radioBold: true
+=======
+  guides: [ Command ] # TODO: should have a more specific guidebook page instead of using the department itself
+>>>>>>> wizards/stable
   access:
   - Research
   - Command

@@ -54,9 +54,14 @@
       - id: Flare
       - id: BarberScissors
       - id: FlippoLighter
+<<<<<<< HEAD
       - id: trayScanner
       # - id: Wristwatch # SS220-our-watches
       - id: ClothingWristWatch # SS220-our-watches
+=======
+      - id: TRayScanner
+      - id: Wristwatch
+>>>>>>> wizards/stable
       - id: ClothingNeckBling
       - id: ClothingMultipleHeadphones
       - id: DiceBag

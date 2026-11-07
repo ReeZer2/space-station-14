@@ -1,9 +1,16 @@
 - type: entity
+<<<<<<< HEAD
   name: space carp
   id: BaseMobCarp
   parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat, MobPassiveCollision ] # SS220 Add Mob Passive Collision
   description: It's a space carp.
+=======
+>>>>>>> wizards/stable
   abstract: true
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat, BaseSlicingRefinableButchering, MobNightVision, BaseMobDestructible ]
+  id: BaseMobCarp
+  name: space carp
+  description: It's a space carp.
   components:
     - type: InputMover
     - type: MobMover
@@ -32,9 +39,9 @@
             radius: 0.40
           density: 80
           mask:
-            - FlyingMobMask
+          - FlyingMobMask
           layer:
-            - FlyingMobLayer
+          - FlyingMobLayer
     - type: MobState
     - type: MobThresholds
       thresholds:
@@ -53,13 +60,13 @@
         Dead:
           Base: dead
           BaseUnshaded: dead_mouth
-    - type: Butcherable
-      spawned:
-        - id: FoodMeatFish
-          amount: 2
-        - id: MaterialToothSpaceCarp1
-          amount: 1
-          maxAmount: 4
+    - type: ToolRefinable
+      refineResult:
+      - id: FoodMeatFish
+        amount: 2
+      - id: MaterialToothSpaceCarp1
+        amount: 1
+        maxAmount: 4
     - type: MeleeWeapon
       altDisarm: false
       angle: 0
@@ -75,6 +82,7 @@
       proto: alien
     - type: Tag
       tags:
+<<<<<<< HEAD
         - Carp
         - DoorBumpOpener
         - CannotSuicide
@@ -83,6 +91,13 @@
     - type: Language
       availableLanguages:
       - id: Carpish #SS220 Dragon & Carp Language End
+=======
+      - Carp
+      - DoorBumpOpener
+      - CannotSuicide
+    - type: ReplacementAccent
+      accent: genericAggressive
+>>>>>>> wizards/stable
     - type: Speech
       speechVerb: LargeMob
     - type: InteractionPopup
@@ -110,11 +125,12 @@
         mouth: ""
 
 - type: entity
-  name: magicarp
   parent: BaseMobCarp
   id: MobCarpMagic
+  name: magicarp
   description: Looks like some kind of fish. Might be magical.
   components:
+<<<<<<< HEAD
     - type: Sprite
       sprite: Mobs/Aliens/Carps/magic.rsi
     - type: TypingIndicator
@@ -124,13 +140,20 @@
       - id: Carpish
       - id: Galactic
         canSpeak: false #SS220 Dragon & Carp Language End
+=======
+  - type: Sprite
+    sprite: Mobs/Aliens/Carps/magic.rsi
+  - type: TypingIndicator
+    proto: guardian
+>>>>>>> wizards/stable
 
 - type: entity
-  name: holocarp
   parent: BaseMobCarp
   id: MobCarpHolo
+  name: holocarp
   description: Carp made out of holographic energies. Sadly for you, it is very much real.
   components:
+<<<<<<< HEAD
     - type: Sprite
       sprite: Mobs/Aliens/Carps/holo.rsi
     - type: Physics
@@ -152,6 +175,24 @@
       - id: Carpish
       - id: Galactic
         canSpeak: false #SS220 Dragon & Carp Language End
+=======
+  - type: Sprite
+    sprite: Mobs/Aliens/Carps/holo.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 10
+        mask:
+        - MobMask
+        layer:
+        - Opaque
+  - type: TypingIndicator
+    proto: robot
+>>>>>>> wizards/stable
 
 - type: entity
   parent: MobCarp
@@ -166,22 +207,31 @@
     layers: [ 0 ]
 
 - type: entity
-  id: MobCarpSalvage
   parent: MobCarp
+  id: MobCarpSalvage
   suffix: "Salvage Ruleset"
   components:
+<<<<<<< HEAD
     - type: SalvageMobRestrictions
     # - type: MobThresholds  # SS220 Revert Wizden balance #38131 BEGIN
     #   thresholds:
     #     0: Alive
     #     30: Dead  # SS220 Revert Wizden balance #38131 END
+=======
+  - type: SalvageMobRestrictions
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      30: Dead
+>>>>>>> wizards/stable
 
 - type: entity
-  name: space carp
+  parent: [ MobDragonBrood, MobCarp ]
   id: MobCarpDragon
+  name: space carp
   suffix: DragonBrood
-  parent: MobCarp
   components:
+<<<<<<< HEAD
     - type: GhostRole
       allowMovement: true
       allowSpeech: true
@@ -207,10 +257,16 @@
       telepathyChannelPrototype: TelepathyChannelSpaceDragon
     # SS220 Telepathy end
     - type: Insulated # SS220 Insulated Dragon and Carp
+=======
+  - type: GhostRole
+    name: ghost-role-information-sentient-carp-name
+    description: ghost-role-information-sentient-carp-description
+    rules: ghost-role-information-space-dragon-summoned-carp-rules
+>>>>>>> wizards/stable
 
 - type: entity
-  id: MobCarpDungeon
   parent: MobCarp
+  id: MobCarpDungeon
   suffix: Dungeon
   components:
   - type: MobThresholds
@@ -226,11 +282,12 @@
         Slash: 6
 
 - type: entity
-  name: sharkminnow
-  parent: [ BaseMobBloodsucker, BaseMobCarp ]
+  parent: [ BaseMobBloodsucker, BaseMobCarp, BaseSlicingRefinableButchering ]
   id: MobShark
+  name: sharkminnow
   description: A dangerous shark from the blackness of endless space, who loves to drink blood.
   components:
+<<<<<<< HEAD
     # SS220 ADD NIGHT VISION START
     - type: NightVision
       profile: NightVisionLightGray
@@ -281,10 +338,76 @@
         types:
           Slash: 10
           Bloodloss: 5
+=======
+  - type: Sprite
+    sprite: Mobs/Aliens/Carps/sharkminnow.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: mouth
+      shader: unshaded
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 100
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Dead
+  - type: Stamina
+    baseCritThreshold: 150
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+        BaseUnshaded: mouth
+      Dead:
+        Base: dead
+        BaseUnshaded: dead_mouth
+  - type: RandomSprite
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        alive: Rainbow
+      enum.DamageStateVisualLayers.BaseUnshaded:
+        mouth: ""
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatFish
+      amount: 4
+    - id: MaterialToothSharkminnow1
+      amount: 3
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 10
+        Bloodloss: 5
+>>>>>>> wizards/stable
 
 - type: entity
-  id: MobSharkSalvage
   parent: MobShark
+  id: MobSharkSalvage
   suffix: "Salvage Ruleset"
   components:
-    - type: SalvageMobRestrictions
+  - type: SalvageMobRestrictions
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      82: Dead # Might seem random, but this brings up the hits to kill with a crusher mark to 3
+
+- type: entity
+  parent: [ MobDragonBrood, MobShark ]
+  id: MobSharkDragon
+  suffix: DragonBrood
+  components:
+  - type: GhostRole
+    name: ghost-role-information-sentient-sharkminnow-name
+    description: ghost-role-information-sentient-carp-description
+    rules: ghost-role-information-space-dragon-summoned-carp-rules

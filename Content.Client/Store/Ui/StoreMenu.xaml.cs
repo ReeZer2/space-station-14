@@ -1,6 +1,5 @@
 using System.Linq;
 using System.Text;
-using Content.Client.Actions;
 using Content.Client.Message;
 using Content.Client.SS220.UserInterface.Controls;
 using Content.Client.SS220.UserInterface.System.PinUI;
@@ -12,6 +11,7 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.Graphics.RSI;
 using Robust.Shared.Prototypes;
 using Content.Shared.SS220.TraitorDynamics;
 
@@ -20,8 +20,8 @@ namespace Content.Client.Store.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class StoreMenu : DefaultWindow, IPinnableWindow // ss220 add pin for ui
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     private StoreWithdrawWindow? _withdrawWindow;
 
@@ -155,8 +155,8 @@ public sealed partial class StoreMenu : DefaultWindow, IPinnableWindow // ss220 
         else if (listing.ProductAction != null)
         {
             var actionId = _entityManager.Spawn(listing.ProductAction);
-            if (_entityManager.System<ActionsSystem>().GetAction(actionId)?.Comp?.Icon is {} icon)
-                texture = spriteSys.Frame0(icon);
+            if (_entityManager.TryGetComponent(actionId, out SpriteComponent? actionSprite))
+                texture = actionSprite.Icon?.GetFrame(RsiDirection.South, 0);
         }
 
         var listingInStock = GetListingPriceString(listing);

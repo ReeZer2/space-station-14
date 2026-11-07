@@ -1,7 +1,8 @@
-﻿using Content.Shared.Bed.Sleep;
+using Content.Shared.Actions.Events;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Buckle.Components;
 using Content.Shared.CombatMode.Pacification;
-using Content.Shared.Damage;
+using Content.Shared.Cuffs;
 using Content.Shared.Damage.ForceSay;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Emoting;
@@ -19,7 +20,9 @@ using Content.Shared.SS220.Telepathy;
 using Content.Shared.Standing;
 using Content.Shared.Strip.Components;
 using Content.Shared.Throwing;
-using Robust.Shared.Physics.Components;
+using Content.Shared.Tools.Systems;
+using System.Linq;
+using Content.Shared.Popups;
 
 namespace Content.Shared.Mobs.Systems;
 
@@ -28,31 +31,26 @@ public partial class MobStateSystem
     //General purpose event subscriptions. If you can avoid it register these events inside their own systems
     private void SubscribeEvents()
     {
-        SubscribeLocalEvent<MobStateComponent, BeforeGettingStrippedEvent>(OnGettingStripped);
         SubscribeLocalEvent<MobStateComponent, ChangeDirectionAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, UseAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, AttackAttemptEvent>(CheckAct);
-        SubscribeLocalEvent<MobStateComponent, ConsciousAttemptEvent>(CheckConcious);
         SubscribeLocalEvent<MobStateComponent, ThrowAttemptEvent>(CheckAct);
+<<<<<<< HEAD
         SubscribeLocalEvent<MobStateComponent, SpeakAttemptEvent>(OnSpeakAttempt);
         SubscribeLocalEvent<MobStateComponent, TelepathySendAttemptEvent>(OnTelepathyAttempt); // SS220 Block telepathy on death
         SubscribeLocalEvent<MobStateComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
+=======
+>>>>>>> wizards/stable
         SubscribeLocalEvent<MobStateComponent, EmoteAttemptEvent>(CheckAct);
-        SubscribeLocalEvent<MobStateComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
         SubscribeLocalEvent<MobStateComponent, DropAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, PickupAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, StartPullAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, UpdateCanMoveEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, StandAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, PointAttemptEvent>(CheckAct);
-        SubscribeLocalEvent<MobStateComponent, TryingToSleepEvent>(OnSleepAttempt);
-        SubscribeLocalEvent<MobStateComponent, CombatModeShouldHandInteractEvent>(OnCombatModeShouldHandInteract);
-        SubscribeLocalEvent<MobStateComponent, AttemptPacifiedAttackEvent>(OnAttemptPacifiedAttack);
-        SubscribeLocalEvent<MobStateComponent, DamageModifyEvent>(OnDamageModify);
-
-        SubscribeLocalEvent<MobStateComponent, UnbuckleAttemptEvent>(OnUnbuckleAttempt);
     }
 
+    [SubscribeLocalEvent]
     private void OnUnbuckleAttempt(Entity<MobStateComponent> ent, ref UnbuckleAttemptEvent args)
     {
         // TODO is this necessary?
@@ -68,6 +66,7 @@ public partial class MobStateSystem
         RaiseLocalEvent(target, ref ev);
     }
 
+    [SubscribeLocalEvent]
     private void CheckConcious(Entity<MobStateComponent> ent, ref ConsciousAttemptEvent args)
     {
         switch (ent.Comp.CurrentState)
@@ -142,14 +141,25 @@ public partial class MobStateSystem
         }
     }
 
+    [SubscribeLocalEvent]
+    private void OnAttemptToolRefine(Entity<MobStateComponent> ent, ref AttemptToolRefineEvent args)
+    {
+        if (!IsDead(ent, ent))
+        {
+            args = args with { IsCancelled = true, BlockCause = Loc.GetString("refined-slice-verb-target-isnt-dead") };
+        }
+    }
+
     #region Event Subscribers
 
+    [SubscribeLocalEvent]
     private void OnSleepAttempt(EntityUid target, MobStateComponent component, ref TryingToSleepEvent args)
     {
         if (IsDead(target, component))
             args.Cancelled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnGettingStripped(EntityUid target, MobStateComponent component, BeforeGettingStrippedEvent args)
     {
         // Incapacitated or dead targets get stripped two or three times as fast. Makes stripping corpses less tedious.
@@ -159,6 +169,7 @@ public partial class MobStateSystem
             args.Multiplier /= 2;
     }
 
+    [SubscribeLocalEvent]
     private void OnSpeakAttempt(EntityUid uid, MobStateComponent component, SpeakAttemptEvent args)
     {
         if (HasComp<AllowNextCritSpeechComponent>(uid))
@@ -194,6 +205,7 @@ public partial class MobStateSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnEquipAttempt(EntityUid target, MobStateComponent component, IsEquippingAttemptEvent args)
     {
         // is this a self-equip, or are they being stripped?
@@ -201,6 +213,7 @@ public partial class MobStateSystem
             CheckAct(target, component, args);
     }
 
+    [SubscribeLocalEvent]
     private void OnUnequipAttempt(EntityUid target, MobStateComponent component, IsUnequippingAttemptEvent args)
     {
         // is this a self-equip, or are they being stripped?
@@ -208,6 +221,7 @@ public partial class MobStateSystem
             CheckAct(target, component, args);
     }
 
+    [SubscribeLocalEvent]
     private void OnCombatModeShouldHandInteract(EntityUid uid, MobStateComponent component, ref CombatModeShouldHandInteractEvent args)
     {
         // Disallow empty-hand-interacting in combat mode
@@ -216,14 +230,23 @@ public partial class MobStateSystem
             args.Cancelled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnAttemptPacifiedAttack(Entity<MobStateComponent> ent, ref AttemptPacifiedAttackEvent args)
     {
         args.Cancelled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnDamageModify(Entity<MobStateComponent> ent, ref DamageModifyEvent args)
     {
         args.Damage *= _damageable.UniversalMobDamageModifier;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnIncapCuffCheck(Entity<MobStateComponent> ent, ref CheckIncapacitatedCuffEvent args)
+    {
+        if (IsIncapacitated(ent, ent.Comp))
+            args.Incapacitated = true;
     }
 
     #endregion

@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 using Content.Server.Administration.Managers;
+=======
+>>>>>>> wizards/stable
 using Content.Server.Database;
 using Content.Shared.Administration;
 using Content.Shared.Database;
@@ -7,10 +10,14 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Ban)]
-    public sealed class PardonCommand : LocalizedCommands
+    public sealed partial class PardonCommand : LocalizedCommands
     {
+<<<<<<< HEAD
         [Dependency] private readonly IServerDbManager _dbManager = default!;
         [Dependency] private readonly IBanManager _banManager = default!; // SS220-make-pardon-better
+=======
+        [Dependency] private IServerDbManager _dbManager = default!;
+>>>>>>> wizards/stable
 
         public override string Command => "pardon";
 

@@ -22,11 +22,15 @@
   - HandheldStationMap
   - ClothingHeadHatWelding
   - ClothingHeadHatCone
+<<<<<<< HEAD
   - ClothingEyesGlassesMeson #SS220 Craftable-Welding-Mask
   - ClothingWristWatch #SS220 Wrist Watch
   - DeviceCalculator #SS220 Calculator
   - CassetteTape # SS220 Tape Recorder #32234 early merge
   - TapeRecorder # SS220 Tape Recorder #32234 early merge
+=======
+  - Binoculars
+>>>>>>> wizards/stable
 
 - type: latheRecipePack
   id: AtmosStatic

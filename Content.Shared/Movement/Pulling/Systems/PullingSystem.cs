@@ -45,8 +45,9 @@ namespace Content.Shared.Movement.Pulling.Systems;
 /// <summary>
 /// Allows one entity to pull another behind them via a physics distance joint.
 /// </summary>
-public sealed class PullingSystem : EntitySystem
+public sealed partial class PullingSystem : EntitySystem
 {
+<<<<<<< HEAD
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!; // SS220-MIT-pull-visualization
     [Dependency] private readonly RotateToFaceSystem _rotateTo = default!; // SS220-MIT-pull-visualization
@@ -69,6 +70,21 @@ public sealed class PullingSystem : EntitySystem
     [Dependency] private readonly SharedGrabSystem _grab = default!; // SS220-Grabs
 
     static readonly Color СolorCaptureEffect = Color.Yellow; // SS220-MIT-pull-visualization
+=======
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
+    [Dependency] private AlertsSystem _alertsSystem = default!;
+    [Dependency] private MovementSpeedModifierSystem _modifierSystem = default!;
+    [Dependency] private SharedJointSystem _joints = default!;
+    [Dependency] private SharedContainerSystem _containerSystem = default!;
+    [Dependency] private SharedHandsSystem _handsSystem = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private HeldSpeedModifierSystem _clothingMoveSpeed = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedVirtualItemSystem _virtual = default!;
+>>>>>>> wizards/stable
 
     public override void Initialize()
     {

@@ -112,7 +112,12 @@
       storagebase: !type:AllSelector
         children:
         - id: ClothingHeadHatBeretQM
+<<<<<<< HEAD
 #        - id: ClothingUniformJumpsuitQMFormal #SS220-Fashion
+=======
+        - id: ClothingUniformJumpsuitQMFormal
+        - id: ClothingUniformJumpskirtQMFormalDress
+>>>>>>> wizards/stable
         - id: ClothingUniformJumpsuitQMTurtleneck
         - id: ClothingUniformJumpskirtQMTurtleneck
         - id: ClothingHandsGlovesColorBrown

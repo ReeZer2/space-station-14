@@ -9,7 +9,6 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
-using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
 using Content.Shared.MedicalScanner;
 using Content.Shared.Mobs;
@@ -24,22 +23,31 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+<<<<<<< HEAD
 using System.Linq;
 using System.Numerics;
+=======
+
+>>>>>>> wizards/stable
 namespace Content.Client.HealthAnalyzer.UI;
 
 // Health analyzer UI is split from its window because it's used by both the
 // health analyzer item and the cryo pod UI.
-
 [GenerateTypedNameReferences]
 public sealed partial class HealthAnalyzerControl : BoxContainer
 {
+<<<<<<< HEAD
     private readonly RandomShuffle<GetHealthAnalyzerShuffleChance> _randomShuffle = new();  // SS220-experience-update
     private readonly IEntityManager _entityManager;
     private readonly SpriteSystem _spriteSystem;
     private readonly IPrototypeManager _prototypes;
+=======
+>>>>>>> wizards/stable
     private readonly IResourceCache _cache;
+    private readonly IEntityManager _entityManager;
+    private readonly IPrototypeManager _prototypes;
     private readonly DamageableSystem _damageable;
+<<<<<<< HEAD
     private readonly SharedSolutionContainerSystem _solSystem; // ss220 add reagents to health analyzer
 
     // SS220-experience-update-begin
@@ -57,37 +65,71 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
     // SS220 clinic death analyzer - start
     private const int WarningThresholdMinutes = 1;
     // SS220 clinic death analyzer - end
+=======
+    private readonly SpriteSystem _spriteSystem;
+>>>>>>> wizards/stable
 
     public HealthAnalyzerControl()
     {
         RobustXamlLoader.Load(this);
 
         var dependencies = IoCManager.Instance!;
-        _entityManager = dependencies.Resolve<IEntityManager>();
-        _spriteSystem = _entityManager.System<SpriteSystem>();
-        _prototypes = dependencies.Resolve<IPrototypeManager>();
         _cache = dependencies.Resolve<IResourceCache>();
+        _entityManager = dependencies.Resolve<IEntityManager>();
+        _prototypes = dependencies.Resolve<IPrototypeManager>();
+        _spriteSystem = _entityManager.System<SpriteSystem>();
         _damageable = _entityManager.System<DamageableSystem>();
         _solSystem = _entityManager.System<SharedSolutionContainerSystem>(); // ss220 add reagents to health analyzer
 
         _randomShuffle.MakeNewRandomChange(SkillIssueReshuffleChance); // SS220-experience-update
     }
 
+    /// <summary>
+    /// Populate the UI via a state.
+    /// </summary>
+    /// <param name="state">The state that carries the information about the patient.</param>
     public void Populate(HealthAnalyzerUiState state)
     {
+<<<<<<< HEAD
         PrintButton.Visible = state.CanPrint; // SS220-health-analyzer-report
         PrintButton.Disabled = true; // SS220-health-analyzer-report
 
         ReagentsContainer.DisposeAllChildren(); // ss220 add reagents to health
 
         var target = _entityManager.GetEntity(state.TargetEntity);
+=======
+        PopulateDataFields(state.TargetEntity, state.ScanMode, state.BloodLevel, state.Unrevivable, state.Bleeding);
+        if (!float.IsNaN(state.Temperature))
+            PopulateTemperature(state.Temperature);
+    }
+>>>>>>> wizards/stable
 
-        if (target == null
-            || !_entityManager.TryGetComponent<DamageableComponent>(target, out var damageable))
+    /// <summary>
+    /// Populates the UI directly.
+    /// </summary>
+    /// <param name="targetEntity">The entity being analyzed.</param>
+    /// <param name="scanMode">The current scanmode of the analyzer.</param>
+    /// <param name="bloodlevel">The bloodlevel of the entity.</param>
+    /// <param name="unrevivable">Whether this entity is revivable.</param>
+    /// <param name="bleeding">Whether this entity is bleeding.</param>
+    private void PopulateDataFields(NetEntity? targetEntity, bool scanMode, float bloodlevel, bool unrevivable, bool bleeding)
+    {
+        var target = _entityManager.GetEntity(targetEntity);
+
+        // If the entity has been deleted,
+        if (_entityManager.Deleted(target))
         {
-            NoPatientDataText.Visible = true;
+            // At the start, the health analyzer will have no entity. So we simply do nothing if it has never been used.
+            if (NoPatientDataText.Visible)
+                return;
+            // If the target is still null even though it was used, that means the target has been deleted.
+            ScanModeLabel.Text = Loc.GetString("health-analyzer-window-scan-mode-inactive");
+            ScanModeLabel.FontColorOverride = Color.Red;
+            SpriteView.Visible = false;
+            NoDataTex.Visible = true;
             return;
         }
+<<<<<<< HEAD
 
         PrintButton.Disabled = !state.CanPrint; // SS220-health-analyzer-report
 
@@ -119,6 +161,8 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
         ReagentsSection.Visible = ReagentsContainer.ChildCount > 0;
         // ss220 add reagents to health analyzer end
 
+=======
+>>>>>>> wizards/stable
         NoPatientDataText.Visible = false;
 
         // SS220 clinic death analyzer - start
@@ -161,19 +205,15 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
         // SS220 clinic death analyzer - end
 
         // Scan Mode
+        ScanModeLabel.Text = scanMode
+            ? Loc.GetString("health-analyzer-window-scan-mode-active")
+            : Loc.GetString("health-analyzer-window-scan-mode-inactive");
 
-        ScanModeLabel.Text = state.ScanMode.HasValue
-            ? state.ScanMode.Value
-                ? Loc.GetString("health-analyzer-window-scan-mode-active")
-                : Loc.GetString("health-analyzer-window-scan-mode-inactive")
-            : Loc.GetString("health-analyzer-window-entity-unknown-text");
-
-        ScanModeLabel.FontColorOverride = state.ScanMode.HasValue && state.ScanMode.Value ? Color.Green : Color.Red;
+        ScanModeLabel.FontColorOverride = scanMode ? Color.Green : Color.Red;
 
         // Patient Information
-
         SpriteView.SetEntity(target.Value);
-        SpriteView.Visible = state.ScanMode.HasValue && state.ScanMode.Value;
+        SpriteView.Visible = scanMode;
         NoDataTex.Visible = !SpriteView.Visible;
 
         var name = new FormattedMessage();
@@ -181,6 +221,11 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
         name.AddText(_entityManager.HasComponent<MetaDataComponent>(target.Value)
             ? Identity.Name(target.Value, _entityManager)
             : Loc.GetString("health-analyzer-window-entity-unknown-text"));
+
+        // If the scanned entity was changed, we need to reset the temperature label.
+        if (name.ToMarkup() != NameLabel.Text)
+            TemperatureLabel.Text = Loc.GetString("health-analyzer-window-entity-unknown-temperature-text");
+
         NameLabel.SetMessage(name);
 
         SpeciesLabel.Text =
@@ -190,6 +235,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
                 : Loc.GetString("health-analyzer-window-entity-unknown-species-text");
 
         // Basic Diagnostic
+<<<<<<< HEAD
 
         // SS220-experience-update-begin
         if (state.Bleeding is not null)
@@ -205,6 +251,10 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
 
         BloodLabel.Text = !float.IsNaN(state.BloodLevel)
             ? $"{state.BloodLevel * 100:F1} %"
+=======
+        BloodLabel.Text = !float.IsNaN(bloodlevel)
+            ? $"{bloodlevel * 100:F1} %"
+>>>>>>> wizards/stable
             : Loc.GetString("health-analyzer-window-entity-unknown-value-text");
 
         //SS220 LimitationRevive - start
@@ -226,18 +276,23 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
         }
         //SS220 clinic death analyzer - end
 
-        // Total Damage
+        if (!_entityManager.HasComponent<DamageableComponent>(target.Value))
+            return;
 
+<<<<<<< HEAD
         // SS220-experience-update-begin
         var totalDamage = _randomShuffle.GetRandomFromScaleAmplitude(nameof(target), _damageable.GetTotalDamage(target.Value), DamageSkillIssueRandomScaleAmplitude);
         DamageLabel.Text = totalDamage.ToString();
         // SS220-experience-update-end
 
         // DamageLabel.Text = _damageable.GetTotalDamage(target.Value).ToString(); [wizden-code] ss220-experience-update
+=======
+        // Total Damage
+        DamageLabel.Text = _damageable.GetTotalDamage(target.Value).ToString();
+>>>>>>> wizards/stable
 
         // Alerts
-
-        var showAlerts = state.Unrevivable == true || state.Bleeding == true;
+        var showAlerts = unrevivable || bleeding;
 
         AlertsDivider.Visible = showAlerts;
         AlertsContainer.Visible = showAlerts;
@@ -245,24 +300,26 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
         if (showAlerts)
             AlertsContainer.RemoveAllChildren();
 
-        if (state.Unrevivable == true)
+        if (unrevivable)
+        {
             AlertsContainer.AddChild(new RichTextLabel
             {
                 Text = Loc.GetString("health-analyzer-window-entity-unrevivable-text"),
                 Margin = new Thickness(0, 4),
-                MaxWidth = 300
+                MaxWidth = 300,
             });
-
-        if (state.Bleeding == true)
+        }
+        if (bleeding)
+        {
             AlertsContainer.AddChild(new RichTextLabel
             {
                 Text = Loc.GetString("health-analyzer-window-entity-bleeding-text"),
                 Margin = new Thickness(0, 4),
-                MaxWidth = 300
+                MaxWidth = 300,
             });
+        }
 
         // Damage Groups
-
         var damageSortedGroups =
             _damageable.GetDamagePerGroup(target.Value)
                 .OrderByDescending(damage => damage.Value)
@@ -271,6 +328,19 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
         var damagePerType = _damageable.GetAllDamage(target.Value).DamageDict;
 
         DrawDiagnosticGroups(damageSortedGroups, damagePerType);
+    }
+
+    /// <summary>
+    /// Populate the temperature label.
+    /// </summary>
+    /// <remarks>
+    /// This has been isolated in a method due to temperature not being predicted, while the rest is.
+    /// </remarks>
+    private void PopulateTemperature(float temperature)
+    {
+        TemperatureLabel.Text = !float.IsNaN(temperature)
+            ? $"{temperature - Atmospherics.T0C:F1} °C ({temperature:F1} K)"
+            : Loc.GetString("health-analyzer-window-entity-unknown-temperature-text");
     }
 
     private static string GetStatus(MobState mobState)
@@ -301,7 +371,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
 
             var groupTitleText = $"{Loc.GetString(
                 "health-analyzer-window-damage-group-text",
-                ("damageGroup", _prototypes.Index<DamageGroupPrototype>(damageGroupId).LocalizedName),
+                ("damageGroup", _prototypes.Index(damageGroupId).LocalizedName),
                 ("amount", damageAmount)
             )}";
 
@@ -316,7 +386,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
             GroupsContainer.AddChild(groupContainer);
 
             // Show the damage for each type in that group.
-            var group = _prototypes.Index<DamageGroupPrototype>(damageGroupId);
+            var group = _prototypes.Index(damageGroupId);
 
             foreach (var type in group.DamageTypes)
             {
@@ -337,7 +407,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
 
                 var damageString = Loc.GetString(
                     "health-analyzer-window-damage-type-text",
-                    ("damageType", _prototypes.Index<DamageTypePrototype>(type).LocalizedName),
+                    ("damageType", _prototypes.Index(type).LocalizedName),
                     ("amount", typeAmount)
                 );
 
@@ -352,7 +422,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
         var rsiSprite = new SpriteSpecifier.Rsi(rsiPath, texture);
 
         var rsi = _cache.GetResource<RSIResource>(rsiSprite.RsiPath).RSI;
-        if (!rsi.TryGetState(rsiSprite.RsiState, out var state))
+        if (!rsi.TryGetState(rsiSprite.RsiState, out _))
         {
             rsiSprite = new SpriteSpecifier.Rsi(rsiPath, "unknown");
         }

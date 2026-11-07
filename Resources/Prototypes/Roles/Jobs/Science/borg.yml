@@ -8,6 +8,7 @@
   requirements:
   - !type:RoleTimeRequirement
     role: JobBorg
+<<<<<<< HEAD
     time: 20h # SS220-AITime-20H
   # SS220-AITime-begin
   - !type:DepartmentTimeRequirement
@@ -16,6 +17,9 @@
   # SS220-AITime-end
   weight: 10
   canBeAntag: false
+=======
+    time: 5h
+>>>>>>> wizards/stable
   icon: JobIconStationAi
   experienceDefinition: StationAiRoleExperience # SS220-experience
   supervisors: job-supervisors-rd
@@ -35,10 +39,15 @@
   playTimeTracker: JobBorg
   requirements:
     - !type:OverallPlaytimeRequirement
+<<<<<<< HEAD
       time: 20h # SS220-RoleTime
   canBeAntag: false
+=======
+      time: 10h
+>>>>>>> wizards/stable
   icon: JobIconBorg
   supervisors: job-supervisors-rd
+  guides: [ Cyborgs ]
   jobEntity: PlayerBorgBattery
   applyTraits: false
   special: #SS220-RenameStart - start

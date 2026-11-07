@@ -1,0 +1,37 @@
+- type: job
+  id: Passenger
+  name: job-name-passenger
+  description: job-description-passenger
+  playTimeTracker: JobPassenger
+  startingGear: PassengerGear
+  experienceDefinition: PassengerRoleExperience # SS220-experience
+  icon: "JobIconPassenger"
+  supervisors: job-supervisors-everyone
+<<<<<<< HEAD:Resources/Prototypes/Roles/Jobs/Civilian/assistant.yml
+#  access: # Corvax
+#  - Maintenance
+=======
+  guides: [ Civilian ] # Doesn't need a unique guidebook page because Civilian is a catch-all for zero-responsibility jobs
+  access:
+  - Maintenance
+>>>>>>> wizards/stable:Resources/Prototypes/Roles/Jobs/Civilian/passenger.yml
+
+- type: startingGear
+  id: PassengerGear
+  equipment:
+    id: PassengerPDA
+    ears: ClothingHeadsetGrey
+  #storage:
+    #back:
+    #- Stuff
+
+- type: chameleonOutfit
+  id: PassengerChameleonOutfit
+  job: Passenger
+  equipment:
+    head: ClothingHeadHatWelding
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskGas
+    neck: ClothingNeckMantle
+    outerClothing: ClothingOuterWinterCoat
+    gloves: ClothingHandsGlovesColorYellowBudget

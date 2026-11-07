@@ -1,10 +1,11 @@
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Paper;
 using Content.Shared.SS220.Photocopier;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Fax.Components;
 
@@ -27,7 +28,7 @@ public sealed partial class FaxMachineComponent : Component
     /// Device address of fax in network to which data will be send
     /// </summary>
     [DataField("destinationAddress")]
-    public string? DestinationFaxAddress { get; set; }
+    public DeviceAddress? DestinationFaxAddress { get; set; }
 
     /// <summary>
     /// Name of fax in network to which data will be send
@@ -90,7 +91,7 @@ public sealed partial class FaxMachineComponent : Component
     /// Known faxes in network by address with fax names
     /// </summary>
     [ViewVariables]
-    public Dictionary<string, string> KnownFaxes { get; } = new();
+    public Dictionary<DeviceAddress, string> KnownFaxes { get; } = new();
 
     /// <summary>
     /// Print queue of the incoming message
@@ -164,8 +165,14 @@ public sealed partial class FaxMachineComponent : Component
     public LocId SenderInfo = "fax-machine-sender-info";
 }
 
+<<<<<<< HEAD
 [DataDefinition, Virtual] // SS220 Make virtual
 public partial class FaxPrintout
+=======
+[DataDefinition]
+[Serializable, NetSerializable]
+public sealed partial class FaxPrintout
+>>>>>>> wizards/stable
 {
     [DataField(required: true)]
     public string Name { get; private set; } = default!;
@@ -176,13 +183,13 @@ public partial class FaxPrintout
     [DataField(required: true)]
     public string Content { get; private set; } = default!;
 
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
-    public string PrototypeId { get; private set; } = default!;
+    [DataField(required: true)]
+    public EntProtoId PrototypeId { get; private set; } = default!;
 
-    [DataField("stampState")]
+    [DataField]
     public string? StampState { get; private set; }
 
-    [DataField("stampedBy")]
+    [DataField]
     public List<StampDisplayInfo> StampedBy { get; private set; } = new();
 
     [DataField]

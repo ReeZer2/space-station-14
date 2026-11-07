@@ -5,7 +5,7 @@ using Content.Shared.Inventory;
 
 namespace Content.Shared.Eye.Blinding.Systems;
 
-public sealed class BlurryVisionSystem : EntitySystem
+public sealed partial class BlurryVisionSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -29,6 +29,10 @@ public sealed class BlurryVisionSystem : EntitySystem
         args.Args.CorrectionPower *= glasses.Comp.CorrectionPower;
     }
 
+    /// <summary>
+    /// Update a blurry vision component according to a blindable component.
+    /// </summary>
+    /// <param name="ent">The entity with the component to update.</param>
     public void UpdateBlurMagnitude(Entity<BlindableComponent?> ent)
     {
         if (!Resolve(ent.Owner, ref ent.Comp, false))

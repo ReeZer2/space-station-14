@@ -1,6 +1,6 @@
-﻿- type: entity
+- type: entity
   id: BaseBarSign
-  parent: [ BaseWallmountGlass, BaseWallmountMachine ]
+  parent: [ BaseWallmountGlass, BaseWallmountMachine, StructureHealthMachineWeak ]
   name: bar sign
   abstract: true
   components:
@@ -29,10 +29,8 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 100
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
@@ -292,7 +290,7 @@
 - type: entity
   parent: BaseBarSign
   id: BarSignEmped
-  name: glitchy bar sign 
+  name: glitchy bar sign
   description: You imagine a good smack might fix it.
   components:
   - type: BarSign

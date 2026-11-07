@@ -18,6 +18,7 @@ using System.Numerics;
 
 namespace Content.Shared.Weapons.Hitscan.Systems;
 
+<<<<<<< HEAD
 public sealed partial class HitscanBasicRaycastSystem : EntitySystem // SS220 separate HitscanBasicRaycastSystem.220.cs
 {
     [Dependency] private readonly SharedShuttleNavInfoSystem _sharedShuttleNavInfo = default!; // SS220-add-hitscan-to-map
@@ -26,8 +27,16 @@ public sealed partial class HitscanBasicRaycastSystem : EntitySystem // SS220 se
     [Dependency] private readonly ISharedAdminLogManager _log = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private StandingStateSystem _standing = default!; //SS220 weapon overhaul
+=======
+public sealed partial class HitscanBasicRaycastSystem : EntitySystem
+{
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private ISharedAdminLogManager _log = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+>>>>>>> wizards/stable
 
-    [Dependency] private readonly EntityQuery<HitscanBasicVisualsComponent> _visualsQuery = default!;
+    [Dependency] private EntityQuery<HitscanBasicVisualsComponent> _visualsQuery = default!;
 
     public override void Initialize()
     {
@@ -72,6 +81,7 @@ public sealed partial class HitscanBasicRaycastSystem : EntitySystem // SS220 se
         {
             ShotDirection = args.ShotDirection,
             Gun = args.Gun,
+            Hitscan = ent.Owner,
             Shooter = args.Shooter,
             HitEntity = result?.HitEntity,
         };
@@ -84,6 +94,12 @@ public sealed partial class HitscanBasicRaycastSystem : EntitySystem // SS220 se
 
         var hitEvent = new HitscanRaycastFiredEvent { Data = data };
         RaiseLocalEvent(ent, ref hitEvent);
+
+        if (data.HitEntity != null)
+        {
+            var strikeEvent = new HitscanRaycastStrikeEvent { Data = data };
+            RaiseLocalEvent(data.HitEntity.Value, ref strikeEvent);
+        }
     }
 
     // SS220-make-hitscan-target-change-begin

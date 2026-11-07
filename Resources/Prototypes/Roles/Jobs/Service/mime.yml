@@ -1,0 +1,64 @@
+- type: job
+  id: Mime
+  name: job-name-mime
+  description: job-description-mime
+  playTimeTracker: JobMime
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 36000 # SS220-RoleTime 2
+    - !type:OverallPlaytimeRequirement
+       time: 20h # SS220-RoleTime 2
+  startingGear: MimeGear
+  experienceDefinition: MimeRoleExperience # SS220-experience
+  icon: "JobIconMime"
+  supervisors: job-supervisors-hop
+  guides: [ Service ] # TODO: should have a more specific guidebook page instead of using the department itself
+  access:
+  - Service # ss220 fix
+  - Theatre
+  - Maintenance
+  - Mime #SS220 New_accesses_and_some_tweaks
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: MimePowers
+      #preventWriting: true #ss220 remove prevent writing for mime
+    - type: FrenchAccent
+    - type: RenameStart #SS220-RenameStart
+
+- type: startingGear
+  id: MimeGear
+  equipment:
+    gloves: ClothingHandsGlovesColorWhite
+#    shoes: ClothingShoesColorWhite #SS220-Two Floppa Iterarion
+    id: MimePDA
+    ears: ClothingHeadsetService
+  storage:
+    back:
+    - RubberStampMime
+
+- type: entity
+  parent: BaseAction
+  id: ActionMimeInvisibleWall
+  name: Create Invisible Wall
+  description: Create an invisible wall in front of you, if placeable there.
+  components:
+  - type: Action
+    priority: -1
+    useDelay: 30
+  - type: Sprite
+    sprite: Structures/Walls/solid.rsi
+    layers:
+    - state: full
+  - type: InstantAction
+    event: !type:InvisibleWallActionEvent
+
+- type: chameleonOutfit
+  id: MimeChameleonOutfit
+  job: Mime
+  equipment:
+    head: ClothingHeadHatMimesoft
+    eyes: ClothingEyesGlassesCheapSunglasses
+    neck: ClothingNeckScarfStripedZebra
+    outerClothing: ClothingOuterWinterMime

@@ -1,0 +1,38 @@
+{
+<<<<<<< HEAD:Resources/Textures/Structures/Walls/mining_diagonal.rsi/meta.json
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt",
+  "copyright": "by MIXnikita for SS220",
+  "states": [
+    {
+      "name": "state0",
+      "directions": 4
+    },
+    {
+      "name": "state1",
+      "directions": 4
+    }
+  ]
+=======
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "dead"
+        },
+        {
+            "name": "alive",
+            "directions": 4
+        }
+    ]
+>>>>>>> wizards/stable:Resources/Textures/Mobs/Animals/Farm/chick.rsi/meta.json
+}

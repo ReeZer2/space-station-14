@@ -1,4 +1,4 @@
-﻿- type: job
+- type: job
   id: ResearchAssistant
   name: job-name-research-assistant
   description: job-description-research-assistant
@@ -16,7 +16,11 @@
   experienceDefinition: ResearchAssistantRoleExperience # SS220-experience
   icon: "JobIconResearchAssistant"
   supervisors: job-supervisors-science
+<<<<<<< HEAD
   canBeAntag: true
+=======
+  guides: [ Science ] # TODO: should have a more specific guidebook page instead of using the department itself
+>>>>>>> wizards/stable
   access:
   - Research
   - Maintenance

@@ -1,11 +1,10 @@
 - type: entity
+  parent: [ BaseAirlockIndestructible, StructureHealthDoorStrong ]
   id: HighSecDoor
-  parent: BaseStructure
   name: high security door
   description: Keeps the bad out and keeps the good in.
-  placement:
-    mode: SnapgridCenter
   components:
+<<<<<<< HEAD
   - type: FoVOverlay # SS220 perspective-wall-fov
   - type: Anchorable
     flags:
@@ -65,19 +64,18 @@
   - type: ContainerContainer
     containers:
       board: !type:Container
+=======
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/airlock-vault.rsi
+>>>>>>> wizards/stable
   - type: Door
     crushDamage:
       types:
         Blunt: 50
-    openSound:
-      path: /Audio/Machines/airlock_open.ogg
-    closeSound:
-      path: /Audio/Machines/airlock_close.ogg
-    denySound:
-      path: /Audio/Machines/airlock_deny.ogg
   - type: Weldable
     fuel: 10
     time: 10
+<<<<<<< HEAD
   - type: Airlock
     openUnlitVisible: true # Corvax-Resprite-Airlocks
   #ss220 airlock visuals fix start
@@ -103,37 +101,38 @@
     enabled: false
     usesApcPower: true
   - type: WiresPanel
+=======
+>>>>>>> wizards/stable
   - type: WiresPanelSecurity
     securityLevel: maxSecurity
   - type: Wires
     boardName: wires-board-name-highsec
     layoutId: HighSec
     alwaysRandomize: true
-  - type: UserInterface
-    interfaces:
-      enum.AiUi.Key:
-        type: StationAiBoundUserInterface
-      enum.WiresUiKey.Key:
-        type: WiresBoundUserInterface
-  - type: Airtight
-  - type: Occluder
   - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StrongMetallic
+    damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 1500
+        damage: 350
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlasteel1:
+            min: 1
+            max: 2
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+          params:
+            volume: -4
   - type: Construction
     graph: Airlock
     node: highSecDoor
   - type: Tag
     tags:
-      - HighSecDoor
-      # This tag is used to nagivate the Airlock construction graph. It's needed because this construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
-      - DoorRemoteWhitelist
-      # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door
+    - HighSecDoor
+    # This tag is used to nagivate the Airlock construction graph. It's needed because this construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
+    - DoorRemoteWhitelist
+    # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door

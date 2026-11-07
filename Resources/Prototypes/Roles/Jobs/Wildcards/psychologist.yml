@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # SS220-own-psychologist
 # - type: job
 #   id: Psychologist
@@ -12,6 +13,22 @@
 #   - Maintenance
 #   extendedAccess:
 #   - Chemistry
+=======
+- type: job
+  id: Psychologist
+  name: job-name-psychologist
+  description: job-description-psychologist
+  playTimeTracker: JobPsychologist
+  startingGear: PsychologistGear
+  icon: "JobIconPsychologist"
+  supervisors: job-supervisors-cmo
+  guides: [ Medical ] # TODO: should have a more specific guidebook page instead of using the department itself
+  access:
+  - Medical
+  - Maintenance
+  extendedAccess:
+  - Chemistry
+>>>>>>> wizards/stable
 
 # - type: startingGear
 #   id: PsychologistGear

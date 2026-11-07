@@ -54,6 +54,7 @@ namespace Content.Client.Input
             // Not in engine so that the RCD can rotate objects
             common.AddFunction(EngineKeyFunctions.EditorRotateObject);
 
+<<<<<<< HEAD
             var human = contexts.GetContext("human");
             human.AddFunction(EngineKeyFunctions.MoveUp);
             human.AddFunction(EngineKeyFunctions.MoveDown);
@@ -103,6 +104,8 @@ namespace Content.Client.Input
 
             KeyFunctions220.AddCalculatorKeys(human); // SS220 Calculator
 
+=======
+>>>>>>> wizards/stable
             // actions should be common (for ghosts, mobs, etc)
             common.AddFunction(ContentKeyFunctions.OpenActionsMenu);
 
@@ -111,23 +114,64 @@ namespace Content.Client.Input
                 common.AddFunction(boundKey);
             }
 
+            common.AddFunction(ContentKeyFunctions.OpenEntitySpawnWindow);
+            common.AddFunction(ContentKeyFunctions.OpenSandboxWindow);
+            common.AddFunction(ContentKeyFunctions.OpenTileSpawnWindow);
+            common.AddFunction(ContentKeyFunctions.OpenDecalSpawnWindow);
+            common.AddFunction(ContentKeyFunctions.OpenAdminMenu);
+            common.AddFunction(ContentKeyFunctions.OpenGuidebook);
+
+            var human = contexts.GetContext("human");
             var aghost = contexts.New("aghost", "common");
-            aghost.AddFunction(EngineKeyFunctions.MoveUp);
-            aghost.AddFunction(EngineKeyFunctions.MoveDown);
-            aghost.AddFunction(EngineKeyFunctions.MoveLeft);
-            aghost.AddFunction(EngineKeyFunctions.MoveRight);
-            aghost.AddFunction(EngineKeyFunctions.Walk);
-            aghost.AddFunction(ContentKeyFunctions.SwapHands);
-            aghost.AddFunction(ContentKeyFunctions.SwapHandsReverse);
-            aghost.AddFunction(ContentKeyFunctions.Drop);
-            aghost.AddFunction(ContentKeyFunctions.UseItemInHand);
-            aghost.AddFunction(ContentKeyFunctions.AltUseItemInHand);
-            aghost.AddFunction(ContentKeyFunctions.ActivateItemInWorld);
-            aghost.AddFunction(ContentKeyFunctions.ThrowItemInHand);
-            aghost.AddFunction(ContentKeyFunctions.AltActivateItemInWorld);
-            aghost.AddFunction(ContentKeyFunctions.TryPullObject);
-            aghost.AddFunction(ContentKeyFunctions.MovePulledObject);
-            aghost.AddFunction(ContentKeyFunctions.ReleasePulledObject);
+
+            // Key functions shared between human and aghost
+            IEnumerable<BoundKeyFunction> sharedKeyFunctions =
+            [
+                EngineKeyFunctions.MoveUp,
+                EngineKeyFunctions.MoveDown,
+                EngineKeyFunctions.MoveLeft,
+                EngineKeyFunctions.MoveRight,
+                EngineKeyFunctions.Walk,
+                ContentKeyFunctions.SwapHands,
+                ContentKeyFunctions.SwapHandsReverse,
+                ContentKeyFunctions.Drop,
+                ContentKeyFunctions.UseItemInHand,
+                ContentKeyFunctions.AltUseItemInHand,
+                ContentKeyFunctions.OpenCharacterMenu,
+                ContentKeyFunctions.ActivateItemInWorld,
+                ContentKeyFunctions.ThrowItemInHand,
+                ContentKeyFunctions.AltActivateItemInWorld,
+                ContentKeyFunctions.TryPullObject,
+                ContentKeyFunctions.MovePulledObject,
+                ContentKeyFunctions.ReleasePulledObject,
+                ContentKeyFunctions.OpenCraftingMenu,
+                ContentKeyFunctions.OpenInventoryMenu,
+                ContentKeyFunctions.SmartEquipBackpack,
+                ContentKeyFunctions.SmartEquipBelt,
+                ContentKeyFunctions.SmartEquipPocket1,
+                ContentKeyFunctions.SmartEquipPocket2,
+                ContentKeyFunctions.SmartEquipSuitStorage,
+                ContentKeyFunctions.OpenBackpack,
+                ContentKeyFunctions.OpenBelt,
+                ContentKeyFunctions.RotateObjectClockwise,
+                ContentKeyFunctions.RotateObjectCounterclockwise,
+                ContentKeyFunctions.FlipObject,
+                ContentKeyFunctions.ArcadeUp,
+                ContentKeyFunctions.ArcadeDown,
+                ContentKeyFunctions.ArcadeLeft,
+                ContentKeyFunctions.ArcadeRight,
+                ContentKeyFunctions.Arcade1,
+                ContentKeyFunctions.Arcade2,
+                ContentKeyFunctions.Arcade3
+            ];
+
+            foreach (var keyFunction in sharedKeyFunctions)
+            {
+                human.AddFunction(keyFunction);
+                aghost.AddFunction(keyFunction);
+            }
+            human.AddFunction(ContentKeyFunctions.ToggleKnockdown);
+            human.AddFunction(ContentKeyFunctions.OpenEmotesMenu);
 
             var ghost = contexts.New("ghost", "human");
             ghost.AddFunction(EngineKeyFunctions.MoveUp);
@@ -136,12 +180,6 @@ namespace Content.Client.Input
             ghost.AddFunction(EngineKeyFunctions.MoveRight);
             ghost.AddFunction(EngineKeyFunctions.Walk);
 
-            common.AddFunction(ContentKeyFunctions.OpenEntitySpawnWindow);
-            common.AddFunction(ContentKeyFunctions.OpenSandboxWindow);
-            common.AddFunction(ContentKeyFunctions.OpenTileSpawnWindow);
-            common.AddFunction(ContentKeyFunctions.OpenDecalSpawnWindow);
-            common.AddFunction(ContentKeyFunctions.OpenAdminMenu);
-            common.AddFunction(ContentKeyFunctions.OpenGuidebook);
         }
     }
 }

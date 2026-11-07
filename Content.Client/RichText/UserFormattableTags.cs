@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 ﻿using Content.Client.SS220.Language;
+=======
+>>>>>>> wizards/stable
 using Content.Client.UserInterface.RichText;
 using Robust.Client.UserInterface.RichText;
 

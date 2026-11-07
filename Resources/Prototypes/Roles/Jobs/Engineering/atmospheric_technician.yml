@@ -11,6 +11,7 @@
   experienceDefinition: AtmosphericTechnicianRoleExperience #SS220-experience
   icon: "JobIconAtmosphericTechnician"
   supervisors: job-supervisors-ce
+  guides: [ Atmospherics ]
   access:
   - Maintenance
   - Engineering

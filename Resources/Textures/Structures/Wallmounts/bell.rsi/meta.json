@@ -8,8 +8,7 @@
   "copyright": "by MIXnikita for SS220",
   "states": [
     {
-      "name": "bell",
-      "directions": 4
+      "name": "bell"
     }
   ]
 }

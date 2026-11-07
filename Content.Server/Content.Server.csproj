@@ -5,7 +5,7 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <OutputType Condition="'$(FullRelease)' != 'True'">Exe</OutputType>
     <NoWarn>1998</NoWarn>
-    <WarningsAsErrors>RA0032;nullable</WarningsAsErrors>
+    <WarningsAsErrors>RA0032;nullable;CS8785</WarningsAsErrors>
     <ServerGarbageCollection>true</ServerGarbageCollection>
   </PropertyGroup>
   <Import Project="../MSBuild/Content.props" />
@@ -14,10 +14,14 @@
     <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" /> <!-- SS220 add recyclable memory stream -->
     <PackageReference Include="prometheus-net" />
     <PackageReference Include="Microsoft.Extensions.ObjectPool" />
+<<<<<<< HEAD
     <PackageReference Include="Microsoft.EntityFrameworkCore" /> <!-- SS220-new-prime-list -->
     <PackageReference Include="FFMpegCore" /> <!--SS220-add-?-->
     <PackageReference Include="NetCord" /> <!-- SS220 add netcord -->
     <PackageReference Include="Serilog" /> <!-- ss220 add serilog -->
+=======
+    <PackageReference Include="Serilog" />
+>>>>>>> wizards/stable
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Content.Packaging\Content.Packaging.csproj" />
@@ -26,9 +30,14 @@
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Folder Include="SS220\GhostExtension\" />
+=======
+    <Folder Include="EntityEffects\" />
+>>>>>>> wizards/stable
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
+  <Import Project="..\RobustToolbox\MSBuild\Robust.EntitySystemSubscriptionsGenerator.targets" />
 
   <Import Project="..\RobustToolbox\Imports\Lidgren.props" />
   <Import Project="..\RobustToolbox\Imports\Server.props" />

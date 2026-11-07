@@ -1,7 +1,11 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Forensics
+namespace Content.Shared.Forensics;
+
+[Serializable, NetSerializable]
+public enum ForensicScannerUiKey : byte
 {
+<<<<<<< HEAD
     [Serializable, NetSerializable]
     public sealed class ForensicScannerBoundUserInterfaceState : BoundUserInterfaceState
     {
@@ -53,4 +57,13 @@ namespace Content.Shared.Forensics
     public sealed class ForensicScannerClearMessage : BoundUserInterfaceMessage
     {
     }
+=======
+    Key
+>>>>>>> wizards/stable
 }
+
+[Serializable, NetSerializable]
+public sealed class ForensicScannerPrintMessage : BoundUserInterfaceMessage;
+
+[Serializable, NetSerializable]
+public sealed class ForensicScannerClearMessage : BoundUserInterfaceMessage;

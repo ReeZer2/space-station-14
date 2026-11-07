@@ -2,14 +2,23 @@
   # Волшебник
 
   <Box>
+<<<<<<< HEAD
     [color=#457573][italic]ЭТО ВРЕМЯ ВОЛШЕБНИКА, МАТЬ ТВ-...[italic][/color]
+=======
+    [color=#999999][italic]IT'S WIZARD TIME MOTHERF-...[/italic][/color]
+>>>>>>> wizards/stable
   </Box>
   <Box>
     <GuideEntityEmbed Entity="ToyFigurineWizard" Caption=""/>
   </Box>
+<<<<<<< HEAD
   Волшебник — это сила хаоса и непредсказуемости. Никогда не знаешь, что они сделают в следующий момент.
   Обычно их посылает [color=#40E0D0]Федерация Космических Волшебников[/color] или какой-нибудь придурок, ставший волшебником после броска на 20 на проклятом кубике.
   А поскольку Волшебник крайне непредсказуем, он может появиться тогда, когда вы меньше всего этого ждёте!
+=======
+  Wizards are a force of chaos and unpredictability, generally sent by the [color=#FF00FF]Space Wizards Federation[/color]. You never know when one is going to show up, or what they'll do!
+  Wizards generally do as they please, having [bold]no specific objectives[/bold] other than to cause chaos on the station. What form that chaos takes is up to you; you might elect to vaporize the Clown for telling a bad joke, steal valuable items just to prove that you can, turn the Captain into a monkey, or just indiscriminately throw fireballs at people.
+>>>>>>> wizards/stable
 
   ## Гримуар
   <Box>

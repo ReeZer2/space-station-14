@@ -3,15 +3,20 @@ using Content.Shared.Movement.Systems;
 using JetBrains.Annotations;
 using Content.Shared.Throwing;
 using Robust.Shared.Physics.Events;
+<<<<<<< HEAD
 using Content.Shared.SS220.InstastunResist;
+=======
+using Content.Shared.Whitelist;
+>>>>>>> wizards/stable
 
 namespace Content.Server.Stunnable.Systems;
 
 [UsedImplicitly]
-internal sealed class StunOnCollideSystem : EntitySystem
+internal sealed partial class StunOnCollideSystem : EntitySystem
 {
-    [Dependency] private readonly StunSystem _stunSystem = default!;
-    [Dependency] private readonly MovementModStatusSystem _movementMod = default!;
+    [Dependency] private StunSystem _stunSystem = default!;
+    [Dependency] private MovementModStatusSystem _movementMod = default!;
+    [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
 
     public override void Initialize()
     {
@@ -23,6 +28,7 @@ internal sealed class StunOnCollideSystem : EntitySystem
 
     private void TryDoCollideStun(Entity<StunOnCollideComponent> ent, EntityUid target)
     {
+<<<<<<< HEAD
         //SS220 instastun resist begin
         var resistEv = new StunAttemptEvent(StunSource.Projectile);
         RaiseLocalEvent(target, ref resistEv);
@@ -30,6 +36,10 @@ internal sealed class StunOnCollideSystem : EntitySystem
         if (resistEv.StunCancelled)
             return;
         //SS220 instastun resist end
+=======
+        if (_entityWhitelist.IsWhitelistPass(ent.Comp.Blacklist, target))
+            return;
+>>>>>>> wizards/stable
 
         _stunSystem.TryKnockdown(target, ent.Comp.KnockdownAmount, ent.Comp.Refresh, ent.Comp.AutoStand, ent.Comp.Drop, true);
 

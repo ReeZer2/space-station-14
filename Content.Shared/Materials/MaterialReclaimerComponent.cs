@@ -1,7 +1,11 @@
-﻿using Content.Shared.Whitelist;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
+using Content.Shared.FixedPoint;
+using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -138,10 +142,36 @@ public sealed partial class MaterialReclaimerComponent : Component
     [DataField, AutoNetworkedField]
     public int ItemsProcessed;
 
+<<<<<<< HEAD
     //SS220-ReclaimerEmaggedTime begin
     [DataField]
     public TimeSpan EmagDuration = TimeSpan.FromMinutes(5);
     //SS220-ReclaimerEmaggedTime end
+=======
+    /// <summary>
+    /// Damage that gets dealt when a creature is in the emagged recycler.
+    /// </summary>
+    [DataField]
+    public DamageSpecifier? DamageOnEmag = new DamageSpecifier
+    {
+        DamageDict = new Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2>
+        {
+            ["Slash"] = 35.0,
+        },
+    };
+
+    /// <summary>
+    /// If it should gib creatures when they enter and the machine is emagged
+    /// </summary>
+    [DataField]
+    public bool GibOnEmag = true;
+
+    /// <summary>
+    /// Should it reclaim things on interaction
+    /// </summary>
+    [DataField]
+    public bool ReclaimOnInteract;
+>>>>>>> wizards/stable
 }
 
 [NetSerializable, Serializable]

@@ -1,24 +1,35 @@
+<<<<<<< HEAD
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Pinpointer;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Systems;
+=======
+>>>>>>> wizards/stable
 using Content.Shared.IdentityManagement;
 using Content.Shared.Materials;
 using Content.Shared.Materials.OreSilo;
+using Content.Shared.Pinpointer;
 using Robust.Server.GameStates;
 using Robust.Shared.Player;
 
 namespace Content.Server.Materials;
 
 /// <inheritdoc/>
-public sealed class OreSiloSystem : SharedOreSiloSystem
+public sealed partial class OreSiloSystem : SharedOreSiloSystem
 {
+<<<<<<< HEAD
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly NavMapSystem _navMap = default!;
     [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly DeviceListSystem _deviceList = default!; // SS220 Add silo linking in mapping
     [Dependency] private readonly MaterialStorageSystem _materialStorage = default!; // ss220 ore silo tweak
+=======
+    [Dependency] private EntityLookupSystem _entityLookup = default!;
+    [Dependency] private NavMapSystem _navMap = default!;
+    [Dependency] private PvsOverrideSystem _pvsOverride = default!;
+    [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
+>>>>>>> wizards/stable
 
     private const float OreSiloPreloadRangeSquared = 225f; // ~1 screen
 

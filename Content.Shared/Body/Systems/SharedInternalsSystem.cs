@@ -20,8 +20,9 @@ namespace Content.Shared.Body.Systems;
 /// <summary>
 /// Handles lung breathing with gas tanks for entities.
 /// </summary>
-public abstract class SharedInternalsSystem : EntitySystem
+public abstract partial class SharedInternalsSystem : EntitySystem
 {
+<<<<<<< HEAD
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
@@ -29,6 +30,13 @@ public abstract class SharedInternalsSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly MaskSystem _mask = default!;
 
+=======
+    [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedGasTankSystem _gasTank = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+>>>>>>> wizards/stable
 
     public override void Initialize()
     {
@@ -89,7 +97,7 @@ public abstract class SharedInternalsSystem : EntitySystem
         if (internals.BreathTools.Count == 0)
         {
             var message = user == target ? Loc.GetString("internals-self-no-breath-tool") : Loc.GetString("internals-other-no-breath-tool", ("ent", Identity.Name(target, EntityManager, user)));
-            _popupSystem.PopupClient(message, target, user);
+            _popupSystem.PopupEntity(message, target, user);
             return false;
         }
 
@@ -100,7 +108,7 @@ public abstract class SharedInternalsSystem : EntitySystem
         if (tank == null)
         {
             var message = user == target ? Loc.GetString("internals-self-no-tank") : Loc.GetString("internals-other-no-tank", ("ent", Identity.Name(target, EntityManager, user)));
-            _popupSystem.PopupClient(message, target, user);
+            _popupSystem.PopupEntity(message, target, user);
             return false;
         }
 

@@ -60,7 +60,7 @@
     rules: ghost-role-information-nukeop-reinforcement-rules
     job: SyndicateReinforcement # SS220-add-playtime-restrictions
     mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    - MindRoleNukeopsReinforcement
     raffle:
       settings: default
   - type: GhostRoleMobSpawner

@@ -1,11 +1,10 @@
 using Content.Server.Spawners.EntitySystems;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Spawners.Components;
 
 /// <summary>
-/// When a <c>TimedDespawnComponent"</c> despawns, another one will be spawned in its place.
+/// When a <c>TimedDespawnComponent</c> despawns, another one will be spawned in its place.
 /// </summary>
 [RegisterComponent, Access(typeof(SpawnOnDespawnSystem))]
 public sealed partial class SpawnOnDespawnComponent : Component
@@ -14,10 +13,14 @@ public sealed partial class SpawnOnDespawnComponent : Component
     /// Entity prototype to spawn.
     /// </summary>
     [DataField(required: true)]
+<<<<<<< HEAD
     public EntProtoId Prototype = string.Empty;
 
     // SS220 Add inherit rotation begin
     [DataField]
     public bool InheritRotation = false;
     // SS220 Add inherit rotation end
+=======
+    public EntProtoId Prototype;
+>>>>>>> wizards/stable
 }

@@ -19,14 +19,18 @@
           nodeGroupID: Pipe
           pipeDirection: South
     - type: CollideOnAnchor
+    - type: SandboxCopyable
 
 - type: entity
   parent: [GasUnaryBase, AirSensorBase]
-  id: GasVentPump
+  id: !type:CreateVariants
+    values: [ GasVentPump, GasVentPumpAlt1, GasVentPumpAlt2 ]
   name: air vent
   description: Has a valve and a pump attached to it.
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
@@ -43,11 +47,19 @@
       drawdepth: FloorObjects
       sprite: SS220/Structures/Piping/Atmospherics/vent.rsi #ss220 engineering-update-atmos
       layers:
+<<<<<<< HEAD
         - sprite: SS220/Structures/Piping/Atmospherics/pipe.rsi # SS220 atmospherics-sprite-update
+=======
+        - sprite: !type:CreateVariants
+            values: [ Structures/Piping/Atmospherics/pipe.rsi, Structures/Piping/Atmospherics/pipe_alt1.rsi, Structures/Piping/Atmospherics/pipe_alt2.rsi ]
+>>>>>>> wizards/stable
           state: pipeUnaryConnectors
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: vent_off
           map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
+    - type: AtmosPipeLayers
+      pipeLayer: !type:CreateVariants
+        values: [ 0, 1, 2 ]
     - type: Appearance
     - type: PipeColorVisuals
     - type: GenericVisualizer
@@ -61,7 +73,8 @@
             Lockout: { state: vent_lockout }
     - type: GasVentPump
     - type: Construction
-      graph: GasUnary
+      graph: !type:CreateVariants
+        values: [ GasUnary, GasUnaryAlt1, GasUnaryAlt2 ]
       node: ventpump
     - type: VentCritterSpawnLocation
     - type: AmbientSound
@@ -80,11 +93,14 @@
 
 - type: entity
   parent: GasUnaryBase
-  id: GasPassiveVent
+  id: !type:CreateVariants
+    values: [ GasPassiveVent, GasPassiveVentAlt1, GasPassiveVentAlt2 ]
   name: passive vent
   description: It's an open vent.
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
     - type: SubFloorHide
       visibleLayers:
@@ -93,16 +109,25 @@
       drawdepth: FloorObjects
       sprite: SS220/Structures/Piping/Atmospherics/vent.rsi #ss220 engineering-update-atmos
       layers:
+<<<<<<< HEAD
         - sprite: SS220/Structures/Piping/Atmospherics/pipe.rsi # SS220 atmospherics-sprite-update
+=======
+        - sprite: !type:CreateVariants
+            values: [ Structures/Piping/Atmospherics/pipe.rsi, Structures/Piping/Atmospherics/pipe_alt1.rsi, Structures/Piping/Atmospherics/pipe_alt2.rsi ]
+>>>>>>> wizards/stable
           state: pipeUnaryConnectors
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: vent_passive
           map: [ "enum.SubfloorLayers.FirstLayer" ]
+    - type: AtmosPipeLayers
+      pipeLayer: !type:CreateVariants
+        values: [ 0, 1, 2 ]
     - type: Appearance
     - type: PipeColorVisuals
     - type: GasPassiveVent
     - type: Construction
-      graph: GasUnary
+      graph: !type:CreateVariants
+        values: [ GasUnary, GasUnaryAlt1, GasUnaryAlt2 ]
       node: passivevent
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasVentOpening
@@ -112,11 +137,14 @@
 
 - type: entity
   parent: [GasUnaryBase, AirSensorBase]
-  id: GasVentScrubber
+  id: !type:CreateVariants
+    values: [ GasVentScrubber, GasVentScrubberAlt1, GasVentScrubberAlt2 ]
   name: air scrubber
   description: Has a valve and pump attached to it.
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
@@ -133,11 +161,19 @@
       drawdepth: FloorObjects
       sprite: SS220/Structures/Piping/Atmospherics/scrubber.rsi #ss220 engineering-update-atmos
       layers:
+<<<<<<< HEAD
         - sprite: SS220/Structures/Piping/Atmospherics/pipe.rsi # SS220 atmospherics-sprite-update
+=======
+        - sprite: !type:CreateVariants
+            values: [ Structures/Piping/Atmospherics/pipe.rsi, Structures/Piping/Atmospherics/pipe_alt1.rsi, Structures/Piping/Atmospherics/pipe_alt2.rsi ]
+>>>>>>> wizards/stable
           state: pipeUnaryConnectors
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: scrub_off
           map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
+    - type: AtmosPipeLayers
+      pipeLayer: !type:CreateVariants
+        values: [ 0, 1, 2 ]
     - type: Appearance
     - type: PipeColorVisuals
     - type: GenericVisualizer
@@ -152,7 +188,8 @@
     - type: AtmosDevice
     - type: GasVentScrubber
     - type: Construction
-      graph: GasUnary
+      graph: !type:CreateVariants
+        values: [ GasUnary, GasUnaryAlt1, GasUnaryAlt2 ]
       node: ventscrubber
     - type: AmbientSound
       enabled: true
@@ -170,18 +207,26 @@
 
 - type: entity
   parent: GasUnaryBase
-  id: GasOutletInjector
+  id: !type:CreateVariants
+    values: [ GasOutletInjector, GasOutletInjectorAlt1, GasOutletInjectorAlt2 ]
   name: air injector
   description: Has a valve and pump attached to it.
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
     - type: Sprite
       drawdepth: FloorObjects
       sprite: SS220/Structures/Piping/Atmospherics/outletinjector.rsi #ss220 engineering-update-atmos
       layers:
         - state: pipeUnaryConnectors
+<<<<<<< HEAD
           sprite: SS220/Structures/Piping/Atmospherics/pipe.rsi # SS220 atmospherics-sprite-update
+=======
+          sprite: !type:CreateVariants
+            values: [ Structures/Piping/Atmospherics/pipe.rsi, Structures/Piping/Atmospherics/pipe_alt1.rsi, Structures/Piping/Atmospherics/pipe_alt2.rsi ]
+>>>>>>> wizards/stable
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: injector
           map: [ "enum.SubfloorLayers.FirstLayer" ]
@@ -189,6 +234,9 @@
           shader: unshaded
           map: [ "enum.LightLayers.Unshaded" ]
           color: "#990000"
+    - type: AtmosPipeLayers
+      pipeLayer: !type:CreateVariants
+        values: [ 0, 1, 2 ]
     - type: Appearance
     - type: GenericVisualizer
       visuals:
@@ -200,7 +248,8 @@
     - type: PipeColorVisuals
     - type: GasOutletInjector
     - type: Construction
-      graph: GasUnary
+      graph: !type:CreateVariants
+        values: [ GasUnary, GasUnaryAlt1, GasUnaryAlt2 ]
       node: outletinjector
     - type: SubFloorHide
       visibleLayers:
@@ -213,7 +262,7 @@
       - AirInjector
 
 - type: entity
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   id: BaseGasThermoMachine
   name: thermomachine
   abstract: true
@@ -228,12 +277,15 @@
     - type: Rotatable
     - type: GasThermoMachine
     - type: AtmosPipeColor
+<<<<<<< HEAD
     - type: AtmosPipeLayers
       spriteLayersRsiPaths:
         enum.PipeVisualLayers.Pipe:
           Primary: SS220/Structures/Piping/Atmospherics/thermomachine.rsi # SS220 atmospherics-sprite-update
           Secondary: SS220/Structures/Piping/Atmospherics/thermomachine_alt1.rsi # SS220 atmospherics-sprite-update
           Tertiary: SS220/Structures/Piping/Atmospherics/thermomachine_alt2.rsi # SS220 atmospherics-sprite-update
+=======
+>>>>>>> wizards/stable
     - type: AtmosDevice
     - type: UserInterface
       interfaces:
@@ -259,7 +311,7 @@
       transmitFrequencyId: AtmosMonitor
       sendBroadcastAttemptEvent: true
       examinableAddress: true
-    - type: WiredNetworkConnection
+    - type: WiredNetwork
     - type: PowerSwitch
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: Thermoregulator
@@ -282,11 +334,14 @@
 
 - type: entity
   parent: BaseGasThermoMachine
-  id: GasThermoMachineFreezer
+  id: !type:CreateVariants
+    values: [ GasThermoMachineFreezer, GasThermoMachineFreezerAlt1, GasThermoMachineFreezerAlt2 ]
   name: freezer
   description: Cools gas in connected pipes.
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
     - type: StationAiWhitelist
     - type: Sprite
@@ -296,14 +351,30 @@
 #          map: [ "enum.PowerDeviceVisualLayers.Powered" ] #ss220-engineering-update-thermomachine
         - state: freezerPanelOpen
           map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-        - state: pipe
+        - sprite: !type:CreateVariants
+            values:
+            - Structures/Piping/Atmospherics/thermomachine.rsi
+            - Structures/Piping/Atmospherics/thermomachine_alt1.rsi
+            - Structures/Piping/Atmospherics/thermomachine_alt2.rsi
+          state: pipe
           map: [ "enum.PipeVisualLayers.Pipe" ]
           renderingStrategy: Default
+<<<<<<< HEAD
           #ss220-engineering-update-thermomachine-begin
         - state: freezerOn-unshaded
           shader: unshaded
           map: ["enum.PowerDeviceVisualLayers.Powered"]
           #ss220-engineering-update-thermomachine-end
+=======
+    - type: AtmosPipeLayers
+      pipeLayer: !type:CreateVariants
+        values: [ 0, 1, 2 ]
+      spriteLayersRsiPaths:
+        enum.PipeVisualLayers.Pipe:
+          Primary: Structures/Piping/Atmospherics/thermomachine.rsi
+          Secondary: Structures/Piping/Atmospherics/thermomachine_alt1.rsi
+          Tertiary: Structures/Piping/Atmospherics/thermomachine_alt2.rsi
+>>>>>>> wizards/stable
     - type: GenericVisualizer
       visuals:
         enum.PowerDeviceVisuals.Powered:
@@ -321,12 +392,17 @@
     - type: DeviceNetwork
       prefix: device-address-prefix-freezer
     - type: StealTarget
-      stealGroup: FreezerHeater
+      stealGroup:
+      - FreezerHeater
 
 - type: entity
-  parent: GasThermoMachineFreezer
-  id: GasThermoMachineFreezerEnabled
+  parent: !type:CreateVariants
+    values: [ GasThermoMachineFreezer, GasThermoMachineFreezerAlt1, GasThermoMachineFreezerAlt2 ]
+  id: !type:CreateVariants
+    values: [ GasThermoMachineFreezerEnabled, GasThermoMachineFreezerEnabledAlt1, GasThermoMachineFreezerEnabledAlt2 ]
   suffix: Enabled
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   components:
   - type: GasThermoMachine
   - type: ApcPowerReceiver
@@ -334,11 +410,14 @@
 
 - type: entity
   parent: BaseGasThermoMachine
-  id: GasThermoMachineHeater
+  id: !type:CreateVariants
+    values: [ GasThermoMachineHeater, GasThermoMachineHeaterAlt1, GasThermoMachineHeaterAlt2 ]
   name: heater
   description: Heats gas in connected pipes.
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
     - type: StationAiWhitelist
     - type: Sprite
@@ -348,14 +427,30 @@
 #          map: [ "enum.PowerDeviceVisualLayers.Powered" ] #ss220-engineering-update-thermomachine
         - state: heaterPanelOpen
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
-        - state: pipe
+        - sprite: !type:CreateVariants
+            values:
+            - Structures/Piping/Atmospherics/thermomachine.rsi
+            - Structures/Piping/Atmospherics/thermomachine_alt1.rsi
+            - Structures/Piping/Atmospherics/thermomachine_alt2.rsi
+          state: pipe
           map: [ "enum.PipeVisualLayers.Pipe" ]
           renderingStrategy: Default
+<<<<<<< HEAD
           #ss220-engineering-update-thermomachine-begin
         - state: heaterOn-unshaded
           shader: unshaded
           map: ["enum.PowerDeviceVisualLayers.Powered"]
           #ss220-engineering-update-thermomachine-end
+=======
+    - type: AtmosPipeLayers
+      pipeLayer: !type:CreateVariants
+        values: [ 0, 1, 2 ]
+      spriteLayersRsiPaths:
+        enum.PipeVisualLayers.Pipe:
+          Primary: Structures/Piping/Atmospherics/thermomachine.rsi
+          Secondary: Structures/Piping/Atmospherics/thermomachine_alt1.rsi
+          Tertiary: Structures/Piping/Atmospherics/thermomachine_alt2.rsi
+>>>>>>> wizards/stable
     - type: GenericVisualizer
       visuals:
         enum.PowerDeviceVisuals.Powered:
@@ -373,22 +468,31 @@
     - type: DeviceNetwork
       prefix: device-address-prefix-heater
     - type: StealTarget
-      stealGroup: FreezerHeater
+      stealGroup:
+      - FreezerHeater
 
 - type: entity
-  parent: GasThermoMachineHeater
-  id: GasThermoMachineHeaterEnabled
+  parent: !type:CreateVariants
+    values: [ GasThermoMachineHeater, GasThermoMachineHeaterAlt1, GasThermoMachineHeaterAlt2 ]
+  id: !type:CreateVariants
+    values: [ GasThermoMachineHeaterEnabled, GasThermoMachineHeaterEnabledAlt1, GasThermoMachineHeaterEnabledAlt2 ]
   suffix: Enabled
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   components:
   - type: GasThermoMachine
   - type: ApcPowerReceiver
     powerDisabled: false
 
 - type: entity
-  parent: GasThermoMachineFreezer
-  id: GasThermoMachineHellfireFreezer
+  parent: !type:CreateVariants
+    values: [ GasThermoMachineFreezer, GasThermoMachineFreezerAlt1, GasThermoMachineFreezerAlt2 ]
+  id: !type:CreateVariants
+    values: [ GasThermoMachineHellfireFreezer, GasThermoMachineHellfireFreezerAlt1, GasThermoMachineHellfireFreezerAlt2 ]
   name: hellfire freezer
   description: An advanced machine that cools gas in connected pipes. Has the side effect of chilling the surrounding area. Cold as Hell!
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   components:
   - type: Sprite
     sprite: SS220/Structures/Piping/Atmospherics/hellfirethermomachine.rsi #ss220-engineering-update-thermomachine
@@ -400,10 +504,14 @@
     board: HellfireFreezerMachineCircuitBoard
 
 - type: entity
-  parent: GasThermoMachineHeater
-  id: GasThermoMachineHellfireHeater
+  parent: !type:CreateVariants
+    values: [ GasThermoMachineHeater, GasThermoMachineHeaterAlt1, GasThermoMachineHeaterAlt2 ]
+  id: !type:CreateVariants
+    values: [ GasThermoMachineHellfireHeater, GasThermoMachineHellfireHeaterAlt1, GasThermoMachineHellfireHeaterAlt2 ]
   name: hellfire heater
   description: An advanced machine that heats gas in connected pipes. Has the side effect of leaking heat into the surrounding area. Hot as Hell!
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   components:
   - type: Sprite
     sprite: SS220/Structures/Piping/Atmospherics/hellfirethermomachine.rsi #ss220-engineering-update-thermomachine
@@ -415,12 +523,15 @@
     board: HellfireHeaterMachineCircuitBoard
 
 - type: entity
-  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
-  id: BaseGasCondenser
+  parent: [ SolutionTank, SolutionHuge, BaseMachinePowered, SmallConstructibleMachine, BaseSmallConstructibleMachineDestructible ]
+  id: !type:CreateVariants
+    values: [ BaseGasCondenser, BaseGasCondenserAlt1, BaseGasCondenserAlt2 ]
   name: condenser
   description: Condenses gases into liquids. Now we just need some plumbing.
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
   - type: Sprite
     sprite: SS220/Structures/Piping/Atmospherics/condenser.rsi # SS220 atmospherics-sprite-update
@@ -431,7 +542,9 @@
       map: [ "enum.PowerDeviceVisualLayers.Powered" ]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-    - state: pipe
+    - sprite: !type:CreateVariants
+        values: [ Structures/Piping/Atmospherics/condenser.rsi, Structures/Piping/Atmospherics/condenser_alt1.rsi, Structures/Piping/Atmospherics/condenser_alt2.rsi ]
+      state: pipe
       map: [ "enum.PipeVisualLayers.Pipe" ]
       renderingStrategy: Default
     - state: fill-1
@@ -453,6 +566,8 @@
   - type: GasCondenser
   - type: AtmosPipeColor
   - type: AtmosPipeLayers
+    pipeLayer: !type:CreateVariants
+      values: [ 0, 1, 2 ]
     spriteLayersRsiPaths:
       enum.PipeVisualLayers.Pipe:
         Primary: SS220/Structures/Piping/Atmospherics/condenser.rsi # SS220 atmospherics-sprite-update
@@ -470,16 +585,8 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpillBehavior
         solution: tank
       - !type:PlaySoundBehavior
@@ -493,10 +600,6 @@
         pipeDirection: South
   - type: Transform
     noRot: false
-  - type: SolutionContainerManager
-    solutions:
-      tank:
-        maxVol: 400
   - type: MixableSolution
     solution: tank
   - type: DrainableSolution
@@ -509,4 +612,3 @@
   - type: GuideHelp
     guides:
     - GasCondensing
-

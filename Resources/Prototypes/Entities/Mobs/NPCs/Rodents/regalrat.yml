@@ -1,0 +1,515 @@
+- type: entity
+  parent: [ BaseMobRat, SimpleMobBase, MobCombat, BaseSlicingRefinableButchering, MobNightVision, BaseMobDestructible, BaseThirstSlowdown ]
+  id: MobRatKing
+<<<<<<< HEAD:Resources/Prototypes/Entities/Mobs/NPCs/regalrat.yml
+  parent: [ BaseMobRat, SimpleMobBase, MobCombat, MobPassiveCollision ] # SS220 Add Mob Passive Collision
+  description: He's da rat. He make da roolz.
+  components:
+  - type: CombatMode
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3.00
+    baseSprintSpeed : 5.00
+#SS220 languages tweaks begin
+  - type: Language
+    availableLanguages:
+    - id: Galactic
+      canSpeak: true
+#SS220 languages tweaks end
+  - type: InputMover
+    #SS220 RatKing tweaks and changes update start
+  - type: KeenHearing
+    visionRadius: 14
+    highSensitiveVisionRadius: 0
+    state: half
+  - type: RandomInsulation
+    list:
+      - 0.5
+    #SS220 RatKing tweaks and changes update end
+  - type: MobMover
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+=======
+  name: rat king
+  description: He's da rat. He make da roolz.
+  components:
+>>>>>>> wizards/stable:Resources/Prototypes/Entities/Mobs/NPCs/Rodents/regalrat.yml
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: Mobs/Animals/Rodents/regalrat.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: regalrat
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: eyes
+      shader: unshaded
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.3
+        density: 230
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: InputMover
+  - type: MobMover
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3.00
+    baseSprintSpeed: 5.00
+  - type: Puller
+    needsHands: false
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+<<<<<<< HEAD:Resources/Prototypes/Entities/Mobs/NPCs/regalrat.yml
+      250: Dead #SS220 Antag balance
+  - type: MeleeWeapon
+    altDisarm: false
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 12
+        Piercing: 8
+  - type: Hunger # probably should be prototyped
+    thresholds:
+      Overfed: 200
+      Okay: 150
+      Peckish: 100
+      Starving: 50
+      Dead: 0
+    baseDecayRate: 0.01666666666
+  - type: Thirst
+    thresholds:
+      OverHydrated: 600
+      Okay: 450
+      Thirsty: 300
+      Parched: 150
+      Dead: 0
+    baseDecayRate: 0.1
+=======
+      200: Dead
+>>>>>>> wizards/stable:Resources/Prototypes/Entities/Mobs/NPCs/Rodents/regalrat.yml
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: regalrat
+        BaseUnshaded: eyes
+      Critical:
+        Base: critical
+      Dead:
+        Base: dead
+  - type: CombatMode
+  - type: MeleeWeapon
+    altDisarm: false
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 12
+        Piercing: 8
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+  - type: Insulated
+    coefficient: 0.5 # rat king touches more wires, see?
+  - type: NoSlip
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - FootstepSound
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: RandomMetadata
+    nameSegments:
+    - NamesRegalratKingdom
+    - NamesRegalratTitle
+    nameFormat: name-format-regal-rat
+  - type: NameIdentifier
+    group: null  # Strips the numeric identifier from the rat king's name, since they already have randomly-generated names anyway
+  - type: Speech
+    speechVerb: SmallMob
+  - type: TypingIndicator
+    proto: regal
+  - type: Satiation
+    satiations:
+      Hunger:
+        prototype: RegalRatHunger
+      Thirst:
+        prototype: NormalSatiationThirst
+  - type: ToolRefinable
+    refineResult:
+    - id: ClothingHeadHatFancyCrown #how did that get there?
+      amount: 1
+  - type: Tool
+    qualities: [ Slicing ]
+  - type: MobPrice
+    price: 2500 # rat wealth
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-rat-king-name
+    description: ghost-role-information-rat-king-description
+    rules: ghost-role-information-freeagent-rules
+    job: AggressiveAnimals # SS220-add-playtime-requirements
+    mindRoles:
+    - MindRoleGhostRoleSoloAntagonist
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: GuideHelp
+    guides:
+    - MinorAntagonists
+<<<<<<< HEAD:Resources/Prototypes/Entities/Mobs/NPCs/regalrat.yml
+  - type: Grammar
+    attributes:
+      gender: male
+    # ss220 lowTTKUpdate
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: RatKing
+    # ss220 lowTTKUpdate
+  - type: Sharp
+  #SS220-AddTTSRatKing begin
+  - type: TTS
+    voice: hagraven
+  #SS220-AddTTSRatKing end
+=======
+  - type: Rummager
+  - type: MobsterAccent
+  - type: RatKing
+    hungerPerArmyUse: 25
+    hungerPerDomainUse: 50
+>>>>>>> wizards/stable:Resources/Prototypes/Entities/Mobs/NPCs/Rodents/regalrat.yml
+
+- type: entity
+  parent: MobRatKing
+  id: MobRatKingBuff
+  suffix: Buff
+  components:
+  - type: Sprite
+    sprite: Mobs/Animals/Rodents/buffrat.rsi
+    scale: 1.2, 1.2
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: regalrat
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: eyes
+      shader: unshaded
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      350: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      200: 0.7
+      250: 0.5
+  - type: MeleeWeapon
+    altDisarm: false
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh2.ogg
+    angle: 0
+    attackRate: 0.75
+    animation: WeaponArcFist
+    damage:
+      types:
+        Blunt: 66 #oof ouch owie my bones
+  - type: GuideHelp
+    guides:
+    - MinorAntagonists
+
+- type: entity
+  parent: [ BaseMobRat, SimpleMobBase, MobCombat, BaseSlicingRefinableButchering, BaseThirstSlowdown ]
+  id: MobRatServant
+<<<<<<< HEAD:Resources/Prototypes/Entities/Mobs/NPCs/regalrat.yml
+  parent: [ BaseMobRat, SimpleMobBase, MobCombat, MobPassiveCollision ] # SS220 Add Mob Passive Collision
+  description: He's da mini rat. He don't make da roolz.
+=======
+>>>>>>> wizards/stable:Resources/Prototypes/Entities/Mobs/NPCs/Rodents/regalrat.yml
+  categories: [ HideSpawnMenu ] #Must be configured to a King or the AI breaks.
+  name: rat servant
+  description: He's da mini rat. He don't make da roolz.
+  components:
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: Mobs/Animals/Rodents/rat.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base", "movement" ]
+      state: rat
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: eyes
+      shader: unshaded
+<<<<<<< HEAD:Resources/Prototypes/Entities/Mobs/NPCs/regalrat.yml
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 40
+=======
+>>>>>>> wizards/stable:Resources/Prototypes/Entities/Mobs/NPCs/Rodents/regalrat.yml
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: rat-moving
+    noMovementLayers:
+      movement:
+        state: rat
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 30 #Bulky by mouse standards...
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: InputMover
+  - type: MobMover
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 3.5
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      15: Critical
+      30: Dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: rat
+        BaseUnshaded: eyes
+      Critical:
+        Base: dead
+      Dead:
+        Base: splat
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Mouse_burning
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 60
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+  - type: Stamina
+    baseCritThreshold: 60
+  - type: CombatMode
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 5
+        Piercing: 3
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+  - type: Insulated
+    coefficient: 0.2 # they don't make da roolz, but they sneaky
+  - type: NoSlip
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - FootstepSound
+  - type: Speech
+    speechVerb: SmallMob
+  - type: Vocal
+    emoteSounds: Mouse
+    wilhelmProbability: 0.001
+  - type: Satiation
+    satiations:
+      Hunger:
+        prototype: RegalRatHunger
+      Thirst:
+        prototype: NormalSatiationThirst
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatRat
+      amount: 1
+  - type: MobPrice
+    price: 500 # rat wealth
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: HTN
+    rootTask:
+      task: RatServantCompound
+    blackboard:
+      IdleRange: !type:Single
+        3.5
+      FollowCloseRange: !type:Single
+        2.0
+      FollowRange: !type:Single
+        3.0
+  - type: GuideHelp
+    guides:
+    - MinorAntagonists
+  - type: MobsterAccent
+    isBoss: false
+
+- type: entityTable
+  id: RatKingLoot
+  table: !type:GroupSelector
+    children:
+    # SS220 RatKing tweaks and changes rummage weight changes start
+    - id: RandomSpawner100
+      weight: 40
+    - id: FoodCheeseSlice
+      weight: 15
+    - id: FoodCheese
+      weight: 15
+    - id: FoodCakeCheese
+      weight: 5
+<<<<<<< HEAD:Resources/Prototypes/Entities/Mobs/NPCs/regalrat.yml
+    # Official weights
+    # - id: RandomSpawner100
+    #   weight: 66
+    # - id: FoodCheese
+    #   weight: 28
+    # - id: IngotGold1
+    #   weight: 5
+    # SS220 RatKing tweaks and changes rummage weight changes end
+
+- type: entity
+  parent: BaseAction
+  id: ActionRatKingRaiseArmy
+  name: Raise Army
+  description: Spend some hunger to summon an allied rat to help defend you.
+  components:
+  - type: Action
+    useDelay: 4
+    icon:
+      sprite: SS220/Interface/Actions/actions_rat_king.rsi #SS220 resprited
+      state: ratKingArmy
+  - type: InstantAction
+    event: !type:RatKingRaiseArmyActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionRatKingDomain
+  name: Rat King's Domain
+  description: Spend some hunger to release a cloud of ammonia into the air.
+  components:
+  - type: Action
+    useDelay: 6
+    icon:
+      sprite: SS220/Interface/Actions/actions_rat_king.rsi #SS220 resprited
+      state: ratKingDomain
+  - type: InstantAction
+    event: !type:RatKingDomainActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionRatKingOrderStay
+  name: Stay
+  description: Command your army to stand in place.
+  components:
+  - type: Action
+    useDelay: 1
+    icon:
+      sprite: SS220/Interface/Actions/actions_rat_king.rsi #SS220-resprite-ratking-action
+      state: stayOff
+    iconOn:
+      sprite: SS220/Interface/Actions/actions_rat_king.rsi #SS220-resprite-ratking-action
+      state: stay
+    priority: 5
+  - type: InstantAction
+    event: !type:RatKingOrderActionEvent
+      type: Stay
+
+- type: entity
+  parent: BaseAction
+  id: ActionRatKingOrderFollow
+  name: Follow
+  description: Command your army to follow you around.
+  components:
+  - type: Action
+    useDelay: 1
+    icon:
+      sprite: SS220/Interface/Actions/actions_rat_king.rsi #SS220-resprite-ratking-action
+      state: followOff
+    iconOn:
+      sprite: SS220/Interface/Actions/actions_rat_king.rsi #SS220-resprite-ratking-action
+      state: follow
+    priority: 6
+  - type: InstantAction
+    event: !type:RatKingOrderActionEvent
+      type: Follow
+
+- type: entity
+  parent: BaseAction
+  id: ActionRatKingOrderCheeseEm
+  name: Cheese 'Em
+  description: Command your army to attack whoever you point at.
+  components:
+  - type: Action
+    useDelay: 1
+    icon:
+      sprite: SS220/Interface/Actions/actions_rat_king.rsi #SS220-resprite-ratking-action
+      state: attackOff
+    iconOn:
+      sprite: SS220/Interface/Actions/actions_rat_king.rsi #SS220-resprite-ratking-action
+      state: attack
+    priority: 7
+  - type: InstantAction
+    event: !type:RatKingOrderActionEvent
+      type: CheeseEm
+
+- type: entity
+  parent: BaseAction
+  id: ActionRatKingOrderLoose
+  name: Loose
+  description: Command your army to act at their own will.
+  components:
+  - type: Action
+    useDelay: 1
+    icon:
+      sprite: SS220/Interface/Actions/actions_rat_king.rsi #SS220-resprite-ratking-action
+      state: looseOff
+    iconOn:
+      sprite: SS220/Interface/Actions/actions_rat_king.rsi #SS220-resprite-ratking-action
+      state: loose
+    priority: 8
+  - type: InstantAction
+    event:
+      !type:RatKingOrderActionEvent
+      type: Loose
+=======
+>>>>>>> wizards/stable:Resources/Prototypes/Entities/Mobs/NPCs/Rodents/regalrat.yml

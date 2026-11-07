@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: Clothing
+  parent: [SolutionFood, SolutionToolNormal, Clothing, BaseSlicingRefinable]
   id: UnsensoredClothingUniformBase
   components:
   - type: Sprite
@@ -9,10 +9,15 @@
     slots: [innerclothing]
     equipSound:
       path: /Audio/Items/jumpsuit_equip.ogg
+<<<<<<< HEAD
   - type: Butcherable
     butcheringType: Knife
     butcheringSound: /Audio/SS220/Effects/butcher_cloth.ogg # SS220-butchering-sounds-tweak
     spawned:
+=======
+  - type: ToolRefinable
+    refineResult:
+>>>>>>> wizards/stable
     - id: MaterialCloth1
       amount: 3
   - type: PhysicalComposition # 50% of the amount of cloth you'd obtain upon butchering
@@ -20,13 +25,11 @@
       Cloth: 150
   - type: Edible
     requiresSpecialDigestion: true
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 30
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 30
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 30
   - type: Tag
     tags:
     - ClothMade
@@ -42,7 +45,6 @@
     slots: [innerclothing]
     femaleMask: UniformTop
 
-
 - type: entity
   abstract: true
   parent: UnsensoredClothingUniformBase
@@ -53,9 +55,10 @@
     deviceNetId: Wireless
     transmitFrequencyId: SuitSensor
     savableAddress: false
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 1200
   - type: StationLimitedNetwork
+  - type: StationTracker
 
 - type: entity
   abstract: true
@@ -72,7 +75,7 @@
   components:
   - type: Foldable
     canFoldInsideContainer: true
-    unfoldVerbText: unfold-verb-clothing-jacket
-    foldVerbText: fold-verb-clothing-jacket
+    unfoldVerbText: fold-zip-verb
+    foldVerbText: fold-unzip-verb
   - type: FoldableClothing
     foldedEquippedPrefix: folded

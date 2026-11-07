@@ -15,8 +15,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Bed;
 
-public sealed class BedSystem : EntitySystem
+public sealed partial class BedSystem : EntitySystem
 {
+<<<<<<< HEAD
     [Dependency] private readonly ActionContainerSystem _actConts = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
@@ -27,8 +28,19 @@ public sealed class BedSystem : EntitySystem
     [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
     [Dependency] private readonly SleepingSystem _sleepingSystem = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!; //SS220-MicroFixesIPC
+=======
+    [Dependency] private ActionContainerSystem _actConts = default!;
+    [Dependency] private DamageableSystem _damageableSystem = default!;
+    [Dependency] private EmagSystem _emag = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private MetabolizerSystem _metabolizer = default!;
+    [Dependency] private MobStateSystem _mobStateSystem = default!;
+    [Dependency] private SharedActionsSystem _actionsSystem = default!;
+    [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private SleepingSystem _sleepingSystem = default!;
+>>>>>>> wizards/stable
 
-    [Dependency] private readonly EntityQuery<SleepingComponent> _sleepingQuery = default!;
+    [Dependency] private EntityQuery<SleepingComponent> _sleepingQuery = default!;
 
     public override void Initialize()
     {

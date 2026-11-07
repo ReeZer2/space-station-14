@@ -1,0 +1,328 @@
+﻿using System.Linq;
+using System.Text;
+using Content.Shared.Antag;
+using Content.Shared.Codewords;
+using Content.Shared.FixedPoint;
+using Content.Shared.GameTicking.Rules.Components;
+using Content.Shared.Mind;
+using Content.Shared.NPC.Systems;
+using Content.Shared.PDA;
+using Content.Shared.Random.Helpers;
+using Content.Shared.Roles;
+using Content.Shared.Roles.Components;
+using Content.Shared.Roles.Jobs;
+using Robust.Shared.Random;
+<<<<<<< HEAD:Content.Server/GameTicking/Rules/TraitorRuleSystem.cs
+using System.Linq;
+using System.Text;
+using Content.Server.SS220.TraitorDynamics;
+using Content.Server.Codewords;
+using Content.Shared.GameTicking.Components;
+using Content.Shared.StationRecords;
+using Robust.Shared.Map;
+=======
+>>>>>>> wizards/stable:Content.Shared/GameTicking/Rules/TraitorRuleSystem.cs
+
+namespace Content.Shared.GameTicking.Rules;
+
+public abstract partial class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
+{
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private AntagSelectionSystem _antag = default!;
+    [Dependency] protected CodewordSystem Codeword = default!;
+    [Dependency] private NpcFactionSystem _npcFaction = default!;
+    [Dependency] private SharedJobSystem _jobs = default!;
+    [Dependency] private SharedMindSystem _mindSystem = default!;
+    [Dependency] private SharedRoleSystem _roleSystem = default!;
+
+    private static readonly Color TraitorCodewordColor = Color.FromHex("#cc3b3b");
+
+<<<<<<< HEAD:Content.Server/GameTicking/Rules/TraitorRuleSystem.cs
+    [Dependency] private readonly AntagSelectionSystem _antag = default!;
+    [Dependency] private readonly SharedJobSystem _jobs = default!;
+    [Dependency] private readonly MindSystem _mindSystem = default!;
+    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedRoleCodewordSystem _roleCodewordSystem = default!;
+    [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
+    [Dependency] private readonly UplinkSystem _uplink = default!;
+    [Dependency] private readonly TraitorDynamicsSystem _dynamics = default!; // SS220 TraitorDynamics
+    [Dependency] private readonly CodewordSystem _codewordSystem = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        Log.Level = LogLevel.Debug;
+
+        SubscribeLocalEvent<TraitorRuleComponent, AfterAntagEntitySelectedEvent>(AfterEntitySelected);
+        SubscribeLocalEvent<TraitorRuleComponent, ObjectivesTextPrependEvent>(OnObjectivesTextPrepend);
+
+        SubscribeLocalEvent<TraitorRuleComponent, BeforeAntagSelection>(OnBeforeAntagSelection);
+    }
+
+    // SS220 TraitorDynamics start
+    private void OnBeforeAntagSelection(Entity<TraitorRuleComponent> entity, ref BeforeAntagSelection _)
+    {
+        InitDynamic(entity!, GetStationWithRecords());
+    }
+
+    protected override void Ended(EntityUid uid, TraitorRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
+    {
+        base.Ended(uid, component, gameRule, args);
+
+        _dynamics.RemoveDynamic();
+    }
+
+    private EntityUid? GetStationWithRecords()
+    {
+        // here goes float to use RobustRandom
+        EntityUid? station = null;
+        int? recordCount = null;
+        var query = AllEntityQuery<StationRecordsComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            var thisEntryRecordCount = comp.Records.Keys.Count;
+
+            // care here I use that null always give false!
+            recordCount = recordCount > thisEntryRecordCount ? recordCount : thisEntryRecordCount;
+            station = recordCount == thisEntryRecordCount ? uid : station;
+        }
+
+        return station;
+    }
+    // SS220 TraitorDynamics end
+
+    private void AfterEntitySelected(Entity<TraitorRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
+    {
+        Log.Debug($"AfterAntagEntitySelected {ToPrettyString(ent)}");
+        MakeTraitor(args.EntityUid, ent);
+    }
+
+    public bool MakeTraitor(EntityUid traitor, TraitorRuleComponent component)
+=======
+    [SubscribeLocalEvent]
+    private void AfterEntitySelected(Entity<TraitorRuleComponent> rule, ref AfterAntagEntitySelectedEvent args)
+    {
+        Log.Debug($"AfterAntagEntitySelected {ToPrettyString(rule)}");
+        MakeTraitor(args.EntityUid, rule);
+    }
+
+    public bool MakeTraitor(EntityUid traitor, Entity<TraitorRuleComponent> rule)
+>>>>>>> wizards/stable:Content.Shared/GameTicking/Rules/TraitorRuleSystem.cs
+    {
+        Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - start");
+        var factionCodewords = Codeword.GetCodewords(rule.Comp.CodewordFactionPrototypeId);
+
+        //Grab the mind if it wasn't provided
+        if (!_mindSystem.TryGetMind(traitor, out var mindId, out var mind))
+        {
+            Log.Debug($"MakeTraitor {ToPrettyString(traitor)}  - failed, no Mind found");
+            return false;
+        }
+
+        var briefing = "";
+
+        if (rule.Comp.GiveCodewords)
+        {
+            Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - added codewords flufftext to briefing");
+            briefing = Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", factionCodewords)));
+        }
+
+        var issuer = _random.Pick(ProtoMan.Index(rule.Comp.ObjectiveIssuers));
+
+        // Uplink code will go here if applicable, but we still need the variable if there aren't any
+        Note[]? code = null;
+
+        if (rule.Comp.GiveUplink)
+        {
+            Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Uplink start");
+            // Calculate the amount of currency on the uplink.
+            var startingBalance = rule.Comp.StartingBalance;
+            if (_jobs.MindTryGetJob(mindId, out var prototype))
+            {
+                if (startingBalance < prototype.AntagAdvantage) // Can't use Math functions on FixedPoint2
+                    startingBalance = 0;
+                else
+                    startingBalance = startingBalance - prototype.AntagAdvantage;
+            }
+
+            // Choose and generate an Uplink, and return the uplink code if applicable
+            Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Uplink request start");
+            var uplinkParams = RequestUplink(traitor, startingBalance, briefing);
+            code = uplinkParams.Item1;
+            briefing = uplinkParams.Item2;
+            Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Uplink request completed");
+        }
+
+        string[]? codewords = null;
+        if (rule.Comp.GiveCodewords)
+        {
+            Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - set codewords from component");
+            codewords = factionCodewords;
+        }
+
+        if (rule.Comp.GiveBriefing)
+        {
+            _antag.SendBriefing(traitor, GenerateBriefing(codewords, code, issuer), null, rule.Comp.GreetSoundNotification);
+            Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Sent the Briefing");
+        }
+
+        Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Adding TraitorMind");
+        rule.Comp.TraitorMinds.Add(mindId);
+
+        // Assign briefing
+        //Since this provides neither an antag/job prototype, nor antag status/roletype,
+        //and is intrinsically related to the traitor role
+        //it does not need to be a separate Mind Role Entity
+        if (_roleSystem.MindHasRole<TraitorRoleComponent>((mindId, mind), out var traitorRole))
+        {
+            Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Add traitor briefing components");
+            EnsureComp<RoleBriefingComponent>(traitorRole.Value.Owner, out var briefingComp);
+            briefingComp.Briefing = briefing;
+
+            // The mind entity is stored in nullspace with a PVS override for the owner, so only they can see the codewords.
+            var codewordComp = EnsureComp<RoleCodewordComponent>(traitorRole.Value);
+            Codeword.SetRoleCodewords((traitorRole.Value, codewordComp), factionCodewords.ToList(), TraitorCodewordColor);
+        }
+        else
+        {
+            Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - did not get traitor briefing");
+        }
+
+        // Change the faction
+        Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Change faction");
+        _npcFaction.RemoveFaction(traitor, rule.Comp.NanoTrasenFaction, false);
+        _npcFaction.AddFaction(traitor, rule.Comp.SyndicateFaction);
+
+        Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Finished");
+        return true;
+    }
+
+    protected virtual (Note[]?, string) RequestUplink(EntityUid traitor, FixedPoint2 startingBalance, string briefing)
+    {
+<<<<<<< HEAD:Content.Server/GameTicking/Rules/TraitorRuleSystem.cs
+        var pda = _uplink.FindUplinkTarget(traitor);
+
+        Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Uplink add");
+        var uplinked = _uplink.AddUplink(traitor, startingBalance, out var code, pda, giveDiscounts: true, bindToPda: false, useDynamics: true);  // SS220 Dynamics
+
+        if (code != null && uplinked == AddUplinkResult.Pda)
+        {
+            Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Uplink is PDA");
+
+            // If giveUplink is false the uplink code part is omitted
+            briefing = string.Format("{0}\n{1}",
+                briefing,
+                Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp", "#"))));
+            return (code, briefing);
+        }
+
+        if (uplinked == AddUplinkResult.Implant)
+        {
+            Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Uplink is implant");
+            briefing += "\n" + Loc.GetString("traitor-role-uplink-implant-short");
+        }
+        else
+        {
+            Log.Error($"MakeTraitor failed on {ToPrettyString(traitor)} - No uplink could be added");
+        }
+
+
+        return (null, briefing);
+    }
+
+    // TODO: AntagCodewordsComponent
+    private void OnObjectivesTextPrepend(EntityUid uid, TraitorRuleComponent comp, ref ObjectivesTextPrependEvent args)
+    {
+        if(comp.GiveCodewords)
+            args.Text += "\n" + Loc.GetString("traitor-round-end-codewords", ("codewords", string.Join(", ", _codewordSystem.GetCodewords(comp.CodewordFactionPrototypeId))));
+=======
+        return default;
+>>>>>>> wizards/stable:Content.Shared/GameTicking/Rules/TraitorRuleSystem.cs
+    }
+
+    // TODO: figure out how to handle this? add priority to briefing event?
+    private string GenerateBriefing(string[]? codewords, Note[]? uplinkCode, string? objectiveIssuer = null)
+    {
+        var sb = new StringBuilder();
+        sb.AppendLine(Loc.GetString("traitor-role-greeting", ("corporation", objectiveIssuer ?? Loc.GetString("objective-issuer-unknown"))));
+        if (codewords != null)
+            sb.AppendLine(Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", codewords))));
+        if (uplinkCode != null)
+            sb.AppendLine(Loc.GetString("traitor-role-uplink-code", ("code", string.Join("-", uplinkCode).Replace("sharp", "#"))));
+        else
+            sb.AppendLine(Loc.GetString("traitor-role-uplink-implant"));
+        // SS220 DynamicTraitor begin
+        var dynamic = _dynamics.GetCurrentDynamic();
+        if (dynamic != null && _prototypeManager.TryIndex(dynamic, out var dynamicProto))
+        {
+            sb.AppendLine(Loc.GetString("dynamic-supply-level", ("dynamic", Loc.GetString(dynamicProto.Name))));
+
+            if (dynamicProto.Briefing != null)
+                sb.AppendLine(Loc.GetString(dynamicProto.Briefing.Value));
+        }
+        // SS220 DynamicTraitor end
+
+
+        return sb.ToString();
+    }
+
+    public List<(EntityUid Id, MindComponent Mind)> GetOtherTraitorMindsAliveAndConnected(MindComponent ourMind)
+    {
+        List<(EntityUid Id, MindComponent Mind)> allTraitors = new();
+
+        var query = EntityQueryEnumerator<TraitorRuleComponent>();
+        while (query.MoveNext(out var uid, out var traitor))
+        {
+            foreach (var role in GetOtherTraitorMindsAliveAndConnected(ourMind, (uid, traitor)))
+            {
+                if (!allTraitors.Contains(role))
+                    allTraitors.Add(role);
+            }
+        }
+
+        return allTraitors;
+    }
+
+    private List<(EntityUid Id, MindComponent Mind)> GetOtherTraitorMindsAliveAndConnected(MindComponent ourMind, Entity<TraitorRuleComponent> rule)
+    {
+        var traitors = new List<(EntityUid Id, MindComponent Mind)>();
+        foreach (var mind in _antag.GetAntagMinds(rule.Owner))
+        {
+            if (mind.Comp == ourMind)
+                continue;
+
+            traitors.Add((mind, mind));
+        }
+
+        return traitors;
+    }
+
+    // SS220 Dynamics begin
+    private void InitDynamic(Entity<TraitorRuleComponent?> rule, EntityUid? station)
+    {
+        if (!Resolve(rule.Owner, ref rule.Comp))
+            return;
+
+        if (!TryComp<TraitorDynamicsComponent>(rule, out var dynamicComp))
+            return;
+
+        if (dynamicComp.Dynamic != null)
+        {
+            _dynamics.SetDynamic(dynamicComp.Dynamic);
+            return;
+        }
+
+        var dynamic = _dynamics.GetCurrentDynamic();
+        if (dynamic != null)
+        {
+            Log.Error($"Can't set random dynamic because it's already was setted");
+            return;
+        }
+
+        _dynamics.SetRandomDynamic(station);
+    }
+    // SS220 Dynamics end
+}

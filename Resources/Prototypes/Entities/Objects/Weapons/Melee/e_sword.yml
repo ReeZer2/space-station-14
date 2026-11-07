@@ -14,7 +14,9 @@
       path: /Audio/Weapons/ebladehum.ogg
   - type: ComponentToggler
     components:
-    - type: Sharp
+    - type: Tool
+      qualities:
+      - Slicing
     - type: DisarmMalus
       malus: 0.6
     - type: Execution
@@ -40,8 +42,14 @@
         variation: 0.125
     activatedDamage:
       types:
+<<<<<<< HEAD
         Heat: 30 #SS220 shield rework
         Structural: 20
+=======
+        Slash: 15
+        Heat: 15
+        Structural: 12
+>>>>>>> wizards/stable
   - type: MeleeWeapon
     wideAnimationRotation: -135
     attackRate: 1
@@ -89,6 +97,7 @@
   id: EnergySword
   description: A very loud & dangerous sword with a beam made of pure, concentrated plasma. Cuts through unarmored targets like butter.
   components:
+  - type: ItemToggleExaminableStatus
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword.rsi
     layers:
@@ -109,8 +118,12 @@
   id: EnergyDaggerLoud
   description: A not as loud and dangerous dagger with a beam made of pure, concentrated plasma. This one is completely undisguised.
   components:
+<<<<<<< HEAD
   #SS220 shield rework begin
   - type: EnergySword
+=======
+  - type: ItemToggleExaminableStatus
+>>>>>>> wizards/stable
   - type: ItemToggle
   - type: ItemToggleHot
   - type: ItemToggleSize
@@ -139,7 +152,9 @@
     temperature: 700
   - type: ComponentToggler
     components:
-    - type: Sharp
+    - type: Tool
+      qualities:
+      - Slicing
     - type: DisarmMalus
       malus: 0.4
     - type: Execution
@@ -178,6 +193,45 @@
   suffix: E-Dagger
   description: 'A dark ink pen.'
   components:
+<<<<<<< HEAD
+=======
+  - type: ItemToggle
+    soundActivate:
+      path: /Audio/Weapons/ebladeon.ogg
+      params:
+        volume: -6
+    soundDeactivate:
+      path: /Audio/Weapons/ebladeoff.ogg
+      params:
+        volume: -6
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Weapons/ebladehum.ogg
+      params:
+        volume: -6
+  - type: ItemToggleMeleeWeapon
+    activatedSoundOnSwing:
+      path: /Audio/Weapons/eblademiss.ogg
+      params:
+        volume: -3
+        variation: 0.250
+    activatedDamage:
+      types:
+        Slash: 10
+        Heat: 10
+    deactivatedSecret: true
+  - type: ComponentToggler
+    components:
+    - type: Tool
+      qualities:
+      - Slicing
+    - type: DisarmMalus
+      malus: 0.4
+    - type: Execution
+      doAfterDuration: 4.0
+    - type: Contraband
+      severity: Syndicate
+>>>>>>> wizards/stable
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_dagger.rsi
     layers:
@@ -253,6 +307,7 @@
   id: EnergyCutlass
   description: An exotic energy weapon.
   components:
+  - type: ItemToggleExaminableStatus
   - type: ItemToggleMeleeWeapon
     activatedDamage:
         types:
@@ -289,6 +344,7 @@
   id: EnergySwordDouble
   description: Syndicate Command Interns thought that having one blade on the energy sword was not enough. This can be stored in pockets.
   components:
+<<<<<<< HEAD
   #SS220 shield rework begin
   - type: AltBlocking
     rangeBlockProb: 0
@@ -334,6 +390,9 @@
     active: false
   - type: InstastunResistOnActiveBlocking
   #SS220 shield rework end
+=======
+  - type: ItemToggleExaminableStatus
+>>>>>>> wizards/stable
   - type: ItemToggle
     onUse: false # wielding events control it instead
     onActivate: false # prevents the weapon from being able to be turned on when it is on the ground
@@ -353,8 +412,13 @@
         variation: 0.250
     activatedDamage:
         types:
+<<<<<<< HEAD
             Heat: 24 #SS220 shield rework
             Structural: 15
+=======
+            Slash: 12
+            Heat: 12
+>>>>>>> wizards/stable
   - type: ItemToggleActiveSound
     activeSound:
       path: /Audio/Weapons/ebladehum.ogg
@@ -362,11 +426,13 @@
         volume: 3
   - type: ComponentToggler
     components:
-    - type: Sharp
     - type: DisarmMalus
       malus: 0.7
     - type: Execution
       doAfterDuration: 4.0
+    - type: Tool
+      qualities:
+      - Slicing
   - type: Wieldable
     wieldSound: null # esword light sound instead
   - type: MeleeWeapon
@@ -414,11 +480,12 @@
       types:
         Slash: 20
         Heat: 20
-        Structural: 20
   - type: MeleeRequiresWield
   - type: HeldSpeedModifier #slowdown is what balances this compared to a dsword
     walkModifier: 0.6
     sprintModifier: 0.6
+    weightlessAcceleration: 0.6
+    zeroGravityModifier: 0.6
   - type: UseDelay
     delay: 1.5
   - type: Sprite

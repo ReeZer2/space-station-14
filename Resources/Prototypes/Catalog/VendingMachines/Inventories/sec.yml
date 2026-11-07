@@ -20,8 +20,12 @@
     BodySecurityCamera: 5 #SS220-Bodycam
     RiotShieldAlt: 2 #SS220 shield rework
     RadioHandheldSecurity: 5
+<<<<<<< HEAD
     CigPackSEC: 2 #SS220 Cigarettes
     Bola: 12 # SS220-yes-it-was-6-now-12-cause-techfab-dont-have-craft-recipe
+=======
+    SecurityBola: 6
+>>>>>>> wizards/stable
   # security officers need to follow a diet regimen!
   contrabandInventory:
     WeaponMeleeNeedle: 2

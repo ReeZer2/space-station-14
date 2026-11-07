@@ -1,4 +1,5 @@
-﻿using Content.Shared.Hands.Components;
+using Content.Shared.Hands.Components;
+using Content.Shared.Standing;
 using Content.Shared.Stunnable;
 
 namespace Content.Shared.Hands.EntitySystems;
@@ -42,5 +43,11 @@ public abstract partial class SharedHandsSystem
         var freeHandsModifiers = totalHands == 0 ? 0f : freeHands / totalHands;
         args.SpeedModifier *= SpeedWithZeroFreeHands + (SpeedWithAllFreeHands - SpeedWithZeroFreeHands) * freeHandsModifiers;
         // SS220-legs-add-end
+    }
+
+    [SubscribeLocalEvent]
+    private void OnAttemptedItemDrop(Entity<PreventForcedThrowComponent> ent, ref FellDownThrowAttemptEvent args)
+    {
+        args.Cancelled = true;
     }
 }

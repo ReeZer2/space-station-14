@@ -6,16 +6,21 @@ using Content.Shared.Mind;
 using Content.Shared.Objectives;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
+<<<<<<< HEAD
 using System.Diagnostics.CodeAnalysis;
+=======
+using Content.Shared.Roles;
+using Robust.Shared.Prototypes;
+>>>>>>> wizards/stable
 
 namespace Content.Server.CharacterInfo;
 
-public sealed class CharacterInfoSystem : EntitySystem
+public sealed partial class CharacterInfoSystem : EntitySystem
 {
-    [Dependency] private readonly JobSystem _jobs = default!;
-    [Dependency] private readonly MindSystem _minds = default!;
-    [Dependency] private readonly RoleSystem _roles = default!;
-    [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
+    [Dependency] private JobSystem _jobs = default!;
+    [Dependency] private MindSystem _minds = default!;
+    [Dependency] private RoleSystem _roles = default!;
+    [Dependency] private SharedObjectivesSystem _objectives = default!;
 
     public override void Initialize()
     {
@@ -33,15 +38,39 @@ public sealed class CharacterInfoSystem : EntitySystem
         var entity = args.SenderSession.AttachedEntity.Value;
 
         var objectives = new Dictionary<string, List<ObjectiveInfo>>();
-        var jobTitle = Loc.GetString("character-info-no-profession");
         string? briefing = null;
+<<<<<<< HEAD
 
         if (_minds.TryGetMind(entity, out var mindId, out var mind))
         {
             // SS220 Antag-List (moved code to GetObjectives method)
+=======
+        ProtoId<JobPrototype>? job = null;
+        if (_minds.TryGetMind(entity, out var mindId, out var mind))
+        {
+            // Get objectives
+            foreach (var objective in mind.Objectives)
+            {
+                var info = _objectives.GetInfo(objective, mindId, mind);
+                if (info == null)
+                    continue;
 
-            if (_jobs.MindTryGetJobName(mindId, out var jobName))
-                jobTitle = jobName;
+                if (!ProtoMan.TryIndex(Comp<ObjectiveComponent>(objective).Issuer, out var issuerProto))
+                {
+                    Log.Error($"Found incorrect objective issuer {issuerProto} when generating character info for objective {MetaData(objective).EntityPrototype}.");
+                    continue;
+                }
+
+                // group objectives by their issuer
+                var issuer = issuerProto.LocalizedName;
+                if (!objectives.ContainsKey(issuer))
+                    objectives[issuer] = new List<ObjectiveInfo>();
+                objectives[issuer].Add(info.Value);
+            }
+>>>>>>> wizards/stable
+
+            if (_jobs.MindTryGetJob(mindId, out var j))
+                job = j;
 
             GetObjectives(mindId, mind, objectives); // SS220 Antag-List
 
@@ -49,7 +78,7 @@ public sealed class CharacterInfoSystem : EntitySystem
             briefing = _roles.MindGetBriefing(mindId);
         }
 
-        RaiseNetworkEvent(new CharacterInfoEvent(GetNetEntity(entity), jobTitle, objectives, briefing), args.SenderSession);
+        RaiseNetworkEvent(new CharacterInfoEvent(GetNetEntity(entity), objectives, briefing, job), args.SenderSession);
     }
 
     private void OnRequestAntagonistInfoEvent(RequestAntagonistInfoEvent msg, EntitySessionEventArgs args)

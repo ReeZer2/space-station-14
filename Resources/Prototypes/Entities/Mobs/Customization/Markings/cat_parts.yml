@@ -5,21 +5,18 @@
   sponsorOnly: false # Corvax-Sponsors
   coloring:
     default:
-      type:
-        !type:CategoryColoring
-          category: Hair
+      type: !type:CategoryColoring
+        category: Hair
       fallbackTypes:
-        - !type:SkinColoring
-    layers:
-      ears_cat_inner:
-        type:
-          !type:SimpleColoring
-            color: "#FFFFFF"
+      - !type:SkinColoring {}
   sprites:
   - sprite: Mobs/Customization/cat_parts.rsi
     state: ears_cat_outer
   - sprite: Mobs/Customization/cat_parts.rsi
     state: ears_cat_inner
+    coloring:
+      type: !type:SimpleColoring
+        color: '#FFFFFF'
 
 - type: marking
   id: CatTail
@@ -29,13 +26,12 @@
   abstract: true #ss220 no cat tail n ears
   coloring:
     default:
-      type:
-        !type:CategoryColoring
-          category: Hair
+      type: !type:CategoryColoring
+        category: Hair
       fallbackTypes:
-        - !type:CategoryColoring
-          category: FacialHair
-        - !type:SkinColoring
+      - !type:CategoryColoring
+        category: FacialHair
+      - !type:SkinColoring {}
   sprites:
   - sprite: Mobs/Customization/cat_parts.rsi
     state: tail_cat_wag # Corvax-Sponsors

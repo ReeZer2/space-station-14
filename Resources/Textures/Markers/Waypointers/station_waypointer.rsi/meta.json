@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt",
+  "copyright": "by MIXnikita for SS220",
+  "states": [
+    {
+      "name": "state0",
+      "directions": 4
+    },
+<<<<<<< HEAD:Resources/Textures/Structures/Walls/reinforced_diagonal.rsi/meta.json
+    {
+      "name": "state1",
+      "directions": 4
+    }
+  ]
+=======
+    "license": "CC-BY-SA-3.0",
+    "copyright": "SirWarock on Github",
+    "states": [
+        {
+            "name": "enable"
+        },
+        {
+            "name": "disable"
+        }
+    ]
+>>>>>>> wizards/stable:Resources/Textures/Markers/Waypointers/station_waypointer.rsi/meta.json
+}

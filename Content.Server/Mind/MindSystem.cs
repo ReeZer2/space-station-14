@@ -2,7 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Server.Ghost;
 using Content.Shared.Database;
-using Content.Shared.Ghost;
+using Content.Shared.Ghost.Components;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Players;
@@ -13,16 +13,21 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+<<<<<<< HEAD
 using Content.Shared.SS220.Containers; //SS220-cryo-mobs-fix
 using Content.Server.Polymorph.Systems; //SS220-cryo-mobs-fix
 using Content.Shared.Body.Systems; //SS220-cryo-mobs-fix
 using Content.Server.SS220.MindExtension;
 using Content.Shared.Body;
+=======
+using Content.Shared.GameTicking;
+>>>>>>> wizards/stable
 
 namespace Content.Server.Mind;
 
-public sealed class MindSystem : SharedMindSystem
+public sealed partial class MindSystem : SharedMindSystem
 {
+<<<<<<< HEAD
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPlayerManager _players = default!;
@@ -40,7 +45,16 @@ public sealed class MindSystem : SharedMindSystem
         SubscribeLocalEvent<MindComponent, ComponentShutdown>(OnMindShutdown);
         SubscribeLocalEvent<MindContainerComponent, BeforePolymorpedEvent>(OnPolymorphed); //SS220-cryo-mobs-fix
     }
+=======
+    [Dependency] private ServerGameTicker _gameTicker = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private IPlayerManager _players = default!;
+    [Dependency] private GhostSystem _ghosts = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private PvsOverrideSystem _pvsOverride = default!;
+>>>>>>> wizards/stable
 
+    [SubscribeLocalEvent]
     private void OnMindShutdown(EntityUid uid, MindComponent mind, ComponentShutdown args)
     {
         if (mind.UserId is {} user)
@@ -57,6 +71,8 @@ public sealed class MindSystem : SharedMindSystem
         mind.OwnedEntity = null;
     }
 
+    // TODO: This should not run on EntityTerminatingEvent, instead we should detach the mind and then queue transferring it.
+    [SubscribeLocalEvent]
     private void OnMindContainerTerminating(EntityUid uid, MindContainerComponent component, ref EntityTerminatingEvent args)
     {
         if (!TryGetMind(uid, out var mindId, out var mind, component))
@@ -65,8 +81,7 @@ public sealed class MindSystem : SharedMindSystem
         // If the player is currently visiting some other entity, simply attach to that entity.
         if (mind.VisitingEntity is {Valid: true} visiting
             && visiting != uid
-            && !Deleted(visiting)
-            && !Terminating(visiting))
+            && !TerminatingOrDeleted(visiting))
         {
             TransferTo(mindId, visiting, mind: mind);
             if (TryComp(visiting, out GhostComponent? ghostComp))
@@ -85,8 +100,7 @@ public sealed class MindSystem : SharedMindSystem
             // Log these to make sure they're not causing the GameTicker round restart bugs...
             Log.Debug($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, spawned \"{ToPrettyString(ghost)}\".");
         else
-            // This should be an error, if it didn't cause tests to start erroring when they delete a player.
-            Log.Warning($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, and no applicable spawn location is available.");
+            Log.Error($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, and no applicable spawn location is available.");
     }
 
     //SS220-cryo-mobs-fix begin
@@ -201,11 +215,11 @@ public sealed class MindSystem : SharedMindSystem
         MindContainerComponent? component = null;
         var alreadyAttached = false;
 
-        if (entity != null)
+        if (entity != null && !TerminatingOrDeleted(entity))
         {
             component = EnsureComp<MindContainerComponent>(entity.Value);
 
-            if (TryGetMind(entity.Value, out var entityMindId, out _))
+            if (TryGetMind(entity.Value, out var entityMindId, out _) && entityMindId != mindId)
                 _ghosts.OnGhostAttempt(entityMindId, false);
 
             if (TryComp<ActorComponent>(entity.Value, out var actor))
@@ -231,7 +245,7 @@ public sealed class MindSystem : SharedMindSystem
                 ? _transform.ToMapCoordinates(_gameTicker.GetObserverSpawnPoint())
                 : _transform.GetMapCoordinates(mind.OwnedEntity.Value);
 
-            entity = Spawn(GameTicker.ObserverPrototypeName, position);
+            entity = Spawn(ServerGameTicker.ObserverPrototypeName, position);
             component = EnsureComp<MindContainerComponent>(entity.Value);
             var ghostComponent = Comp<GhostComponent>(entity.Value);
             _ghosts.SetCanReturnToBody((entity.Value, ghostComponent), false);
@@ -251,7 +265,7 @@ public sealed class MindSystem : SharedMindSystem
 
             oldContainer.Mind = null;
             oldContainer.HasMind = false;
-            mind.OwnedEntity = null;
+            mind.OwnedEntity = entity;
 
             RaiseLocalEvent(oldEntity.Value, new MindRemovedMessage(mindEnt, containerEnt, entity));
             RaiseLocalEvent(mindId, new MindGotRemovedEvent(mindEnt, containerEnt, entity));
@@ -265,6 +279,11 @@ public sealed class MindSystem : SharedMindSystem
             // Yes this control flow sucks.
             mind.VisitingEntity = null;
             RemComp<VisitingMindComponent>(entity!.Value);
+            // If you are transferring to your own ghost then you can no longer return to body
+            if (TryComp(entity.Value, out GhostComponent? ghostComponent))
+            {
+                _ghosts.SetCanReturnToBody((entity.Value, ghostComponent), false);
+            }
         }
         else if (mind.VisitingEntity != null
               && (ghostCheckOverride // to force mind transfer, for example from ControlMobVerb
@@ -285,7 +304,12 @@ public sealed class MindSystem : SharedMindSystem
 
         if (entity != null)
         {
+            if (component!.Mind.HasValue && TryComp(component!.Mind.Value, out MindComponent? newMind))
+            {
+                TransferTo(component!.Mind.Value, newMind?.VisitingEntity);
+            }
             component!.Mind = mindId;
+            component.LastMind = mindId;
             component.HasMind = true;
             mind.OwnedEntity = entity;
             mind.OriginalOwnedEntity ??= GetNetEntity(mind.OwnedEntity);

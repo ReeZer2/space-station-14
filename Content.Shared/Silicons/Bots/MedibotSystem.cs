@@ -10,6 +10,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Prototypes; //ss220 fix medibot
@@ -19,16 +20,21 @@ namespace Content.Shared.Silicons.Bots;
 /// <summary>
 /// Handles emagging medibots and provides api.
 /// </summary>
-public sealed class MedibotSystem : EntitySystem
+public sealed partial class MedibotSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private EmagSystem _emag = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
+<<<<<<< HEAD
     [Dependency] private readonly IPrototypeManager _proto = default!; //ss220 fix medibot
     [Dependency] private readonly DamageableSystem _damageable = default!;
+=======
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+>>>>>>> wizards/stable
 
     public override void Initialize()
     {
@@ -93,33 +99,44 @@ public sealed class MedibotSystem : EntitySystem
     /// </summary>
     public bool CheckInjectable(Entity<MedibotComponent?> medibot, EntityUid target, bool manual = false)
     {
-        if (!Resolve(medibot, ref medibot.Comp, false)) return false;
+        if (!Resolve(medibot, ref medibot.Comp, false))
+            return false;
 
         if (HasComp<NPCRecentlyInjectedComponent>(target))
         {
-            _popup.PopupClient(Loc.GetString("medibot-recently-injected"), medibot, medibot);
+            _popup.PopupEntity(Loc.GetString("medibot-recently-injected"), medibot, medibot);
             return false;
         }
 
-        if (!TryComp<MobStateComponent>(target, out var mobState)) return false;
-        if (!TryComp<DamageableComponent>(target, out var damageable)) return false;
-        if (!_solutionContainer.TryGetInjectableSolution(target, out _, out _)) return false;
+        if (!TryComp<MobStateComponent>(target, out var mobState))
+            return false;
 
-        if (mobState.CurrentState != MobState.Alive && mobState.CurrentState != MobState.Critical)
+        if (!TryComp<DamageableComponent>(target, out var damageable))
+            return false;
+
+        if (!_solutionContainer.TryGetInjectableSolution(target, out _, out _))
+            return false;
+
+        if (_mobState.IsDead(target))
         {
-            _popup.PopupClient(Loc.GetString("medibot-target-dead"), medibot, medibot);
+            _popup.PopupEntity(Loc.GetString("medibot-target-dead"), medibot, medibot);
             return false;
         }
 
+<<<<<<< HEAD
         var total = _damageable.GetTotalDamage((target, damageable));
         //ss220 fix medibot start
         var isEmagged = HasComp<EmaggedComponent>(medibot);
         if (total == 0 && !isEmagged)
+=======
+        if (_damageable.GetPositiveDamage((target, damageable)).Empty && !HasComp<EmaggedComponent>(medibot))
+>>>>>>> wizards/stable
         {
-            _popup.PopupClient(Loc.GetString("medibot-target-healthy"), medibot, medibot);
+            _popup.PopupEntity(Loc.GetString("medibot-target-healthy"), medibot, medibot);
             return false;
         }
 
+<<<<<<< HEAD
         if (!TryGetTreatment(medibot.Comp, mobState.CurrentState, out var treatment) ||
             !treatment.IsValid(_damageable.GetAllDamage(target), isEmagged, _proto) &&
             !manual)
@@ -129,6 +146,9 @@ public sealed class MedibotSystem : EntitySystem
         //ss220 fix medibot end
 
         return true;
+=======
+        return TryGetTreatment(medibot.Comp, mobState.CurrentState, out var treatment) && manual;
+>>>>>>> wizards/stable
     }
 
     /// <summary>
@@ -147,7 +167,7 @@ public sealed class MedibotSystem : EntitySystem
         _solutionContainer.TryAddReagent(injectable.Value, treatment.Reagent, treatment.Quantity, out _);
 
         _popup.PopupEntity(Loc.GetString("injector-component-feel-prick-message"), target, target);
-        _popup.PopupClient(Loc.GetString("medibot-target-injected"), medibot, medibot);
+        _popup.PopupEntity(Loc.GetString("medibot-target-injected"), medibot, medibot);
 
         _audio.PlayPredicted(medibot.Comp.InjectSound, medibot, medibot);
 

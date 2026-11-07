@@ -11,6 +11,7 @@
   defaultSkinTone: "#b8b8b8"
   dollPrototype: AppearanceSlimePerson
   skinColoration: Hues
+<<<<<<< HEAD
   buttScanTexture: /Textures/SS220/Interface/Butts/slime.png # SS220 Photocopier
 #SS220-new-species-naming begin
   maleFirstNames: NamesSlimeFirstMale
@@ -18,3 +19,12 @@
   maleLastNames: NamesSlimeLast
   femaleLastNames: NamesSlimeLast
 #SS220-new-species-naming end
+=======
+  defaultSoundsBySex:
+  - MaleSlime
+  - FemaleSlime
+  - MaleSlime
+  voices:
+  - MaleSlime
+  - FemaleSlime
+>>>>>>> wizards/stable

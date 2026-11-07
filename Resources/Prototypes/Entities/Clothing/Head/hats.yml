@@ -38,8 +38,8 @@
     sprite: Clothing/Head/Hats/beret_french.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_french.rsi
-  - type: AddAccentClothing
-    accent: FrenchAccent
+  - type: FrenchAccent
+    relayAccent: true
   - type: Tag
     tags:
     - PetWearable
@@ -201,6 +201,7 @@
     - Ian # SS220 Shapochki
     - PetWearable
     - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -216,6 +217,7 @@
     tags:
     - PetWearable
     - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -279,6 +281,7 @@
     tags:
     - PetWearable
     - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: [ClothingHeadBase]
@@ -331,6 +334,7 @@
     - Ian # SS220 Shapochki
     - PetWearable
     - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -528,9 +532,9 @@
     tags:
     - PetWearable
     - CorgiWearable
-  - type: AddAccentClothing
-    accent: ReplacementAccent
-    replacement: pirate
+  - type: ReplacementAccent
+    accent: pirate
+    relayAccent: true
 
 - type: entity
   parent: ClothingHeadBase
@@ -554,22 +558,6 @@
       HeadSide : HEAD
 
 - type: entity
-  parent: ClothingHeadHatWizardBase
-  id: ClothingHeadHatRedwizard
-  name: red wizard hat
-  description: A strange-looking red hat that most certainly belongs to a powerful magic-user.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hats/redwizard.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hats/redwizard.rsi
-  - type: Tag
-    tags:
-    - PetWearable
-    - ClothMade
-    - WhitelistChameleon
-
-- type: entity
   parent: [ClothingHeadBase, BaseFoldable]
   id: ClothingHeadHatSantahat
   name: santa hat
@@ -577,6 +565,7 @@
   components:
   - type: Clothing
     sprite: Clothing/Head/Hats/santahat.rsi
+<<<<<<< HEAD
   #ss220 special_sounds start
   - type: SpecialSounds
   - type: Vocal
@@ -584,6 +573,8 @@
       Male: MaleSanta
   #ss220 special_sounds end
   - type: Appearance
+=======
+>>>>>>> wizards/stable
   - type: HideLayerClothing
     layers:
       Hair: HEAD
@@ -620,8 +611,8 @@
     sprite: Clothing/Head/Hats/sombrero.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/sombrero.rsi
-  - type: AddAccentClothing
-    accent: SpanishAccent
+  - type: SpanishAccent
+    relayAccent: true
   - type: Tag
     tags:
     - PetWearable
@@ -720,12 +711,17 @@
   components:
   - type: Clothing
     sprite: Clothing/Head/Hats/ushanka.rsi
+<<<<<<< HEAD
   - type: Appearance
   - type: AddAccentClothing
     accent: RussianAccent
   - type: Tag
     tags:
     - Ian # SS220 Shapochki
+=======
+  - type: RussianAccent
+    relayAccent: true
+>>>>>>> wizards/stable
   - type: Foldable
     canFoldInsideContainer: true
   - type: FoldableClothing
@@ -779,22 +775,6 @@
         color: "#a60b0b"
 
 - type: entity
-  parent: ClothingHeadHatWizardBase
-  id: ClothingHeadHatVioletwizard
-  name: violet wizard hat
-  description: A strange-looking violet hat that most certainly belongs to a powerful magic-user.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hats/violetwizard.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hats/violetwizard.rsi
-  - type: Tag
-    tags:
-    - PetWearable
-    - ClothMade
-    - WhitelistChameleon
-
-- type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatWarden
   name: warden's cap
@@ -805,11 +785,13 @@
   - type: Clothing
     sprite: Clothing/Head/Hats/warden.rsi
   - type: StealTarget
-    stealGroup: ClothingHeadHatWarden
+    stealGroup:
+    - ClothingHeadHatWarden
   - type: Tag
     tags:
     - PetWearable
     - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -833,6 +815,48 @@
     - Hair
 
 - type: entity
+  abstract: true
+  parent: [ ClothingHeadBase, BaseMagicalContraband ]
+  id: ClothingHeadHatWizardBase
+  components:
+  - type: WizardClothes
+
+- type: entity
+  parent: ClothingHeadHatWizardBase
+  id: ClothingHeadHatWizardAbyss
+  name: abyss wizard hat
+  description: A strange looking red-trimmed hat that most certainly belongs to a powerful magic-user.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/wizard_abyss.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/wizard_abyss.rsi
+  - type: Tag
+    tags:
+    - PetWearable
+    - ClothMade
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadHatWizardBase
+  id: ClothingHeadHatWizardBlue
+  name: blue wizard hat
+  description: A strange-looking blue hat that most certainly belongs to a powerful magic-user.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/wizard_blue.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/wizard_blue.rsi
+  - type: Tag
+    tags:
+    - PetWearable
+    - CorgiWearable
+    - ClothMade
+    - Recyclable
+    - HamsterWearable
+    - WhitelistChameleon
+
+- type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatWizardFake
   name: fake wizard hat
@@ -849,29 +873,35 @@
       HeadSide : HEAD
 
 - type: entity
-  abstract: true
-  parent: [ ClothingHeadBase, BaseMagicalContraband ]
-  id: ClothingHeadHatWizardBase
-  components:
-  - type: WizardClothes
-
-- type: entity
   parent: ClothingHeadHatWizardBase
-  id: ClothingHeadHatWizard
-  name: wizard hat
-  description: A strange-looking blue hat that most certainly belongs to a powerful magic-user.
+  id: ClothingHeadHatWizardRed
+  name: red wizard hat
+  description: A strange-looking red hat that most certainly belongs to a powerful magic-user.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/wizardhat.rsi
+    sprite: Clothing/Head/Hats/wizard_red.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hats/wizardhat.rsi
+    sprite: Clothing/Head/Hats/wizard_red.rsi
   - type: Tag
     tags:
     - PetWearable
-    - CorgiWearable
     - ClothMade
-    - Recyclable
-    - HamsterWearable
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadHatWizardBase
+  id: ClothingHeadHatWizardViolet
+  name: violet wizard hat
+  description: A strange-looking violet hat that most certainly belongs to a powerful magic-user.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/wizard_violet.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/wizard_violet.rsi
+  - type: Tag
+    tags:
+    - PetWearable
+    - ClothMade
     - WhitelistChameleon
 
 - type: entity
@@ -1107,9 +1137,9 @@
     sprite: Clothing/Head/Hats/piratetricord.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/piratetricord.rsi
-  - type: AddAccentClothing
-    accent: ReplacementAccent
-    replacement: pirate
+  - type: ReplacementAccent
+    accent: pirate
+    relayAccent: true
 
 - type: entity
   parent: ClothingHeadBase
@@ -1398,9 +1428,9 @@
       sprite: Clothing/Head/Hats/cowboyhatbrown.rsi
     - type: Clothing
       sprite: Clothing/Head/Hats/cowboyhatbrown.rsi
-    - type: AddAccentClothing
-      accent: ReplacementAccent
-      replacement: cowboy
+    - type: ReplacementAccent
+      accent: cowboy
+      relayAccent: true
     - type: Tag
       tags:
       - PetWearable
@@ -1516,6 +1546,7 @@
         Heat: 1
   - type: Damageable
     damageModifierSet: Wood
+  - type: Injurable
   - type: Appearance
   - type: FireVisuals
     sprite: Effects/fire.rsi
@@ -1528,9 +1559,9 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-            Ash:
-              min: 1
-              max: 1
+          Ash:
+            min: 1
+            max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
@@ -1548,6 +1579,7 @@
     tags:
     - PetWearable
     - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -1611,3 +1643,19 @@
     sprite: Clothing/Head/Hats/mitre_clown.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/mitre_clown.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatTramDriver
+  name: tram driver hat
+  description: It smells like confidence.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/tramdriver.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/tramdriver.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - WhitelistChameleon

@@ -5,8 +5,14 @@
   description: Spawns a web that slows your prey down.
   components:
   - type: Action
+<<<<<<< HEAD
     icon: SS220/Interface/Actions/web.png #SS220 new web action sprite
+=======
+>>>>>>> wizards/stable
     useDelay: 25
+  - type: Sprite
+    layers:
+    - texture: Interface/Actions/web.png
   - type: InstantAction
     event: !type:SpiderWebActionEvent
 
@@ -17,7 +23,13 @@
   description: Weave a bit of silk for use in arts and crafts.
   components:
   - type: Action
+<<<<<<< HEAD
     icon: SS220/Interface/Actions/web.png #SS220 new web action sprite
+=======
+>>>>>>> wizards/stable
     useDelay: 1
+  - type: Sprite
+    layers:
+    - texture: Interface/Actions/web.png
   - type: InstantAction
     event: !type:SericultureActionEvent

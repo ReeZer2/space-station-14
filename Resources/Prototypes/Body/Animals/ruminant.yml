@@ -9,11 +9,24 @@
       - Ruminant
       - Wheat
       - BananaPeel
+<<<<<<< HEAD
       - Omnivorous #SS220 CultYoggs
   - type: SolutionContainerManager
+=======
+    isSpecialDigestibleExclusive: false
+  - type: SolutionManager
+>>>>>>> wizards/stable
     solutions:
-      stomach:
-        maxVol: 80
+    - SolutionStomachRuminant
+
+- type: entity
+  parent: SolutionStomach
+  id: SolutionStomachRuminant
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 240
 
 - type: entity
   id: BaseMobRuminant

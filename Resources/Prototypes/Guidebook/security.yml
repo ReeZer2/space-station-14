@@ -6,9 +6,12 @@
   - Forensics
   - Defusal
   - CriminalRecords
+<<<<<<< HEAD
   # SS220 space-law begin
   # - SpaceLaw
   # SS220 space-law end
+=======
+>>>>>>> wizards/stable
 
 - type: guideEntry
   id: Forensics
@@ -24,6 +27,7 @@
   id: CriminalRecords
   name: guide-entry-criminal-records
   text: "/ServerInfo/Guidebook/Security/CriminalRecords.xml"
+<<<<<<< HEAD
 
 # SS220 Changes Space Law in the Guidebook BEGIN
 # - type: guideEntry
@@ -38,3 +42,5 @@
 #   name: guide-entry-rules-sl-crime-list
 #   text: "/ServerInfo/Guidebook/ServerRules/SpaceLaw/SLCrimeList.xml"
 # SS220 Changes Space Law in the Guidebook END
+=======
+>>>>>>> wizards/stable

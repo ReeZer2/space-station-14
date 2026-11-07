@@ -1,6 +1,10 @@
 - type: entity
   name: bat
+<<<<<<< HEAD
   parent: [ SimpleMobBase, FlyingMobBase, MobCombat, MobPassiveCollision ] # SS220 Add Mob Passive Collision
+=======
+  parent: [ SimpleMobBase, FlyingMobBase, MobCombat, BaseSlicingRefinableButchering, MobNightVision ]
+>>>>>>> wizards/stable
   id: MobBat
   description: Some cultures find them terrifying, others crunchy on the teeth.
   components:
@@ -42,8 +46,8 @@
         Base: dead
       Dead:
         Base: dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 1
   - type: InteractionPopup
@@ -89,6 +93,7 @@
     - VimPilot
 
 - type: entity
+<<<<<<< HEAD
   name: bee
   parent: [ SimpleMobBase, FlyingMobBase, MobPassiveCollision ] # SS220 Add Mob Passive Collision
   id: MobBee
@@ -976,8 +981,10 @@
     - FoodRecipes
 
 - type: entity
+=======
+>>>>>>> wizards/stable
   name: crab
-  parent: [ SimpleMobBase, BaseMobHemocyanin ]
+  parent: [ SimpleMobBase, BaseMobHemocyanin, BaseSlicingRefinableButchering, BaseMobDestructible ]
   id: MobCrab
   description: A folk legend goes around that his claw snaps spacemen out of existence over distasteful remarks. Be polite and tolerant for your own safety.
   components:
@@ -1018,8 +1025,8 @@
         Base: dead
       Dead:
         Base: dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatCrab
       amount: 2
   - type: InteractionPopup
@@ -1043,111 +1050,10 @@
     rootTask:
       task: RuminantCompound
 
-- type: entity
-  name: goat
-  parent: [ SimpleMobBase, BaseMobRuminant ]
-  id: MobGoat
-  description: Her spine consists of long sharp segments, no wonder she is so grumpy.
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: goat
-      sprite: Mobs/Animals/goat.rsi
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.35
-        density: 150
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
-  - type: Tag
-    tags:
-    # let moths eat wool directly
-    - ClothMade
-    - DoorBumpOpener
-    - Goat
-  - type: Reproductive
-    partnerWhitelist:
-      tags:
-      - Goat
-    offspring:
-    - id: MobGoat
-  - type: ReproductivePartner
-  - type: Appearance
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: goat
-      Critical:
-        Base: dead
-      Dead:
-        Base: dead
-  - type: SolutionContainerManager
-    solutions:
-      udder:
-        maxVol: 250
-        reagents:
-        - ReagentId: MilkGoat
-          Quantity: 30
-      wool:
-        maxVol: 250
-  - type: Udder
-    reagentId: MilkGoat
-    quantityPerUpdate: 25
-    growthDelay: 20
-  - type: ExaminableHunger
-  - type: Wooly
-  - type: Edible
-    destroyOnEmpty: false
-    solution: wool
-    requiresSpecialDigestion: true
-    requireDead: false
-  - type: FlavorProfile
-    flavors:
-    - fiber
-  - type: Butcherable
-    spawned:
-    - id: FoodMeat
-      amount: 4
-  - type: Grammar
-    attributes:
-      gender: female # Here because of UdderComponent
-  - type: Speech
-    speechSounds: Goat
-    speechVerb: Goat
-  - type: Vocal
-    sounds:
-      Female: Goat
-      Male: Goat
-      Unsexed: Goat
-  - type: BleatingAccent
-  - type: InteractionPopup
-    successChance: 0.2
-    interactSuccessString: petting-success-goat
-    interactFailureString: petting-failure-goat
-    interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      path: /Audio/Animals/goat_bah.ogg
-  - type: NpcFactionMember
-    factions:
-    - Passive
-  - type: NPCRetaliation
-    attackMemoryLength: 5
-  - type: FactionException
-  - type: HTN
-    rootTask:
-      task: RuminantHostileCompound
-
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
   name: goose
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   id: MobGoose
   description: Its stomach and mind are an enigma beyond human comprehension.
   components:
@@ -1176,8 +1082,8 @@
         Base: dead
       Dead:
         Base: dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatChicken
       amount: 2
   - type: InteractionPopup # TODO: Make it so there's a separate chance to make certain animals outright hostile towards you.
@@ -1198,7 +1104,7 @@
 
 - type: entity
   name: gorilla
-  parent: [ SimpleMobBase, MobCombat ]
+  parent: [ SimpleMobBase, MobCombat, BaseMobDestructible ]
   id: MobGorilla
   description: Smashes, roars, looks cool. Don't stand near one.
   components:
@@ -1228,8 +1134,8 @@
         Base: dead
       Dead:
         Base: dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 4
   - type: Bloodstream
@@ -1275,6 +1181,8 @@
       0: Alive
       200: Critical
       250: Dead
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-organic
 
 - type: entity
   name: kangaroo
@@ -1282,6 +1190,8 @@
   - SimpleMobBase
   - MobCombat
   - StripableInventoryBase
+  - BaseSlicingRefinableButchering
+  - BaseMobDestructible
   id: MobKangaroo
   description: A large marsupial herbivore. It has powerful hind legs, with nails that resemble long claws.
   components:
@@ -1311,8 +1221,8 @@
     templateId: kangaroo
   - type: ReplacementAccent
     accent: kangaroo
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
   - type: DamageStateVisuals
     states:
@@ -1334,8 +1244,7 @@
     rules: ghost-role-information-nonantagonist-rules
   - type: GhostTakeoverAvailable
   - type: Vocal
-    sounds:
-      Unsexed: Kangaroo
+    emoteSounds: Kangaroo
   - type: Puller
     needsHands: false
   - type: StaminaDamageOnHit
@@ -1372,6 +1281,7 @@
     - SimpleHostile
 
 - type: entity
+<<<<<<< HEAD
   name: genetic ancestor
   id: MobBaseAncestor
   parent: [BaseMobAnimal, SimpleMobBase, StripableInventoryBase]
@@ -2194,8 +2104,10 @@
     damageModifierSet: Zombie
 
 - type: entity
+=======
+>>>>>>> wizards/stable
   name: lizard #Weh
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   id: MobLizard
   description: A harmless dragon.
   components:
@@ -2234,8 +2146,8 @@
         Base: dead
       Dead:
         Base: dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatLizard
       amount: 1
   - type: InteractionPopup
@@ -2251,16 +2163,18 @@
       - ReagentId: Blood
         Quantity: 150
   - type: Damageable
-    damageContainer: Biological
     damageModifierSet: Scale
   - type: Tag
     tags:
     - VimPilot
 
-
 - type: entity
   name: slug
+<<<<<<< HEAD
   parent: [ SimpleMobBase, MobPassiveCollision ] # SS220 Add Mob Passive Collision
+=======
+  parent: [SimpleMobBase, BaseSlicingRefinableButchering, BaseMobDestructible]
+>>>>>>> wizards/stable
   id: MobSlug
   description: And they called this a lizard?
   components:
@@ -2293,8 +2207,8 @@
         Base: dead
       Dead:
         Base: dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 1
   - type: InteractionPopup
@@ -2310,7 +2224,11 @@
 
 - type: entity
   name: frog
+<<<<<<< HEAD
   parent: [ SimpleMobBase, MobPassiveCollision ] # SS220 Add Mob Passive Collision
+=======
+  parent: [SimpleMobBase, BaseSlicingRefinableButchering]
+>>>>>>> wizards/stable
   id: MobFrog
   description: Hop hop hop. Lookin' moist.
   components:
@@ -2350,8 +2268,8 @@
         Base: dead
       Dead:
         Base: dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 1
   - type: InteractionPopup
@@ -2381,7 +2299,11 @@
 
 # Would be cool to have some functionality for the parrot to be able to sit on stuff
 - type: entity
+<<<<<<< HEAD
   parent: [ SimpleMobBase, FlyingMobBase, MobPassiveCollision ] # SS220 Add Mob Passive Collision
+=======
+  parent: [ SimpleMobBase, FlyingMobBase, BaseSlicingRefinableButchering, BaseMobDestructible ]
+>>>>>>> wizards/stable
   id: MobParrotBase
   name: parrot
   abstract: true
@@ -2415,16 +2337,15 @@
         Base: dead
       Dead:
         Base: dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 1
   - type: Speech
     speechSounds: Parrot
     speechVerb: Parrot
   - type: Vocal
-    sounds:
-      Unsexed: Parrot
+    emoteSounds: Parrot
   - type: ActiveListener
   - type: Vocalizer
   - type: RadioVocalizer
@@ -2471,7 +2392,7 @@
 
 - type: entity
   name: penguin
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   id: MobPenguin
   description: Their lives are constant pain due to their inner-body knees.
   components:
@@ -2501,8 +2422,8 @@
         Base: penguin_dead
       Dead:
         Base: penguin_dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatPenguin
       amount: 3
   - type: InteractionPopup
@@ -2518,9 +2439,6 @@
   - type: NpcFactionMember
     factions:
     - Passive
-  - type: Temperature
-    currentTemperature: 310.15
-    specificHeat: 46
   - type: TemperatureDamage
     heatDamageThreshold: 335
     coldDamageThreshold: 230
@@ -2610,7 +2528,7 @@
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
 - type: entity
   name: snake
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   id: MobSnake
   description: Hissss! Bites aren't poisonous.
   components:
@@ -2646,8 +2564,8 @@
         Base: dead
       Dead:
         Base: dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatSnake
       amount: 1
   - type: InteractionPopup
@@ -2661,9 +2579,9 @@
       - ReagentId: Blood
         Quantity: 50
   - type: Damageable
-    damageContainer: Biological
     damageModifierSet: Scale
 
+<<<<<<< HEAD
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.
 - type: entity
@@ -2922,9 +2840,11 @@
     - type: ReplacementAccent
       accent: xeno  #let this wizard speak
 
+=======
+>>>>>>> wizards/stable
 - type: entity
   name: possum
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   id: MobPossum
   description: '"O Possum! My Possum!" -- Walt Whitman, 1865'
   components:
@@ -2957,8 +2877,8 @@
         Base: possum_dead
       Dead:
         Base: possum_dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 3
   - type: InteractionPopup
@@ -2999,7 +2919,7 @@
 
 - type: entity
   name: raccoon
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   id: MobRaccoon
   description: Trash panda!
   components:
@@ -3032,8 +2952,8 @@
         Base: raccoon_dead
       Dead:
         Base: raccoon_dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 3
   - type: InteractionPopup
@@ -3054,7 +2974,7 @@
 
 - type: entity
   name: fox
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   id: MobFox
   description: They're a fox.
   components:
@@ -3094,8 +3014,8 @@
         Base: fox_dead
       Dead:
         Base: fox_dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 3
   - type: InteractionPopup
@@ -3136,7 +3056,7 @@
 
 - type: entity
   abstract: true
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: [SimpleMobBase, StripableInventoryBase, BaseMobDestructible]
   id: MobCorgiBase
   name: corgi
   description: Finally, a space corgi!
@@ -3164,7 +3084,32 @@
         - MobLayer
   - type: Inventory
     speciesId: dog
+<<<<<<< HEAD
     templateId: ian # SS220 Shapochki
+=======
+    templateId: Corgi
+    displacements:
+      belt:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/displacements.rsi
+            state: corgi_belt_displacement
+      ears:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/displacements.rsi
+            state: corgi_belt_displacement
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/displacements.rsi
+            state: corgi_head_displacement
+      mask:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/displacements.rsi
+            state: corgi_mask_displacement
+>>>>>>> wizards/stable
   - type: InteractionPopup
     interactSuccessString: petting-success-dog
     interactFailureString: petting-failure-generic
@@ -3202,7 +3147,7 @@
   #    state: creampie_corgi
 
 - type: entity
-  parent: MobCorgiBase
+  parent: [MobCorgiBase, BaseSlicingRefinableButchering]
   id: MobCorgi
   components:
   - type: DamageStateVisuals
@@ -3213,8 +3158,8 @@
         Base: corgi_dead
       Dead:
         Base: corgi_dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 2
   - type: ReplacementAccent
@@ -3273,11 +3218,9 @@
       - ReagentId: DemonsBlood
         Quantity: 150
   - type: Damageable
-    damageContainer: BiologicalMetaphysical
     damageModifierSet: Infernal
-  - type: Temperature
-    currentTemperature: 310.15
-    specificHeat: 42
+  - type: Injurable
+    damageContainer: BiologicalMetaphysical
   - type: TemperatureDamage
     heatDamageThreshold: 4000 #They come from hell, so..
     coldDamageThreshold: 260
@@ -3317,7 +3260,11 @@
 
 - type: entity
   name: cat
+<<<<<<< HEAD
   parent: [SimpleMobBase, StripableInventoryBase, BaseMobCatBody] # SS220 cat organ
+=======
+  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinableButchering, BaseMobDestructible]
+>>>>>>> wizards/stable
   id: MobCat
   description: Feline pet, very funny.
   components:
@@ -3377,6 +3324,7 @@
   - type: Speech
     speechSounds: Cat
     speechVerb: SmallMob
+<<<<<<< HEAD
     # 220 cat-emotes start
     allowedEmotes: ['Meow','Mew','Growl','Purr','Hiss']
   - type: Vocal
@@ -3388,6 +3336,10 @@
     # 220 cat-emotes end
   - type: Butcherable
     spawned:
+=======
+  - type: ToolRefinable
+    refineResult:
+>>>>>>> wizards/stable
     - id: FoodMeat
       amount: 3
   - type: ReplacementAccent
@@ -3516,12 +3468,16 @@
       types:
         Slash: 6
         Piercing: 6
-        Structural: 15
+        Structural: 6 # Secondary breaching
 
 - type: entity
   name: space cat
   id: MobCatSpace
+<<<<<<< HEAD
   parent: [MobCat, MobLyingDownOnEntity ] #SS220 Add lying down on entity
+=======
+  parent: [MobCat, BaseSlicingRefinableButchering]
+>>>>>>> wizards/stable
   description: Feline pet, prepared for the worst.
   components:
   - type: Sprite
@@ -3549,9 +3505,12 @@
     coldDamageThreshold: 0
   - type: Tag
     tags:
-      - DoorBumpOpener
+    - DoorBumpOpener
+    - VimPilot
   - type: MovementAlwaysTouching
-  - type: PressureImmunity
+  - type: PermanentStatusEffects
+    statusEffects:
+    - StatusEffectPressureImmunity
   - type: ProtectedFromStepTriggers
   - type: Insulated
   - type: InteractionPopup
@@ -3607,8 +3566,8 @@
         Base: kitten_dead
       Dead:
         Base: kitten_dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 1
   - type: MobPrice
@@ -3632,7 +3591,7 @@
 
 - type: entity
   name: sloth
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   id: MobSloth
   description: Very slow animal. For people with low energy.
   components:
@@ -3668,8 +3627,8 @@
         Base: sloth_dead
       Dead:
         Base: sloth_dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 3
   - type: InteractionPopup
@@ -3689,7 +3648,7 @@
 
 - type: entity
   name: ferret
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   id: MobFerret
   description: Just a silly little guy!
   components:
@@ -3722,8 +3681,8 @@
         Base: ferret_dead
       Dead:
         Base: ferret_dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 3
   - type: InteractionPopup
@@ -3744,6 +3703,7 @@
     - VimPilot
 
 - type: entity
+<<<<<<< HEAD
   name: hamster
   parent: [ SimpleMobBase, MobCombat, StripableInventoryBase, MobPassiveCollision ] # SS220 Add Mob Passive Collision
   id: MobHamster
@@ -3996,8 +3956,10 @@
       task: RuminantCompound
 
 - type: entity
+=======
+>>>>>>> wizards/stable
   name: diona nymph
-  parent: [BaseMobAnimal, SimpleMobBase, StripableInventoryBase]
+  parent: [BaseMobAnimal, SimpleMobBase, StripableInventoryBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   id: MobDionaNymph
   description: It's like a cat, only.... branch-ier.
   components:
@@ -4035,8 +3997,8 @@
         Base: nymph_sleep
       Dead:
         Base: nymph_dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: MaterialWoodPlank1
       amount: 2
   - type: InteractionPopup
@@ -4061,10 +4023,7 @@
     speechSounds: Alto
     allowedEmotes: ['Chirp']
   - type: Vocal
-    sounds:
-      Male: UnisexDiona
-      Female: UnisexDiona
-      Unsexed: UnisexDiona
+    emoteSounds: UnisexDiona
   - type: Tag
     tags:
     - DoorBumpOpener
@@ -4096,7 +4055,7 @@
 
 - type: entity
   name: reindeer buck
-  parent: [ SimpleMobBase, MobCombat ]
+  parent: [ SimpleMobBase, MobCombat, BaseSlicingRefinableButchering, BaseMobDestructible ]
   id: MobReindeerBuck
   description: You think it can pull a sleigh?
   components:
@@ -4133,8 +4092,8 @@
         Base: reindeer_buck_dead
       Dead:
         Base: reindeer_buck_dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 4
   - type: Bloodstream
@@ -4190,6 +4149,7 @@
         Base: reindeer_doe_dead
       Dead:
         Base: reindeer_doe_dead
+<<<<<<< HEAD
 
 - type: entity
   parent: MobCorgiBase
@@ -4274,3 +4234,5 @@
     - id: Doggish
       canSpeak: true
   #SS220 Languages tweaks end
+=======
+>>>>>>> wizards/stable

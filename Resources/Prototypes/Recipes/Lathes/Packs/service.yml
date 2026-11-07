@@ -41,6 +41,16 @@
   - SodaDispenserMachineCircuitboard
   - SmartFridgeCircuitboard
 
+- type: latheRecipePack
+  id: HydroponicsStatic
+  recipes:
+  - HydroponicsToolMiniHoe
+  - HydroponicsToolScythe
+  - HydroponicsToolHatchet
+  - HydroponicsToolSpade
+  - HydroponicsToolClippers
+  - PlantAnalyzer
+
 ## Dynamic
 
 - type: latheRecipePack
@@ -50,8 +60,22 @@
   - WeaponSprayNozzle
   - ClothingBackpackWaterTank
   - MegaSprayBottle
+<<<<<<< HEAD
   - TrashBagAdvanced #SS220 Borg Modules
   - PdaIdPainterMachineCircuitboard #ss220 add pdaidpainter
+=======
+  - TrashBagHolding
+  - BoxLighttube
+  - BoxExteriorLighttube
+  - BoxLedLighttube
+  - BoxSodiumLighttube
+  - BoxLightbulb
+  - BoxDimLightbulb
+  - BoxWarmLightbulb
+  - BoxLedLightbulb
+  - BoxLightMixed
+  - BoxLedLightMixed
+>>>>>>> wizards/stable
 
 - type: latheRecipePack
   id: Instruments

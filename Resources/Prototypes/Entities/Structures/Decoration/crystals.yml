@@ -1,10 +1,17 @@
 - type: entity
+<<<<<<< HEAD
   id: CrystalBase #SS220-Crystal-fix
   parent: BaseStructure
   abstract: true #SS220-Crystal-fix
+=======
+  abstract: true
+  parent: [ BaseStructure, StructureHealthFurnitureWeak ]
+  id: BaseCrystalStalagmite
+>>>>>>> wizards/stable
   name: crystal
-  description: A crystaline solid.
+  description: An outcrop of jagged crystals.
   components:
+<<<<<<< HEAD
     - type: Sprite #SS220-Crystal-Resprite-Start
       noRot: true
       layers:
@@ -92,9 +99,85 @@
                 ShardCrystalGreen:
                   min: 1
                   max: 1 #SS220-Crystal-fix-End
+=======
+  - type: Sprite
+    layers:
+    - sprite: Structures/Decoration/crystal.rsi
+      state: big0
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: RandomSprite
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        big0: ""
+        big1: ""
+        big2: ""
+        medium0: ""
+        medium1: ""
+        medium2: ""
+        medium3: ""
+        medium4: ""
+  - type: Reflect
+    reflectProb: 0.5
+    reflects:
+    - Energy
+    spread: 75
+  - type: Anchorable
+    delay: 2
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+        - BulletImpassable
+        - Opaque
+  - type: PointLight
+    radius: 3
+    energy: 3
+  - type: Damageable
+    damageModifierSet: GlassMod
+  - type: Destructible
+    thresholds:
+    - trigger: &DamageFurnitureWeak
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+>>>>>>> wizards/stable
 
 - type: entity
+  parent: BaseCrystalStalagmite
+  id: CrystalGreen
+  suffix: green
+  components:
+  - type: Sprite
+    color: "#52ff39"
+  - type: PointLight
+    color: "#52ff39"
+  - type: Destructible
+    thresholds:
+    - trigger: *DamageFurnitureWeak
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardCrystalGreen: &Min1Max2
+            min: 1
+            max: 2
+
+- type: entity
+  parent: BaseCrystalStalagmite
   id: CrystalPink
+<<<<<<< HEAD
   parent: CrystalBase #SS220-Crystal-fix
   suffix: pink
   components:
@@ -120,9 +203,26 @@
                 ShardCrystalPink:
                   min: 1
                   max: 1
+=======
+  suffix: pink
+  components:
+  - type: Sprite
+    color: "#ff66cc"
+  - type: PointLight
+    color: "#ff66cc"
+  - type: Destructible
+    thresholds:
+    - trigger: *DamageFurnitureWeak
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardCrystalPink: *Min1Max2
+>>>>>>> wizards/stable
 
 - type: entity
+  parent: BaseCrystalStalagmite
   id: CrystalGrey
+<<<<<<< HEAD
   parent: CrystalBase #SS220-Crystal-fix
   suffix: red
   components:
@@ -149,9 +249,26 @@
                 ShardCrystalRed:
                   min: 1
                   max: 2
+=======
+  suffix: red
+  components:
+  - type: Sprite
+    color: "#fb4747"
+  - type: PointLight
+    color: "#fb4747"
+  - type: Destructible
+    thresholds:
+    - trigger: *DamageFurnitureWeak
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardCrystalRed: *Min1Max2
+>>>>>>> wizards/stable
 
 - type: entity
+  parent: BaseCrystalStalagmite
   id: CrystalOrange
+<<<<<<< HEAD
   parent: CrystalBase #SS220-Crystal-fix
   suffix: orange
   components:
@@ -177,37 +294,43 @@
                 ShardCrystalOrange:
                   min: 1
                   max: 2
+=======
+  suffix: orange
+  components:
+  - type: Sprite
+    color: "#ff8227"
+  - type: PointLight
+    color: "#ff8227"
+  - type: Destructible
+    thresholds:
+    - trigger: *DamageFurnitureWeak
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardCrystalOrange: *Min1Max2
+>>>>>>> wizards/stable
 
 - type: entity
+  parent: BaseCrystalStalagmite
   id: CrystalBlack
-  parent: CrystalGreen
   suffix: black
   components:
     - type: Sprite
       color: "#363636"
     - type: PointLight
-      radius: 3
-      energy: 3
       color: "#363636"
     - type: Destructible
       thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 20
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-            - !type:PlaySoundBehavior
-              sound:
-                collection: GlassBreak
-            - !type:SpawnEntitiesBehavior
-              spawn:
-                ShardCrystalBlack:
-                  min: 1
-                  max: 2
+      - trigger: *DamageFurnitureWeak
+        behaviors:
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            ShardCrystalBlack: *Min1Max2
 
 - type: entity
+  parent: BaseCrystalStalagmite
   id: CrystalBlue
+<<<<<<< HEAD
   parent: CrystalBase #SS220-Crystal-fix
   suffix: blue
   components:
@@ -233,9 +356,26 @@
                 ShardCrystalBlue:
                   min: 1
                   max: 2
+=======
+  suffix: blue
+  components:
+  - type: Sprite
+    color: "#39a1ff"
+  - type: PointLight
+    color: "#39a1ff"
+  - type: Destructible
+    thresholds:
+    - trigger: *DamageFurnitureWeak
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardCrystalBlue: *Min1Max2
+>>>>>>> wizards/stable
 
 - type: entity
+  parent: BaseCrystalStalagmite
   id: CrystalYellow
+<<<<<<< HEAD
   parent: CrystalBase #SS220-Crystal-fix
   suffix: yellow
   components:
@@ -261,9 +401,26 @@
                 ShardCrystalYellow:
                   min: 1
                   max: 2
+=======
+  suffix: yellow
+  components:
+  - type: Sprite
+    color: "#ffde46"
+  - type: PointLight
+    color: "#ffde46"
+  - type: Destructible
+    thresholds:
+    - trigger: *DamageFurnitureWeak
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardCrystalYellow: *Min1Max2
+>>>>>>> wizards/stable
 
 - type: entity
+  parent: BaseCrystalStalagmite
   id: CrystalCyan
+<<<<<<< HEAD
   parent: CrystalBase #SS220-Crystal-fix
   suffix: cyan
   components:
@@ -289,3 +446,18 @@
                   max: 2
             - !type:DoActsBehavior
                acts: [ "Destruction" ]
+=======
+  suffix: cyan
+  components:
+  - type: Sprite
+    color: "#47f8ff"
+  - type: PointLight
+    color: "#47f8ff"
+  - type: Destructible
+    thresholds:
+    - trigger: *DamageFurnitureWeak
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardCrystalCyan: *Min1Max2
+>>>>>>> wizards/stable

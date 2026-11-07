@@ -14,6 +14,9 @@
     layers:
     - state: stunprod_off
       map: [ "enum.ToggleableVisuals.Layer" ]
+  - type: ItemToggleExaminableStatus
+  - type: ItemToggleRequiresCharge
+    requiredCharge: 120
   - type: ItemToggle
     soundActivate:
       collection: sparks
@@ -27,26 +30,45 @@
       path: /Audio/Machines/button.ogg
       params:
         variation: 0.250
+  - type: ItemTogglePrefix
+    prefixOn: on
+    prefixOff: off
   - type: ItemToggleMeleeWeapon
     activatedSoundOnHit: #ss220 stunprod stamina damage fix
       path: /Audio/Weapons/egloves.ogg #ss220 stunprod stamina damage fix
     activatedDamage:
       types:
+<<<<<<< HEAD
         Blunt: 0 #ss220 stunprod fix
   - type: Stunbaton
     energyPerUse: 120
+=======
+        Shock: 5
+>>>>>>> wizards/stable
   - type: MeleeWeapon
+    attackRate: 1.3
     wideAnimationRotation: -135
     damage:
       types:
         Blunt: 9
     angle: 60
     animation: WeaponArcThrust
+  - type: MeleeBatteryHitsLeft
+  - type: StaminaDamageOnHitRequiresToggle
+  - type: StaminaDamageOnHitRequiresCharge
+    requiredCharge: 100
   - type: StaminaDamageOnHit
+<<<<<<< HEAD
     damage: 35 #ss220 stunprod stamina damage
     sound: /Audio/Weapons/egloves.ogg
   - type: StaminaDamageOnCollide
     damage: 35 #ss220 stunprod stamina damage
+=======
+    damage: 23
+    sound: /Audio/Weapons/egloves.ogg
+  - type: StaminaDamageOnCollide
+    damage: 23
+>>>>>>> wizards/stable
     sound: /Audio/Weapons/egloves.ogg
   #ss220 stunprod stamina damage fix begin
   - type: DamageOtherOnHit
@@ -56,8 +78,8 @@
   #ss220 stunprod stamina damage fix end
   - type: LandAtCursor # it deals stamina damage when thrown
   - type: Battery
-    maxCharge: 360
-    startingCharge: 360
+    maxCharge: 700
+    startingCharge: 700
   - type: UseDelay
   - type: Item
     heldPrefix: off
@@ -81,3 +103,6 @@
   - type: Construction
     graph: makeshiftstunprod
     node: msstunprod
+  - type: Tag
+    tags:
+    - Stunbaton

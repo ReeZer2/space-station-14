@@ -13,8 +13,18 @@
   skinColoration: Hues
   maleFirstNames: NamesMothFirstMale
   femaleFirstNames: NamesMothFirstFemale
+<<<<<<< HEAD
   #SS220-new-species-naming begin
   maleLastNames: NamesMothLast
   femaleLastNames: NamesMothLast
   # lastNames: NamesMothLast
   #SS220-new-species-naming end
+=======
+  lastNames: NamesMothLast
+  defaultSoundsBySex:
+  - UnisexMoth
+  - UnisexMoth
+  - UnisexMoth
+  voices:
+  - UnisexMoth
+>>>>>>> wizards/stable

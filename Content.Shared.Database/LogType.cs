@@ -488,6 +488,7 @@ public enum LogType
     /// <summary>
     /// Events related to players connecting/disconnecting.
     /// </summary>
+<<<<<<< HEAD
     Connection = 108,
 
     //SS220 log types start
@@ -507,4 +508,12 @@ public enum LogType
     /// </summary>
     Experience = 10002,
     //SS220 log types end
+=======
+    Connection = 104,
+
+    /// <summary>
+    /// Silicon law changes.
+    /// </summary>
+    SiliconLaw = 105,
+>>>>>>> wizards/stable
 }

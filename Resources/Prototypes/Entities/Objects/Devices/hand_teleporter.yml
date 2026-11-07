@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: HandTeleporter
   parent: [BaseItem]
   name: hand teleporter
@@ -15,8 +15,10 @@
   - type: Tag
     tags:
     - HighRiskItem
+    - FitInTeleporterConsole
   - type: StealTarget
-    stealGroup: HandTeleporter
+    stealGroup:
+    - HandTeleporter
 
 - type: entity
   id: HandTeleporterAdmeme
@@ -30,6 +32,9 @@
     layers:
     - state: icon
       color: green
+  - type: Tag
+    tags:
+    - FitInTeleporterConsole
   - type: HandTeleporter
     allowPortalsOnDifferentGrids: true
     allowPortalsOnDifferentMaps: true

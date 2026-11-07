@@ -17,8 +17,9 @@ using Direction = Robust.Shared.Maths.Direction;
 
 namespace Content.Client.Hands
 {
-    public sealed class ShowHandItemOverlay : Overlay
+    public sealed partial class ShowHandItemOverlay : Overlay
     {
+<<<<<<< HEAD
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IClyde _clyde = default!;
@@ -38,6 +39,12 @@ namespace Content.Client.Hands
         private const float PerformedStepsYDivisor = 1.8f;
         private const float PerformedStepsHalfDivisor = 2f;
         // SS220-MartialArts-End
+=======
+        [Dependency] private IConfigurationManager _cfg = default!;
+        [Dependency] private IInputManager _inputManager = default!;
+        [Dependency] private IClyde _clyde = default!;
+        [Dependency] private IEntityManager _entMan = default!;
+>>>>>>> wizards/stable
 
         private HandsSystem? _hands;
         private readonly IRenderTexture _renderBackbuffer;

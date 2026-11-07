@@ -1,7 +1,7 @@
 - type: entity
   name: laser raptor
   id: MobLaserRaptor
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   description: From the Viking age.
   components:
     - type: NpcFactionMember
@@ -37,8 +37,8 @@
       thresholds:
         0: Alive
         100: Dead
-    - type: Butcherable
-      spawned:
+    - type: ToolRefinable
+      refineResult:
       - id: FoodMeatChicken
         amount: 2
     - type: MovementSpeedModifier
@@ -99,7 +99,7 @@
       Flammable: [ Touch ]
       Extinguish: [ Touch ]
     reactions:
-    - reagents: [ Water ]
+    - reagents: [ Water, Holywater ]
       methods: [ Touch ]
       effects:
       - !type:EvenHealthChange
@@ -143,6 +143,7 @@
   - type: HTN
     rootTask:
       task: KillerTomatoCompound
+<<<<<<< HEAD
   - type: NPCImprintingOnSpawnBehaviour
     spawnFriendsSearchRadius: 8 #SS220 Tomato-Killer-Balance
     whitelist:
@@ -151,6 +152,8 @@
   - type: Damageable #SS220 Old-Tomato-Killer-Balance
     damageContainer: Biological
     damageModifierSet: TomatoKiller
+=======
+>>>>>>> wizards/stable
   - type: Sprite
     sprite: Mobs/Demons/tomatokiller.rsi
     noRot: true
@@ -168,8 +171,8 @@
         Base: alive
       Dead:
         Base: dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatTomato
       amount: 2
   - type: Destructible
@@ -233,6 +236,7 @@
   # - type: PotencyVisuals #SS220 Tomato-Killer-Balance
   - type: Appearance
   - type: Produce
+<<<<<<< HEAD
     seedId: killerTomato
   #SS220 Old-Tomato-Killer-Balance begin
   - type: IgnoreKudzu
@@ -240,6 +244,9 @@
   - type: Puller
     needsHands: false
   #SS220 Old-Tomato-Killer-Balance end
+=======
+    plantId: KillerTomatoPlants
+>>>>>>> wizards/stable
   - type: PassiveDamage # Slight passive damage. 35 hp \ 5 min \ 60 sec = 0.08
     allowedStates:
     - Alive

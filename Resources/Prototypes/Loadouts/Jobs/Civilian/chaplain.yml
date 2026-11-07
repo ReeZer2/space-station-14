@@ -108,12 +108,25 @@
   equipment:
     outerClothing: ClothingOuterHoodieChaplain
 
+<<<<<<< HEAD
   #SS220-Clothes-Start
 - type: loadout
   id: HoodieChaplainWhite
   equipment:
     outerClothing: ClothingOuterHoodieChaplainWhite
   #SS220-Clothes-End
+=======
+# Shoes
+- type: loadout
+  id: BlackSandals
+  equipment:
+    shoes: ClothingShoesSandalsBlack
+
+- type: loadout
+  id: BrownSandals
+  equipment:
+    shoes: ClothingShoesSandalsBrown
+>>>>>>> wizards/stable
 
 # Bible/Holy Book
 - type: loadout
@@ -139,7 +152,7 @@
   storage:
     back:
     - BibleNanoTrasen
-    
+
 - type: loadout
   id: BibleNarsie
   storage:

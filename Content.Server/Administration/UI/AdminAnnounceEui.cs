@@ -1,6 +1,5 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
-using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.EUI;
@@ -10,11 +9,16 @@ using Content.Shared.Eui;
 
 namespace Content.Server.Administration.UI
 {
-    public sealed class AdminAnnounceEui : BaseEui
+    public sealed partial class AdminAnnounceEui : BaseEui
     {
+<<<<<<< HEAD
         [Dependency] private readonly IAdminLogManager _adminLogManager = default!; // SS220-add-eui-log
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
+=======
+        [Dependency] private IAdminManager _adminManager = default!;
+        [Dependency] private IChatManager _chatManager = default!;
+>>>>>>> wizards/stable
         private readonly ChatSystem _chatSystem;
 
         public AdminAnnounceEui()
@@ -52,7 +56,7 @@ namespace Content.Server.Administration.UI
                     switch (doAnnounce.AnnounceType)
                     {
                         case AdminAnnounceType.Server:
-                            _chatManager.DispatchServerAnnouncement(doAnnounce.Announcement);
+                            _chatManager.DispatchServerAnnouncement(doAnnounce.Announcement, sender: Player);
                             break;
                         // TODO: Per-station announcement support
                         case AdminAnnounceType.Station:

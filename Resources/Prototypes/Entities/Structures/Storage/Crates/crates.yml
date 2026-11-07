@@ -223,12 +223,13 @@
     sprite: Structures/Storage/Crates/surgery.rsi
 
 - type: entity
-  parent: CrateGeneric
+  parent: [ BaseCrate, StructureHealthContainerFlimsy ]
   id: CrateWeb
   name: web crate
   components:
   - type: Icon
     sprite: Structures/Storage/Crates/web.rsi
+    state: icon
   - type: Sprite
     offset: 0, 0 #SS220 Crate-tg-resprite
     sprite: Structures/Storage/Crates/web.rsi
@@ -243,25 +244,16 @@
   - type: Construction
     graph: WebStructures
     node: crate
+    containers:
+    - entity_storage
   - type: Damageable
-    damageModifierSet: Web
+    damageModifierSet: ThreadMod
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 20
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: WoodDestroy
@@ -285,6 +277,7 @@
   components:
   - type: Icon
     sprite: Structures/Storage/Crates/sec_gear.rsi
+    state: icon
   - type: Sprite
     sprite: Structures/Storage/Crates/sec_gear.rsi
   - type: AccessReader
@@ -391,6 +384,8 @@
     sprite: Structures/Storage/Crates/weapon.rsi
   - type: Sprite
     sprite: Structures/Storage/Crates/weapon.rsi
+  - type: Damageable
+    damageModifierSet: PlasteelStaticMod
   - type: AccessReader
     access: [["Armory"]]
 
@@ -420,6 +415,18 @@
 
 - type: entity
   parent: CrateBaseSecure
+  id: CrateEVASecure
+  name: EVA crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/command.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/command.rsi
+  - type: AccessReader
+    access: [["Command"], ["External"]]
+
+- type: entity
+  parent: CrateBaseSecure
   id: CrateSyndicateSecure
   name: secure syndicate crate
   description: A dark steel crate with red bands and a letter S embossed on the front.
@@ -432,7 +439,7 @@
     access: [["SyndicateAgent", "NuclearOperative"]]
 
 - type: entity
-  parent: CrateGeneric
+  parent: [ BaseCrate, StructureHealthContainerFlimsy ]
   id: CrateLivestock
   name: livestock crate
   components:
@@ -452,11 +459,13 @@
   - type: Icon
     sprite: Structures/Storage/Crates/livestock.rsi
     state: base
+  - type: Damageable
+    damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 15
+        damage: 20
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -466,8 +475,6 @@
           MaterialWoodPlank1:
             min: 1
             max: 4
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures
@@ -492,7 +499,7 @@
     price: 125
 
 - type: entity
-  parent: CrateGeneric
+  parent: [ BaseCrate, StructureHealthContainerFlimsy ]
   id: CrateRodentCage
   name: hamster cage
   components:
@@ -511,20 +518,14 @@
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: Icon
     sprite: Structures/Storage/Crates/cage.rsi
+    state: icon
+  - type: Damageable
+    damageModifierSet: PlasticMod
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 75
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalGlassBreak
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 15
+        damage: 20
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -534,13 +535,14 @@
           SheetPlastic:
             min: 1
             max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Physics
     bodyType: Dynamic
   - type: EntityStorage
     capacity: 1
     airtight: false
+    whitelist:
+      sizes:
+      - Tiny
   - type: Fixtures
     fixtures:
       fix1:
@@ -798,7 +800,7 @@
     state: crate_icon
 
 - type: entity
-  parent: CrateGeneric
+  parent: [ BaseCrate, StructureHealthContainerFlimsy ]
   id: CrateCoffin
   name: coffin
   description: A comfy coffin, excellent place for the vampires and corpses.
@@ -815,20 +817,13 @@
   - type: Icon
     sprite: Structures/Storage/Crates/coffin.rsi
     state: base
+  - type: Damageable
+    damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 75
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 15
+        damage: 20
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -838,8 +833,6 @@
           MaterialWoodPlank1:
             min: 1
             max: 4
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Construction
     graph: CrateCoffin
     node: cratecoffin
@@ -860,7 +853,7 @@
   #SS220-TweakHitbox end
 
 - type: entity
-  parent: CrateGeneric
+  parent: [ BaseCrate, StructureHealthContainer ]
   id: CrateWoodenGrave
   name: grave
   suffix: wooden
@@ -880,20 +873,13 @@
   - type: Icon
     sprite: Structures/Storage/Crates/wooden_grave.rsi
     state: base
+  - type: Damageable
+    damageModifierSet: RockMod
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 400
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 200 # discourage just beating the grave to break it open
+        damage: 100 # discourage just beating the grave to break it open
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -903,8 +889,6 @@
           MaterialWoodPlank1:
             min: 1
             max: 4
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Physics
     bodyType: Static
   - type: Grave
@@ -1036,7 +1020,7 @@
   suffix: Stealth
   components:
   - type: Stealth
-    hadOutline: true
+    shimmerFrequency: 0.05
   - type: StealthOnMove
     passiveVisibilityRate: -0.10
     movementVisibilityRate: 0.10

@@ -1,8 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
+<<<<<<< HEAD
 using System.Globalization;
 using Content.Client.UserInterface.Controls;
+=======
+>>>>>>> wizards/stable
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Guidebook.Richtext;
 

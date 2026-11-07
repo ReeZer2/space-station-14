@@ -38,6 +38,10 @@
       path: /Audio/Items/flashlight_on.ogg
     soundDeactivate:
       path: /Audio/Items/flashlight_off.ogg
+<<<<<<< HEAD
   - type: Tag #SS220-pr: FIX CLOTHING TAGS
     tags: #SS220-pr: FIX CLOTHING TAGS
     - WhitelistChameleon #SS220-pr: FIX CLOTHING TAGS
+=======
+  - type: NoiseProtection
+>>>>>>> wizards/stable

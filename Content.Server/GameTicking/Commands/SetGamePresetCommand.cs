@@ -1,18 +1,28 @@
+<<<<<<< HEAD
 using System.Linq;
+=======
+>>>>>>> wizards/stable
 using Content.Server.Administration;
-using Content.Server.GameTicking.Presets;
 using Content.Shared.Administration;
+<<<<<<< HEAD
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+=======
+using Content.Shared.GameTicking.Prototypes;
+>>>>>>> wizards/stable
 using Robust.Shared.Console;
 
 namespace Content.Server.GameTicking.Commands
 {
     [AdminCommand(AdminFlags.Round)]
-    public sealed class SetGamePresetCommand : IConsoleCommand
+    public sealed partial class SetGamePresetCommand : IConsoleCommand
     {
+<<<<<<< HEAD
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!; // SS220-add-logs
         [Dependency] private readonly IEntityManager _entity = default!;
+=======
+        [Dependency] private IEntityManager _entity = default!;
+>>>>>>> wizards/stable
 
         public string Command => "setgamepreset";
         public string Description => Loc.GetString("set-game-preset-command-description", ("command", Command));
@@ -26,7 +36,7 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            var ticker = _entity.System<GameTicker>();
+            var ticker = _entity.System<ServerGameTicker>();
 
             if (!ticker.TryFindGamePreset(args[0], out var preset))
             {

@@ -17,6 +17,7 @@
     # SS220-RoleTime end
     - !type:DepartmentTimeRequirement
       department: Security
+<<<<<<< HEAD
       time: 50h # SS220-RoleTime
     - !type:RoleTimeRequirement
       role: JobWarden
@@ -29,12 +30,19 @@
       species:
       - Felinid #SS220-jobbans end
   weight: 10
+=======
+      time: 10h
+>>>>>>> wizards/stable
   startingGear: HoSGear
   experienceDefinition: HeadOfSecurityRoleExperience # SS220-experience
   icon: "JobIconHeadOfSecurity"
   supervisors: job-supervisors-captain
+<<<<<<< HEAD
   canBeAntag: false
   radioBold: true
+=======
+  guides: [ Command ] # TODO: should have a more specific guidebook page instead of using the department itself
+>>>>>>> wizards/stable
   access:
   - HeadOfSecurity
   - Command
@@ -77,5 +85,6 @@
   job: HeadOfSecurity
   hasMindShield: true
   equipment:
+    head: ClothingHeadHatBeretHoS
     mask: ClothingMaskGasSecurity
     neck: ClothingNeckCloakHos

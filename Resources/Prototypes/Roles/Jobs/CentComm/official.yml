@@ -8,8 +8,11 @@
   experienceDefinition: CentralCommandOfficialExperience # SS220-experience
   icon: "JobIconNanotrasen"
   supervisors: job-supervisors-hos
+<<<<<<< HEAD
   canBeAntag: false
   radioBold: true
+=======
+>>>>>>> wizards/stable
   accessGroups:
   - AllAccess
   access:

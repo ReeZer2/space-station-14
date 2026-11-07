@@ -116,6 +116,7 @@
   - type: Wieldable
     unwieldOnUse: false
   - type: GunWieldBonus
+<<<<<<< HEAD
     #220 SG Angle Updates begin
     minAngle: -2
     maxAngle: -13
@@ -126,6 +127,16 @@
     maxAngle: 29
     shotsPerBurst: 6
     #220 SG Angle Updates end
+=======
+    minAngle: -19
+    maxAngle: -12
+  - type: Gun
+    minAngle: 21
+    maxAngle: 32
+    angleIncrease: 1.25
+    angleDecay: 20
+    shotsPerBurst: 5
+>>>>>>> wizards/stable
     availableModes:
     - Burst
     - FullAuto
@@ -202,6 +213,7 @@
     - type: Wieldable
       unwieldOnUse: false
     - type: GunWieldBonus
+<<<<<<< HEAD
       #220 SG Angle Updates begin
       minAngle: -2
       maxAngle: -13
@@ -212,6 +224,16 @@
       maxAngle: 29
       fireRate: 6.5
       #220 SG Angle Updates end
+=======
+      minAngle: -19
+      maxAngle: -14
+    - type: Gun
+      minAngle: 21
+      maxAngle: 32
+      angleIncrease: 1.5
+      angleDecay: 16
+      fireRate: 6
+>>>>>>> wizards/stable
       burstFireRate: 18
       soundGunshot:
         path: /Audio/SS220/Weapons/Guns/Gunshots/drozd_shot.ogg #SS220 drozd update
@@ -276,13 +298,19 @@
   - type: ChamberMagazineAmmoProvider
     boltClosed: null
   - type: Gun
+<<<<<<< HEAD
     #220 SG Angle Updates begin
     fireRate: 6.5
     minAngle: 17
     maxAngle: 27
     #220 SG Angle Updates end
+=======
+    fireRate: 5.5
+    minAngle: 1
+    maxAngle: 16
+>>>>>>> wizards/stable
     angleIncrease: 1.5
-    angleDecay: 6
+    angleDecay: 12
     selectedMode: FullAuto
     shotsPerBurst: 5
     burstCooldown: 0.2
@@ -333,6 +361,8 @@
   components:
   - type: Item
     size: Ginormous
+    shape:
+    - 0,0,4,3
     inhandVisuals:
       left:
         - sprite: Objects/Storage/Briefcases/briefcase_brown.rsi

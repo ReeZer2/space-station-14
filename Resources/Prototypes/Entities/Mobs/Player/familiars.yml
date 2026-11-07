@@ -97,6 +97,7 @@
   - type: MindExaminable
   - type: Familiar
   - type: Vocal
+<<<<<<< HEAD
     sounds:
       Male: Cerberus
       Female: Cerberus
@@ -107,3 +108,6 @@
     - id: Galactic
       canSpeak: false
   #SS220 Languages tweaks end
+=======
+    emoteSounds: Cerberus
+>>>>>>> wizards/stable

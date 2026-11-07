@@ -267,7 +267,8 @@
   abstract: true
   components:
   - type: Tag
-    tags: [] # ignore "WhitelistChameleon" tag
+    tags:
+    - Backpack # ignore "WhitelistChameleon" tag
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -275,7 +276,8 @@
   abstract: true
   components:
   - type: Tag
-    tags: [] # ignore "WhitelistChameleon" tag
+    tags:
+    - Backpack # ignore "WhitelistChameleon" tag
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
@@ -294,8 +296,9 @@
   id: ClothingBackpackDuffelSyndicateAmmoBundle
   abstract: true
   components:
-    - type: Tag
-      tags: [] # ignore "WhitelistChameleon" tag
+  - type: Tag
+    tags:
+    - Backpack # ignore "WhitelistChameleon" tag
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
@@ -314,14 +317,15 @@
   id: ClothingBackpackDuffelSyndicateMedicalBundle
   abstract: true
   components:
-    - type: Tag
-      tags: [] # ignore "WhitelistChameleon" tag
+  - type: Tag
+    tags:
+    - Backpack # ignore "WhitelistChameleon" tag
 
 - type: entity
-  parent: ClothingBackpackDuffel
+  parent: ClothingBackpackHoldingBase #Standardized Bluespace Bags
   id: ClothingBackpackDuffelHolding
-  name: duffelbag of holding
-  description: A duffelbag that opens into a localized pocket of bluespace.
+  name: duffel bag of holding
+  description: A duffel bag that opens into a localized pocket of bluespace.
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/holding.rsi
@@ -330,6 +334,7 @@
     - state: icon
     - state: icon-unlit
       shader: unshaded
+<<<<<<< HEAD
   - type: Item
     size: Ginormous
   - type: Storage
@@ -346,6 +351,11 @@
 
 - type: entity
   parent: [ ClothingBackpackDuffel]
+=======
+
+- type: entity
+  parent: [ ClothingBackpackDuffel, BaseCBURNContraband ]
+>>>>>>> wizards/stable
   id: ClothingBackpackDuffelCBURN
   name: CBURN duffel bag
   description: A duffel bag containing a variety of biological containment equipment.
@@ -356,8 +366,14 @@
     walkModifier: 1
     sprintModifier: 1
   - type: HeldSpeedModifier
+<<<<<<< HEAD
   #SS220 CBURN Explosition resistance fix start
   - type: ExplosionResistance
     damageCoefficient: 0
   #SS220 CBURN Explosition resistance fix end
 
+=======
+  - type: Tag
+    tags:
+    - Backpack # ignore "WhitelistChameleon" tag. Maybe make a unique CBURN duffel sprite?
+>>>>>>> wizards/stable

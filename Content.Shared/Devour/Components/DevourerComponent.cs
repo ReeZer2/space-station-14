@@ -57,13 +57,13 @@ public sealed partial class DevourerComponent : Component
     [DataField, AutoNetworkedField]
     public SoundSpecifier? SoundDevour = new SoundCollectionSpecifier("MetalSlam")
     {
-        Params = AudioParams.Default.WithVolume(-3f),
+        Params = AudioParams.Default.AddVolume(-3f),
     };
 
     [DataField, AutoNetworkedField]
     public SoundSpecifier? SoundDevourMob = new SoundPathSpecifier("/Audio/Effects/demon_consume.ogg")
     {
-        Params = AudioParams.Default.WithVolume(-3f),
+        Params = AudioParams.Default.AddVolume(-3f),
     };
     // SS220 dragon devour fix end
 

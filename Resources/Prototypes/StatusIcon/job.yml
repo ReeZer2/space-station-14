@@ -23,6 +23,24 @@
     state: ShaftMiner
   jobName: job-name-salvagespec
 
+# Civilian
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconPassenger
+  icon:
+    sprite: *icon-rsi
+    state: Passenger
+  jobName: job-name-passenger
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconVisitor
+  icon:
+    sprite: *icon-rsi
+    state: Visitor
+  jobName: job-name-visitor
+
 # Command
 
 - type: jobIcon
@@ -323,7 +341,15 @@
     state: Zookeeper
   jobName: job-name-zookeeper
 
-# Entertainer (like service, but not actually service)
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconTramDriver
+  icon:
+    sprite: *icon-rsi
+    state: TramDriver
+  jobName: job-name-tram-driver
+
+# Theatre (not exactly service workers, but not civilians either)
 
 - type: jobIcon
   parent: JobIcon
@@ -348,24 +374,6 @@
     sprite: *icon-rsi
     state: Musician
   jobName: job-name-musician
-
-# Passenger
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconPassenger
-  icon:
-    sprite: *icon-rsi
-    state: Passenger
-  jobName: job-name-passenger
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconVisitor
-  icon:
-    sprite: *icon-rsi
-    state: Visitor
-  jobName: job-name-visitor
 
 # Silicon
 
@@ -559,7 +567,6 @@
   icon:
     sprite: *icon-rsi
     state: Admin
-  allowSelection: false
 
 - type: jobIcon
   parent: JobIcon
@@ -567,7 +574,10 @@
   icon:
     sprite: *icon-rsi
     state: SeniorPhysician
+<<<<<<< HEAD
   # allowSelection: false //ss220 senior agent card fix
+=======
+>>>>>>> wizards/stable
 
 - type: jobIcon
   parent: JobIcon
@@ -575,7 +585,10 @@
   icon:
     sprite: *icon-rsi
     state: SeniorOfficer
+<<<<<<< HEAD
   # allowSelection: false //ss220 senior agent card fix
+=======
+>>>>>>> wizards/stable
 
 - type: jobIcon
   parent: JobIcon
@@ -583,7 +596,10 @@
   icon:
     sprite: *icon-rsi
     state: SeniorEngineer
+<<<<<<< HEAD
   # allowSelection: false //ss220 senior agent card fix
+=======
+>>>>>>> wizards/stable
 
 - type: jobIcon
   parent: JobIcon
@@ -591,6 +607,7 @@
   icon:
     sprite: *icon-rsi
     state: SeniorResearcher
+<<<<<<< HEAD
   # allowSelection: false //ss220 senior agent card fix
 
 - type: jobIcon
@@ -606,6 +623,8 @@
   icon:
     sprite: *icon-rsi #SS220-fix_job_icons_prototypes
     state: IAA
+=======
+>>>>>>> wizards/stable
 
 # Other
 
@@ -626,6 +645,7 @@
     state: Unknown
   jobName: job-name-unknown
   isCrewJob: false
+<<<<<<< HEAD
   allowSelection: false # SS220-remove-job-prototype-GhostRole-from-crew-monitoring-console
 
 #SS220 SeniorService-begin
@@ -636,3 +656,13 @@
     sprite: *icon-rsi
     state: SeniorService
 #SS220 SeniorService-end
+=======
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSus
+  icon:
+    sprite: *icon-rsi
+    state: Sus
+  jobName: job-name-sus
+>>>>>>> wizards/stable

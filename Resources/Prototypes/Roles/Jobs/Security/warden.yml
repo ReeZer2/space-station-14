@@ -6,17 +6,21 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Security
+<<<<<<< HEAD
       time: 30h # SS220-RoleTime
     - !type:SpeciesRequirement #SS220-jobbans begin
       inverted: true
       species:
       - Felinid #SS220-jobbans end
   weight: 5
+=======
+      time: 10h
+>>>>>>> wizards/stable
   startingGear: WardenGear
   experienceDefinition: WardenRoleExperience # SS220-experience
   icon: "JobIconWarden"
   supervisors: job-supervisors-hos
-  canBeAntag: false
+  guides: [ Security ] # TODO: should have a more specific guidebook page instead of using the department itself
   access:
   - Security
   - Brig

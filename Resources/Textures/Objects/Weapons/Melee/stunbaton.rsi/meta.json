@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "version": 1,
   "license": "CC-BY-NC-SA-3.0",
   "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/commit/1cdfb0230cc96d0ba751fa002d04f8aa2f25ad7d, stunbaton_off, stunbaton_on taken from goonstation at https://github.com/goonstation/goonstation/pull/7163/commits/5429349ac82b1cadc401f5b0f00dc868cbaed177, modified by Estkemran (Github) for SS220, christmasbaton by TTTomaTTT",
@@ -117,4 +118,104 @@
       ]
     }
   ]
+=======
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/commit/1cdfb0230cc96d0ba751fa002d04f8aa2f25ad7d, inhands by TiniestShark (Github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "stunbaton_off"
+        },
+        {
+            "name": "stunbaton_on",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "equipped-BELT",
+            "directions": 4
+        },
+        {
+            "name": "off-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "off-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "on-inhand-left",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "on-inhand-right",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        }
+    ]
+>>>>>>> wizards/stable
 }

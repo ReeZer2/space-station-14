@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "version": 1,
   "license": "CC-BY-SA-3.0",
   "copyright": "Taken from TauCetiClassic at commit https://github.com/TauCetiStation/TauCetiClassic/commit/f878e95210d81e1328b023feb96ec0d0b6113d8c",
@@ -487,4 +488,128 @@
       ]
     }
   ]
+=======
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "By AftrLite (GitHub). EMP Effects by marianolarre (GitHub).",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "cameracase"
+        },
+        {
+            "name": "camera_off",
+            "directions": 4
+        },
+        {
+            "name": "camera_assembly",
+            "directions": 4
+        },
+        {
+            "name": "camera",
+            "directions": 4,
+            "delays": [
+                [
+                    1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "camera_emp",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "camera_in_use",
+            "directions": 4,
+            "delays": [
+                [
+                    1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        }
+    ]
+>>>>>>> wizards/stable
 }

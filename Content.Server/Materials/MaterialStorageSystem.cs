@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Materials;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
@@ -20,8 +21,9 @@ namespace Content.Server.Materials;
 /// <summary>
 /// This handles <see cref="SharedMaterialStorageSystem"/>
 /// </summary>
-public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
+public sealed partial class MaterialStorageSystem : SharedMaterialStorageSystem
 {
+<<<<<<< HEAD
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
@@ -29,6 +31,13 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly StackSystem _stackSystem = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!; // SS220 Add access check for material eject
+=======
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private StackSystem _stackSystem = default!;
+>>>>>>> wizards/stable
 
     public override void Initialize()
     {
@@ -65,6 +74,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         if (!_actionBlocker.CanInteract(player, uid))
             return;
 
+<<<<<<< HEAD
         // SS220 Add access check for material eject begin
         if (TryComp<AccessReaderComponent>(uid, out var accessReader) &&
             !_accessReader.IsAllowed(player, uid, accessReader))
@@ -76,13 +86,16 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         // SS220 Add access check for material eject end
 
         if (!component.CanEjectStoredMaterials || !_prototypeManager.TryIndex<MaterialPrototype>(msg.Material, out var material))
+=======
+        if (!component.CanEjectStoredMaterials || !ProtoMan.TryIndex<MaterialPrototype>(msg.Material, out var material))
+>>>>>>> wizards/stable
             return;
 
         var volume = 0;
 
         if (material.StackEntity != null)
         {
-            if (!_prototypeManager.Index<EntityPrototype>(material.StackEntity).TryGetComponent<PhysicalCompositionComponent>(out var composition, EntityManager.ComponentFactory))
+            if (!ProtoMan.Index(material.StackEntity.Value).TryComp(out PhysicalCompositionComponent? composition, EntityManager.ComponentFactory))
                 return;
 
             var volumePerSheet = composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == msg.Material).Value;
@@ -128,7 +141,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
             return false;
         _audio.PlayPvs(storage.InsertingSound, receiver);
         _popup.PopupEntity(Loc.GetString("machine-insert-item",
-                ("user", user),
+                ("user", Identity.Entity(user, EntityManager)),
                 ("machine", receiver),
                 ("item", toInsert)),
             receiver);
@@ -143,62 +156,17 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         return true;
     }
 
-    /// <summary>
-    ///     Spawn an amount of a material in stack entities.
-    ///     Note the 'amount' is material dependent.
-    ///     1 biomass = 1 biomass in its stack,
-    ///     but 100 plasma = 1 sheet of plasma, etc.
-    /// </summary>
-    public List<EntityUid> SpawnMultipleFromMaterial(int amount, string material, EntityCoordinates coordinates)
-    {
-        return SpawnMultipleFromMaterial(amount, material, coordinates, out _);
-    }
-
-    /// <summary>
-    ///     Spawn an amount of a material in stack entities.
-    ///     Note the 'amount' is material dependent.
-    ///     1 biomass = 1 biomass in its stack,
-    ///     but 100 plasma = 1 sheet of plasma, etc.
-    /// </summary>
-    public List<EntityUid> SpawnMultipleFromMaterial(int amount, string material, EntityCoordinates coordinates, out int overflowMaterial)
-    {
-        overflowMaterial = 0;
-        if (!_prototypeManager.TryIndex<MaterialPrototype>(material, out var stackType))
-        {
-            Log.Error("Failed to index material prototype " + material);
-            return new List<EntityUid>();
-        }
-
-        return SpawnMultipleFromMaterial(amount, stackType, coordinates, out overflowMaterial);
-    }
-
-    /// <summary>
-    ///     Spawn an amount of a material in stack entities.
-    ///     Note the 'amount' is material dependent.
-    ///     1 biomass = 1 biomass in its stack,
-    ///     but 100 plasma = 1 sheet of plasma, etc.
-    /// </summary>
+    /// <inheritdoc/>
     [PublicAPI]
-    public List<EntityUid> SpawnMultipleFromMaterial(int amount, MaterialPrototype materialProto, EntityCoordinates coordinates)
-    {
-        return SpawnMultipleFromMaterial(amount, materialProto, coordinates, out _);
-    }
-
-    /// <summary>
-    ///     Spawn an amount of a material in stack entities.
-    ///     Note the 'amount' is material dependent.
-    ///     1 biomass = 1 biomass in its stack,
-    ///     but 100 plasma = 1 sheet of plasma, etc.
-    /// </summary>
-    public List<EntityUid> SpawnMultipleFromMaterial(int amount, MaterialPrototype materialProto, EntityCoordinates coordinates, out int overflowMaterial)
+    public override List<EntityUid> SpawnMultipleFromMaterial(int amount, MaterialPrototype materialProto, EntityCoordinates coordinates, out int overflowMaterial)
     {
         overflowMaterial = 0;
 
         if (amount <= 0 || materialProto.StackEntity == null)
             return new List<EntityUid>();
 
-        var entProto = _prototypeManager.Index<EntityPrototype>(materialProto.StackEntity);
-        if (!entProto.TryGetComponent<PhysicalCompositionComponent>(out var composition, EntityManager.ComponentFactory))
+        var entProto = ProtoMan.Index<EntityPrototype>(materialProto.StackEntity);
+        if (!entProto.TryComp<PhysicalCompositionComponent>(out var composition, EntityManager.ComponentFactory))
             return new List<EntityUid>();
 
         var materialPerStack = composition.MaterialComposition[materialProto.ID];
@@ -249,11 +217,13 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
     /// <param name="entity">The entity with storage to eject from.</param>
     /// <param name="coordinates">The position where to spawn the created sheets. If not given, they're spawned next to the entity.</param>
     /// <param name="component">The storage component on <paramref name="entity"/>. Resolved automatically if not given.</param>
+    /// <param name="mergeContacts">If true, spawned stacks will attempt to merge with existing stacks in the area.</param>
     /// <returns>The stack entities that were spawned.</returns>
     public List<EntityUid> EjectAllMaterial(
         EntityUid entity,
         EntityCoordinates? coordinates = null,
-        MaterialStorageComponent? component = null)
+        MaterialStorageComponent? component = null,
+        bool mergeContacts = false)
     {
         if (!Resolve(entity, ref component))
             return new List<EntityUid>();
@@ -265,6 +235,14 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         {
             var spawned = EjectMaterial(entity, material, null, coordinates, component);
             allSpawned.AddRange(spawned);
+        }
+
+        if (mergeContacts)
+        {
+            foreach (var stack in allSpawned)
+            {
+                _stackSystem.TryMergeToContacts(stack);
+            }
         }
 
         return allSpawned;

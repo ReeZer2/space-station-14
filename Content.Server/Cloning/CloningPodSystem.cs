@@ -1,7 +1,6 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Systems;
 using Content.Server.Cloning.Components;
-using Content.Server.DeviceLinking.Systems;
 using Content.Server.EUI;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Materials;
@@ -33,11 +32,13 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage.Systems;
+using Content.Shared.DeviceLinking.Systems;
 
 namespace Content.Server.Cloning;
 
-public sealed class CloningPodSystem : EntitySystem
+public sealed partial class CloningPodSystem : EntitySystem
 {
+<<<<<<< HEAD
     [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
     [Dependency] private readonly IPlayerManager _playerManager = null!;
     [Dependency] private readonly EuiManager _euiManager = null!;
@@ -60,6 +61,29 @@ public sealed class CloningPodSystem : EntitySystem
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly RoleSystem _role = default!; //SS220 Add antags playtime trackers
     [Dependency] private readonly DamageableSystem _damageable = default!;
+=======
+    [Dependency] private DeviceLinkSystem _signalSystem = default!;
+    [Dependency] private IPlayerManager _playerManager = null!;
+    [Dependency] private EuiManager _euiManager = null!;
+    [Dependency] private CloningConsoleSystem _cloningConsoleSystem = default!;
+    [Dependency] private ContainerSystem _containerSystem = default!;
+    [Dependency] private MobStateSystem _mobStateSystem = default!;
+    [Dependency] private PowerReceiverSystem _powerReceiverSystem = default!;
+    [Dependency] private IRobustRandom _robustRandom = default!;
+    [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
+    [Dependency] private SharedTransformSystem _transformSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private PuddleSystem _puddleSystem = default!;
+    [Dependency] private ChatSystem _chatSystem = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private IConfigurationManager _configManager = default!;
+    [Dependency] private MaterialStorageSystem _material = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private SharedMindSystem _mindSystem = default!;
+    [Dependency] private CloningSystem _cloning = default!;
+    [Dependency] private EmagSystem _emag = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+>>>>>>> wizards/stable
 
     public readonly Dictionary<MindComponent, EntityUid> ClonesWaitingForMind = new();
     public readonly ProtoId<CloningSettingsPrototype> SettingsId = "CloningPod";
@@ -73,7 +97,7 @@ public sealed class CloningPodSystem : EntitySystem
         SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
         SubscribeLocalEvent<BeingClonedComponent, MindAddedMessage>(HandleMindAdded);
         SubscribeLocalEvent<CloningPodComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<CloningPodComponent, PortDisconnectedEvent>(OnPortDisconnected);
+        SubscribeLocalEvent<CloningPodComponent, SinkPortDisconnectedEvent>(OnPortDisconnected);
         SubscribeLocalEvent<CloningPodComponent, AnchorStateChangedEvent>(OnAnchor);
         SubscribeLocalEvent<CloningPodComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<CloningPodComponent, GotEmaggedEvent>(OnEmagged);
@@ -114,9 +138,11 @@ public sealed class CloningPodSystem : EntitySystem
         }
         UpdateStatus(clonedComponent.Parent, CloningPodStatus.Cloning, cloningPodComponent);
     }
-    private void OnPortDisconnected(Entity<CloningPodComponent> ent, ref PortDisconnectedEvent args)
+
+    private void OnPortDisconnected(Entity<CloningPodComponent> ent, ref SinkPortDisconnectedEvent args)
     {
-        ent.Comp.ConnectedConsole = null;
+        if (ent.Comp.PodPort == args.Port)
+            ent.Comp.ConnectedConsole = null;
     }
 
     private void OnAnchor(Entity<CloningPodComponent> ent, ref AnchorStateChangedEvent args)

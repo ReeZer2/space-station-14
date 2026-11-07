@@ -1,8 +1,14 @@
 using Content.Server.Chat.Systems;
+<<<<<<< HEAD
 using Content.Server.Power.Components;
 using Content.Server.Speech;
 using Content.Shared.Speech;
+=======
+using Content.Server.SurveillanceCamera.Systems;
+>>>>>>> wizards/stable
 using Content.Shared.Chat;
+using Content.Shared.Speech;
+using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
@@ -11,12 +17,12 @@ namespace Content.Server.SurveillanceCamera;
 /// <summary>
 ///     This handles speech for surveillance camera monitors.
 /// </summary>
-public sealed class SurveillanceCameraSpeakerSystem : EntitySystem
+public sealed partial class SurveillanceCameraSpeakerSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly SpeechSoundSystem _speechSound = default!;
-    [Dependency] private readonly ChatSystem _chatSystem = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
+    [Dependency] private SpeechSoundSystem _speechSound = default!;
+    [Dependency] private ChatSystem _chatSystem = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

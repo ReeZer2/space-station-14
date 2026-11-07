@@ -1,0 +1,32 @@
+{
+  "version": 1,
+<<<<<<< HEAD:Resources/Textures/Objects/Materials/Shards/crystal.rsi/meta.json
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by malanisa (discord)",
+=======
+  "license": "CC-BY-SA-4.0",
+  "copyright": "by vladimir.s",
+>>>>>>> wizards/stable:Resources/Textures/Objects/Materials/Shards/crystal-shard.rsi/meta.json
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+<<<<<<< HEAD:Resources/Textures/Objects/Materials/Shards/crystal.rsi/meta.json
+      "name": "shard"
+=======
+      "name": "shard0"
+    },
+    {
+      "name": "shard1"
+    },
+    {
+      "name": "shard2"
+    },
+    {
+      "name": "shard3"
+>>>>>>> wizards/stable:Resources/Textures/Objects/Materials/Shards/crystal-shard.rsi/meta.json
+    }
+  ]
+}

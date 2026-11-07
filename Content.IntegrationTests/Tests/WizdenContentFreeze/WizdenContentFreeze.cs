@@ -24,8 +24,13 @@ public sealed class WizdenContentFreeze : GameTest
 
         var protoMan = server.ProtoMan;
 
+<<<<<<< HEAD
         var recipesCount = protoMan.Count<FoodRecipePrototype>();
         var recipesLimit = recipesCount; // SS220-we-dont-really-care... maybe...
+=======
+        var recipesCount = protoMan.Count<MicrowaveMealRecipePrototype>();
+        var recipesLimit = 218;
+>>>>>>> wizards/stable
 
         if (recipesCount > recipesLimit)
         {

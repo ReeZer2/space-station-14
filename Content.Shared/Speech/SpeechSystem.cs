@@ -2,7 +2,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Speech
 {
-    public sealed class SpeechSystem : EntitySystem
+    public sealed partial class SpeechSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 

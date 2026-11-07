@@ -20,6 +20,7 @@ namespace Content.Shared.Implants;
 
 public abstract partial class SharedSubdermalImplantSystem : EntitySystem
 {
+<<<<<<< HEAD
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly INetManager _net = default!;
@@ -27,6 +28,12 @@ public abstract partial class SharedSubdermalImplantSystem : EntitySystem
     [Dependency] private readonly TagSystem _tag = default!; // SS220-some-tag...
 
     private static readonly ProtoId<TagPrototype> ThermalImplantTag = "ThermalImplant";
+=======
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private IGameTiming _timing = default!;
+>>>>>>> wizards/stable
 
     public override void Initialize()
     {
@@ -190,7 +197,7 @@ public abstract partial class SharedSubdermalImplantSystem : EntitySystem
             return;
 
         _container.Remove(implant, target.Comp.ImplantContainer);
-        PredictedQueueDel(implant);
+        QueueDel(implant);
     }
 
     /// <summary>

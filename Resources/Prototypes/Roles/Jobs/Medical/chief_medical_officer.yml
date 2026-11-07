@@ -8,6 +8,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
+<<<<<<< HEAD
       time: 50h # SS220-RoleTime
     - !type:RoleTimeRequirement
       role: JobChemist
@@ -20,11 +21,18 @@
       species:
       - Felinid #SS220-jobbans end
   weight: 10
+=======
+      time: 10h
+>>>>>>> wizards/stable
   startingGear: CMOGear
   experienceDefinition: ChiefMedicalOfficerRoleExperience # SS220-experience
   icon: "JobIconChiefMedicalOfficer"
   supervisors: job-supervisors-captain
+<<<<<<< HEAD
   radioBold: true
+=======
+  guides: [ Command ] # TODO: should have a more specific guidebook page instead of using the department itself
+>>>>>>> wizards/stable
   access:
   - Medical
   - Command

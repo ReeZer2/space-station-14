@@ -64,9 +64,10 @@
 - file: ["amber.yml"]
   authors: Southbridge, Flipsie27
 
-  - files: ["snowball.yml"]
+- files: ["snowball.yml"]
   authors: Spacemann
 
+<<<<<<< HEAD
 # ss220-maps
 
 - files: ["frankenstein.yml"]
@@ -105,3 +106,7 @@
 - files: ["stargate.yml"]
   authors: Ed, Arcanis, Jojo Cat, Jeb, Zarxis, Xomak404, NikaVich, Abiergo, Adammatic, SVEDETEL, PandionSM, Shiva_Meresh, VoidCat, darkzist, misyk0, sharkysan
 
+=======
+- files: ["sushi.yml"]
+  authors: SuperDicq, Codebreak
+>>>>>>> wizards/stable

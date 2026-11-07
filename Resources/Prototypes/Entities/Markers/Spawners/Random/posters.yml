@@ -127,12 +127,17 @@
     - id: PosterLegitTyrone
     - id: PosterLegitHelio
     - id: PosterLegitBotanyFear
+<<<<<<< HEAD
     #SS220-JRPosters begin
     - id: PosterJRSaviorsOfTheWorld
     - id: PosterJRAnnualReport
     - id: PosterJRSpaceJunk
     - id: PosterJRCarpLivesImportant
     #SS220-JRPosters end
+=======
+    - id: PosterLegitRaptor
+    - id: PosterLegitVulture
+>>>>>>> wizards/stable
 
 - type: entity
   parent: MarkerBase

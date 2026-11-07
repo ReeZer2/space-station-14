@@ -76,5 +76,14 @@
   - /Audio/Voice/Zombie/zombie-2.ogg
   - /Audio/Voice/Zombie/zombie-3.ogg
   - /Audio/Voice/Vox/shriek1.ogg
+<<<<<<< HEAD
   - /Audio/SS220/DarkReaper/jnec_scrm.ogg #ss220 dark reaper sounds add
   - /Audio/SS220/DarkReaper/jnec_eat.ogg  #ss220 dark reaper sounds add
+=======
+  - /Audio/Effects/Changeling/devour_consume.ogg
+  - /Audio/Effects/Changeling/devour_windup.ogg
+  - /Audio/Effects/Changeling/changeling_transform.ogg
+  - /Audio/Effects/gib1.ogg
+  - /Audio/Effects/gib2.ogg
+  - /Audio/Effects/gib3.ogg
+>>>>>>> wizards/stable

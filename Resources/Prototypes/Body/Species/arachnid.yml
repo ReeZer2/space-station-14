@@ -103,6 +103,7 @@
     productionLength: 2
     entityProduced: MaterialWebSilk1
     hungerCost: 4 # Should total to 25 total silk on full hunger
+    minHungerThreshold: Peckish
   - type: Tag
     tags:
     - CanPilot
@@ -122,7 +123,13 @@
       - !type:SpawnEntityInInventory
         slot: head
         entity: WaterDropletHat
-    - reagents: [Water, SpaceCleaner]
+    - reagents: [ Holywater ]
+      methods: [ Touch ]
+      effects:
+      - !type:SpawnEntityInInventory
+        slot: head
+        entity: HolywaterDropletHat
+    - reagents: [ Water, Holywater, SpaceCleaner ]
       methods: [Touch]
       effects:
       - !type:WashCreamPie
@@ -130,7 +137,7 @@
     bloodReferenceSolution:
       reagents:
       - ReagentId: CopperBlood
-        Quantity: 300
+        Quantity: 600
   - type: MeleeWeapon
     animation: WeaponArcBite
     soundHit:
@@ -151,10 +158,7 @@
     speechSounds: Arachnid
     allowedEmotes: ['Click', 'Chitter', 'Hiss'] #ss-220-emote-fix
   - type: Vocal
-    sounds:
-      Male: UnisexArachnid
-      Female: UnisexArachnid
-      Unsexed: UnisexArachnid
+    emoteSounds: UnisexArachnid
   - type: TypingIndicator
     proto: spider
   # SS220-Add-Languages begin
@@ -172,7 +176,7 @@
       state: creampie_arachnid
 
 - type: entity
-  parent: OrganBase
+  parent: OrganBaseOrganic
   id: OrganArachnid
   abstract: true
   suffix: Arachnid
@@ -258,6 +262,10 @@
 - type: entity
   parent: [ OrganArachnidVisual, OrganBaseEyes, OrganArachnidInternal ]
   id: OrganArachnidEyes
+  components:
+  - type: Appearance
+  - type: EyeBlinking
+    eyelidsSprite: /Textures/Mobs/Species/Arachnid/parts.rsi
 
 - type: entity
   parent: [ OrganBaseTongue, OrganArachnidInternal ]

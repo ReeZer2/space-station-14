@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
@@ -23,7 +24,11 @@ using System.Runtime.InteropServices;
 
 namespace Content.Server.Physics.Controllers;
 
+<<<<<<< HEAD
 public sealed partial class MoverController : SharedMoverController // SS220-add-partial
+=======
+public sealed partial class MoverController : SharedMoverController
+>>>>>>> wizards/stable
 {
     [Dependency] private TransformSystem _transform = default!; // SS220-add-local-rotation-setter
     [Dependency] private IConfigurationManager _configManager = default!; // SS220-add-mob-update
@@ -33,13 +38,13 @@ public sealed partial class MoverController : SharedMoverController // SS220-add
         "physics_active_mover_count",
         "Amount of ActiveInputMovers being processed by MoverController");
 
-    [Dependency] private readonly ThrusterSystem _thruster = default!;
+    [Dependency] private ThrusterSystem _thruster = default!;
+
+    [Dependency] private EntityQuery<ActiveInputMoverComponent> _activeQuery = default!;
+    [Dependency] private EntityQuery<DroneConsoleComponent> _droneQuery = default!;
+    [Dependency] private EntityQuery<ShuttleComponent> _shuttleQuery = default!;
 
     private Dictionary<EntityUid, (ShuttleComponent, List<(EntityUid, PilotComponent, InputMoverComponent, TransformComponent)>)> _shuttlePilots = new();
-
-    private EntityQuery<ActiveInputMoverComponent> _activeQuery;
-    private EntityQuery<DroneConsoleComponent> _droneQuery;
-    private EntityQuery<ShuttleComponent> _shuttleQuery;
 
     // Not needed for persistence; just used to save an alloc
     private readonly HashSet<EntityUid> _seenMovers = [];
@@ -60,6 +65,7 @@ public sealed partial class MoverController : SharedMoverController // SS220-add
         SubscribeLocalEvent<RelayInputMoverComponent, PlayerDetachedEvent>(OnRelayPlayerDetached);
         SubscribeLocalEvent<InputMoverComponent, PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<InputMoverComponent, PlayerDetachedEvent>(OnPlayerDetached);
+<<<<<<< HEAD
 
         _activeQuery = GetEntityQuery<ActiveInputMoverComponent>();
         _droneQuery = GetEntityQuery<DroneConsoleComponent>();
@@ -67,6 +73,8 @@ public sealed partial class MoverController : SharedMoverController // SS220-add
 
         _configManager.OnValueChanged(CCVars220.ParallelMoverUpdate, x => _useParallelMobMover = x, true); // SS220-add-parallel-mover-update
         _configManager.OnValueChanged(CCVars220.ParallelMoverThreads, x => _parallelThreadCount = Math.Max(1, x), true); // SS220-add-parallel-mover-update
+=======
+>>>>>>> wizards/stable
     }
 
     private void OnEntityPaused(Entity<ActiveInputMoverComponent> ent, ref EntityPausedEvent args)
@@ -632,12 +640,12 @@ public sealed partial class MoverController : SharedMoverController // SS220-add
                     if (!torque.Equals(0f))
                     {
                         PhysicsSystem.ApplyTorque(shuttleUid, torque, body: body);
-                        _thruster.SetAngularThrust(shuttle, true);
+                        _thruster.SetAngularThrustVisualState(shuttle, true);
                     }
                 }
                 else
                 {
-                    _thruster.SetAngularThrust(shuttle, false);
+                    _thruster.SetAngularThrustVisualState(shuttle, false);
                 }
             }
 
@@ -739,7 +747,7 @@ public sealed partial class MoverController : SharedMoverController // SS220-add
                 PhysicsSystem.SetSleepingAllowed(shuttleUid, body, true);
 
                 if (brakeInput <= 0f)
-                    _thruster.SetAngularThrust(shuttle, false);
+                    _thruster.SetAngularThrustVisualState(shuttle, false);
             }
             else if (!cruiseQuery.HasComp(shuttleUid)) // SS220 Cruise-Control
             {
@@ -757,7 +765,7 @@ public sealed partial class MoverController : SharedMoverController // SS220-add
                 if (!torque.Equals(0f))
                 {
                     PhysicsSystem.ApplyTorque(shuttleUid, torque, body: body);
-                    _thruster.SetAngularThrust(shuttle, true);
+                    _thruster.SetAngularThrustVisualState(shuttle, true);
                 }
             }
         }

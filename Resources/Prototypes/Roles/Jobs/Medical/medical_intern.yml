@@ -1,4 +1,4 @@
-﻿- type: job
+- type: job
   id: MedicalIntern
   name: job-name-intern
   description: job-description-intern
@@ -16,7 +16,11 @@
   experienceDefinition: MedicalInternRoleExperience # SS220-experience
   icon: "JobIconMedicalIntern"
   supervisors: job-supervisors-medicine
+<<<<<<< HEAD
   canBeAntag: true
+=======
+  guides: [ Medical ] # TODO: should have a more specific guidebook page instead of using the department itself
+>>>>>>> wizards/stable
   access:
   - Medical
   - Maintenance

@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 using Content.Shared.Buckle;
+=======
+>>>>>>> wizards/stable
 using Content.Shared.Buckle.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
@@ -7,11 +10,16 @@ using Content.Shared.Throwing;
 
 namespace Content.Shared.Traits.Assorted;
 
-public sealed class LegsParalyzedSystem : EntitySystem
+public sealed partial class LegsParalyzedSystem : EntitySystem
 {
+<<<<<<< HEAD
     [Dependency] private readonly SharedBuckleSystem _buckle = default!; // SS220-Mindslave-disfunction
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
     [Dependency] private readonly StandingStateSystem _standingSystem = default!;
+=======
+    [Dependency] private MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
+    [Dependency] private StandingStateSystem _standingSystem = default!;
+>>>>>>> wizards/stable
 
     public override void Initialize()
     {

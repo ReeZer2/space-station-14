@@ -1,4 +1,4 @@
-﻿using Content.Shared.Damage;
+using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Item.ItemToggle.Components;
 using Robust.Shared.Audio;
@@ -69,6 +69,7 @@ public sealed partial class DefibrillatorComponent : Component
     public bool AllowDoAfterMovement = true;
 
     /// <summary>
+<<<<<<< HEAD
     /// Can the defibrilator be used on mobs in critical mobstate?
     /// </summary>
     [DataField, AutoNetworkedField]
@@ -83,6 +84,8 @@ public sealed partial class DefibrillatorComponent : Component
     //SS220 LimitationRevive - end
 
     /// <summary>
+=======
+>>>>>>> wizards/stable
     /// The sound to play when someone is zapped.
     /// </summary>
     [DataField]

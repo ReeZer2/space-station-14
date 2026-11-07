@@ -25,6 +25,7 @@
   - DeviceDesynchronizer
   - ThermalVisorRND # SS220 Thermals
   - ClothingBackpackHarmpack
+  - TeleporterChipBlank
 
 - type: latheRecipePack
   id: ScienceClothing
@@ -85,6 +86,8 @@
   - APECircuitboard
   - ArtifactAnalyzerMachineCircuitboard
   - ArtifactCrusherMachineCircuitboard
+  - StationTeleportersControlCircuitboard
+  - StationTeleporterMachineCircuitboard
 
 - type: latheRecipePack
   id: CameraBoards

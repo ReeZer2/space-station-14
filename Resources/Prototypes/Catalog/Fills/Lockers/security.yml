@@ -28,7 +28,10 @@
     children:
     - id: FlashlightSeclite
     - id: WeaponDisabler
+<<<<<<< HEAD
     # - id: WeaponTase #SS220 No tasers
+=======
+>>>>>>> wizards/stable
     - id: ClothingBeltSecurityFilled
     - id: Flash
     - id: BodySecurityCamera #SS220-Bodycam
@@ -79,7 +82,10 @@
       # prob: 0.8 #SS220-old-bug-save
     - id: BodySecurityCamera #SS220-Bodycam
     - id: WeaponDisabler
+<<<<<<< HEAD
     # - id: WeaponTase #SS220 No tasers
+=======
+>>>>>>> wizards/stable
     - id: ClothingUniformJumpsuitSecGrey
       prob: 0.3
     - id: ClothingHeadHelmetBasic
@@ -119,6 +125,7 @@
   id: FillLockerBrigmedic
   table: !type:AllSelector
     children:
+<<<<<<< HEAD
     # - id: ClothingEyesGlassesSecurity #SS220-brig-medic
     - id: ClothingEyesHudMedical #ss220-brig-medic
     # - id: WeaponDisabler
@@ -127,6 +134,10 @@
     #  amount: 2
     # SS220 No tasers end
     # SS220 Return trackers for brigmed Begin
+=======
+    - id: ClothingEyesGlassesSecurity
+    - id: WeaponDisabler
+>>>>>>> wizards/stable
     - id: TrackingImplanter
       amount: 2
     - id: HandHeldImplantMedicalScanner # SS220-surgery-scanner

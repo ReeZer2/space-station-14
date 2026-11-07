@@ -5,7 +5,8 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: StealTarget
-    stealGroup: ClothingEyesHuds
+    stealGroup:
+    - ClothingEyesHuds
 
 - type: entity
   id: ShowSecurityIcons
@@ -105,6 +106,7 @@
   - type: Clothing
     slots: [EYES, HEAD] # SS220-glasses-on-forehead
     sprite: Clothing/Eyes/Hud/beergoggles.rsi
+<<<<<<< HEAD
     # SS220-glasses-on-forehead-begin
     clothingVisuals:
       head:
@@ -119,6 +121,11 @@
     # SS220-glasses-on-forehead-end
 
   - type: ShowThirstIcons
+=======
+  - type: ShowSatiationIcons
+    shownTypes:
+    - Thirst
+>>>>>>> wizards/stable
   - type: SolutionScanner
   - type: Tag
     tags:
@@ -126,8 +133,8 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingEyesHudBase
-  id: ClothingEyesHudFriedOnion
+  parent: [SolutionFood, SolutionSmall, ClothingEyesHudBase]
+  id: ClothingEyesHudFriedOnion # It's been too long since I've had good onion rings...
   name: fried onion goggles
   description: Filler
   components:
@@ -135,19 +142,19 @@
     sprite: Clothing/Eyes/Hud/friedonion.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/friedonion.rsi
-  - type: ShowHungerIcons
+  - type: ShowSatiationIcons
+    shownTypes:
+    - Hunger
   - type: Edible
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 3
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 30
   - type: FlavorProfile
     flavors:
       - onion
-      - greasey
+      - oily
 
 - type: entity
   parent: ClothingEyesHudBase
@@ -159,8 +166,10 @@
     sprite: Clothing/Eyes/Hud/onionbeer.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/onionbeer.rsi
-  - type: ShowHungerIcons
-  - type: ShowThirstIcons
+  - type: ShowSatiationIcons
+    shownTypes:
+    - Hunger
+    - Thirst
 
 - type: entity
   parent: [ClothingEyesHudBase, ShowMedicalIcons]
@@ -172,7 +181,9 @@
     sprite: Clothing/Eyes/Hud/medonion.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/medonion.rsi
-  - type: ShowHungerIcons
+  - type: ShowSatiationIcons
+    shownTypes:
+    - Hunger
 
 - type: entity
   parent: [ClothingEyesHudBase, ShowMedicalIcons]
@@ -184,8 +195,10 @@
     sprite: Clothing/Eyes/Hud/medonionbeer.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/medonionbeer.rsi
-  - type: ShowHungerIcons
-  - type: ShowThirstIcons
+  - type: ShowSatiationIcons
+    shownTypes:
+    - Hunger
+    - Thirst
 
 - type: entity
   parent: [ClothingEyesHudBase, ShowSecurityIcons, ShowMedicalIcons, BaseSecurityCommandContraband]
@@ -231,8 +244,10 @@
     damageContainers:
     - Biological
     - Inorganic
-  - type: ShowHungerIcons
-  - type: ShowThirstIcons
+  - type: ShowSatiationIcons
+    shownTypes:
+    - Hunger
+    - Thirst
   - type: ShowSyndicateIcons
 
 - type: entity
@@ -319,7 +334,8 @@
   suffix: Syndicate
   components:
   - type: StealTarget
-    stealGroup: ClothingEyesHuds
+    stealGroup:
+    - ClothingEyesHuds
 
 - type: entity
   parent: [ClothingEyesHudMedical, ClothingHeadEyeBaseFlippable]

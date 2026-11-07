@@ -154,11 +154,15 @@
     speechVerb: Robotic
     speechSounds: Borg
   - type: Vocal
-    sounds:
-      Unsexed: UnisexSilicon
+    emoteSounds: UnisexSilicon
     wilhelmProbability: 0
   - type: DamagedSiliconAccent
+<<<<<<< HEAD
   # - type: UnblockableSpeech #ss220 Borg update
+=======
+    damageAtMaxCorruption: 300
+  - type: UnblockableSpeech
+>>>>>>> wizards/stable
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepBorg
@@ -181,7 +185,9 @@
     # ss220 prevent sound spam from ghost on borg end
   - type: LockedWiresPanel
   - type: Damageable
+  - type: Injurable
     damageContainer: Silicon
+<<<<<<< HEAD
     damageModifierSet: Silicon #SS220 Add Silicon Resistance Begin
   - type: ExplosionResistance
     damageCoefficient: 0.7 #SS220 Add Silicon Resistance End
@@ -210,6 +216,8 @@
         - cell_slot
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+=======
+>>>>>>> wizards/stable
   - type: HandheldLight
     toggleOnInteract: false
     wattage: 0.2
@@ -238,7 +246,7 @@
       isLooped: true
   - type: PointLight
     enabled: false
-    mask: /Textures/Effects/LightMasks/cone.png
+    lightMask: ConeSingle
     autoRot: true
     radius: 6 #ss220 Borg update
     netsync: false
@@ -301,7 +309,36 @@
   id: BaseBorgChassis
   components:
   - type: IonStormTarget
+<<<<<<< HEAD
   - type: UnblockableSpeech #ss220 Borg update
+=======
+  - type: Destructible
+    generateOverkillThreshold: false
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Machines/warning_buzzer.ogg
+          params:
+            volume: 5
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:EmptyContainersBehaviour
+        containers:
+        - borg_brain
+        - borg_module
+        - cell_slot
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+>>>>>>> wizards/stable
 
 - type: entity
   abstract: true
@@ -419,8 +456,7 @@
     allowedEmotes:
     - Laugh
   - type: Vocal
-    sounds:
-      Unsexed: UnisexSiliconSyndicate
+    emoteSounds: UnisexSiliconSyndicate
   - type: PointLight
     color: "#dd200b"
   #SS220 Add Silicon Resistance Begin
@@ -521,8 +557,7 @@
     allowedEmotes:
     - Laugh
   - type: Vocal
-    sounds:
-      Unsexed: UnisexSiliconSyndicate
+    emoteSounds: UnisexSiliconSyndicate
   - type: PointLight
     color: "#dd200b"
   - type: BypassLock
@@ -579,8 +614,7 @@
     allowedEmotes:
     - Laugh
   - type: Vocal
-    sounds:
-      Unsexed: UnisexSiliconXenoborg
+    emoteSounds: UnisexSiliconXenoborg
     wilhelmProbability: 0
   - type: DamagedSiliconAccent
   - type: UnblockableSpeech
@@ -599,6 +633,34 @@
   - type: NpcFactionMember
     factions:
     - Xenoborg
+  - type: PointLight
+    color: "#3010ff"
+    energy: 7
+  - type: GuideHelp
+    guides:
+    - Cyborgs
+    - Robotics
+    - Xenoborgs
+  - type: Access
+    tags:
+    - Xenoborg
+  - type: AccessReader
+    access: [["Xenoborg"]]
+  - type: ShowJobIcons # not sure if it is needed
+  - type: ShowCrewIcons
+  - type: InteractionPopup
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: Xenoborg
+  - type: BypassLock
+    bypassDelay: 15 # We don't want people to easily be able to remove xenoborg brains.
+  - type: EmpResistance
+    strengthMultiplier: 0
+
+- type: entity
+  abstract: true
+  id: BaseXenoborgDestructible
+  components:
   - type: Destructible
     thresholds:
     - trigger:
@@ -629,24 +691,3 @@
         - cell_slot
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: PointLight
-    color: "#3010ff"
-    energy: 7
-  - type: GuideHelp
-    guides:
-    - Cyborgs
-    - Robotics
-    - Xenoborgs
-  - type: Access
-    tags:
-    - Xenoborg
-  - type: AccessReader
-    access: [["Xenoborg"]]
-  - type: ShowJobIcons # not sure if it is needed
-  - type: ShowCrewIcons
-  - type: InteractionPopup
-    interactSuccessSound:
-      path: /Audio/Ambience/Objects/periodic_beep.ogg
-  - type: Xenoborg
-  - type: BypassLock
-    bypassDelay: 15 # We don't want people to easily be able to remove xenoborg brains.

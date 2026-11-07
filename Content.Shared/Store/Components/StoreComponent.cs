@@ -11,6 +11,7 @@ namespace Content.Shared.Store.Components;
 /// through the ui. The currency, listings, and categories are defined in yaml.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class StoreComponent : Component
 {
     [DataField]
@@ -28,13 +29,13 @@ public sealed partial class StoreComponent : Component
     /// The string represents the ID of te currency prototype, where the
     /// float is that amount.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> Balance = new();
 
     /// <summary>
     /// The list of currencies that can be inserted into this store.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public HashSet<ProtoId<CurrencyPrototype>> CurrencyWhitelist = new();
 
     /// <summary>
@@ -94,6 +95,7 @@ public sealed partial class StoreComponent : Component
     [DataField]
     public EntityUid? StartingMap;
 
+<<<<<<< HEAD
     //SS220-insert-currency-doafter begin
     /// <summary>
     /// How much time needed for inserting currency.
@@ -106,6 +108,15 @@ public sealed partial class StoreComponent : Component
     [DataField]
     public bool UseDynamicPrices = false;
     // ss220 dynamics
+=======
+    /// <summary>
+    /// Whether the UI added to the store should require input validation.
+    /// Does nothing if the store UI is added seperately via <see cref="UserInterfaceComponent"/>
+    /// </summary>
+    [DataField]
+    public bool InputValidation = true;
+
+>>>>>>> wizards/stable
     #region audio
     /// <summary>
     /// The sound played to the buyer when a purchase is succesfully made.

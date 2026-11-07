@@ -1,7 +1,7 @@
 - type: entity
-  id: BaseWeaponBattery
-  parent: BaseItem
   abstract: true
+  parent: BaseItem
+  id: BaseWeaponBatteryNoAmmoCounter
   components:
   - type: EmitSoundOnLand
     sound:
@@ -17,8 +17,11 @@
     slots:
     - Back
     - suitStorage
+<<<<<<< HEAD
     - Belt
   - type: AmmoCounter
+=======
+>>>>>>> wizards/stable
   - type: Gun
     fireRate: 2
     projectileSpeed: 25 # SS220 Bullet Speed
@@ -40,6 +43,13 @@
     sound:
       path: /Audio/SS220/Items/Weapons/gun_drop.ogg
   # SS220-place-and-pickup-sounds-2 end
+
+- type: entity
+  abstract: true
+  parent: BaseWeaponBatteryNoAmmoCounter
+  id: BaseWeaponBattery
+  components:
+  - type: AmmoCounter
 
 - type: entity
   parent: [BaseWeaponBattery, BaseGunWieldable]
@@ -132,9 +142,9 @@
   # SS220-place-and-pickup-sounds-2 end
 
 - type: entity
-  id: BaseWeaponBatterySmall
-  parent: BaseWeaponBattery
   abstract: true
+  parent: BaseWeaponBatteryNoAmmoCounter
+  id: BaseWeaponBatterySmallNoAmmoCounter
   components:
   - type: Item
     size: Small
@@ -154,6 +164,13 @@
     slots:
     - Belt
     - suitStorage
+
+- type: entity
+  abstract: true
+  parent: BaseWeaponBatterySmallNoAmmoCounter
+  id: BaseWeaponBatterySmall
+  components:
+  - type: AmmoCounter
 
 - type: entity
   id: BaseWeaponPowerCellSmall
@@ -239,31 +256,61 @@
     - LaserWeapon
 
 - type: entity
+  abstract: true
+  parent: BaseMinorContraband
+  id: WeaponMakeshiftLaserConstructionBase
+  components:
+  - type: Construction
+    graph: MakeshiftLaserGraph
+    containers:
+    - cell_slot
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+    storedOffset: 0,-4
+
+- type: entity
+  parent: [WeaponMakeshiftLaserConstructionBase, BaseWeaponPowerCell]
+  id: WeaponMakeshiftLaserNoCell
+  categories: [ HideSpawnMenu ]
   name: makeshift laser pistol
-  parent: [BaseWeaponBatterySmall, BaseMinorContraband]
-  id: WeaponMakeshiftLaser
+  suffix: No Cell
   description: Better pray it won't burn your hands off.
   components:
   - type: Sprite
+<<<<<<< HEAD
     sprite: SS220/Objects/Weapons/Guns/Battery/makeshift.rsi #SS220 resprite
+=======
+>>>>>>> wizards/stable
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Item
-    storedOffset: 0,-4
   - type: MagazineVisuals
     magState: mag
     steps: 5
     zeroVisible: false
   - type: Appearance
   - type: Clothing
+<<<<<<< HEAD
     sprite: SS220/Objects/Weapons/Guns/Battery/makeshift.rsi #SS220 resprite
+=======
+    sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
+    quickEquip: false
+    slots:
+    - Belt
+    - suitStorage
+>>>>>>> wizards/stable
   - type: BatteryAmmoProvider
-    proto: RedLaser
+    proto: RedLaserMakeshift
     fireCost: 62.5
+<<<<<<< HEAD
   - type: Battery
     maxCharge: 500
     startingCharge: 500
@@ -272,10 +319,42 @@
     graph: WeaponMakeshiftLaserGraph
     node: pistol
 #ss220 handmade gun buff end
+=======
+  - type: PowerCellSlot
+    fitsInCharger: false
+>>>>>>> wizards/stable
   - type: Tag
     tags:
     - Sidearm
     - LaserWeapon
+  - type: Construction
+    node: mslaser
+
+- type: entity # for salv loot & co
+  parent: WeaponMakeshiftLaserNoCell
+  id: WeaponMakeshiftLaser
+  suffix: Medium Cell
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        startingItem: PowerCellMedium
+        locked: true
+        whitelist:
+          tags:
+          - PowerCell
+
+- type: entity
+  parent: [BaseItem, WeaponMakeshiftLaserConstructionBase]
+  id: WeaponMakeshiftLaserFrame
+  name: makeshift laser pistol frame
+  description: Only needs a bit more screwing and a doctorate in practical bluespace technology.
+  components:
+  - type: Sprite
+    state: frame
+  - type: Construction
+    node: mslaserframe
+    defaultTarget: mslaser
 
 - type: entity
   name: tesla gun
@@ -331,9 +410,9 @@
 
 - type: entity
   name: pulse pistol
-  parent: [BaseWeaponBatterySmall, BaseCentcommContraband]
+  parent: [BaseWeaponBatterySmall, BaseDeathSquadContraband]
   id: WeaponPulsePistol
-  description: A state of the art energy pistol favoured as a sidearm by the NT operatives.
+  description: A state-of-the-art energy pistol favoured as a sidearm by elite Nanotrasen operatives.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
@@ -371,9 +450,13 @@
 
 - type: entity
   name: pulse carbine
+<<<<<<< HEAD
   parent: [BaseWeaponBattery, BaseGunWieldable]
+=======
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseDeathSquadContraband]
+>>>>>>> wizards/stable
   id: WeaponPulseCarbine
-  description: A high tech energy carbine favoured by the NT-ERT operatives.
+  description: A high-tech energy carbine favoured by elite Nanotrasen operatives.
   components:
   - type: Item
     size: Large
@@ -393,7 +476,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
   - type: Gun
-    selectedMode: SemiAuto
+    selectedMode: FullAuto
     fireRate: 3
     availableModes:
       - SemiAuto
@@ -409,9 +492,9 @@
 
 - type: entity
   name: pulse rifle
-  parent: [BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband]
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseDeathSquadContraband]
   id: WeaponPulseRifle
-  description: A weapon that is almost as infamous as its users.
+  description: A weapon almost as infamous as its users.
   components:
   - type: Item
     size: Huge
@@ -487,6 +570,8 @@
   components:
     - type: Item
       size: Ginormous
+      shape:
+      - 0,0,7,3
     - type: MultiHandedItem
     - type: ClothingSpeedModifier
       walkModifier: 0.6
@@ -576,9 +661,12 @@
     projectileSpeed: 35 # any higher and this causes issues in lag
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+  - type: Battery
+    maxCharge: 800
+    startingCharge: 800 # Charges in a 20W recharger at 40 seconds
   - type: BatteryAmmoProvider
     proto: BulletDisablerPractice
-    fireCost: 62.5
+    fireCost: 25 # 32 shots, 2 stamcrits, +3 miss buffer per stamcrit (256 stam damage total)
   - type: Tag
     tags:
     - Taser
@@ -607,7 +695,6 @@
       - Belt
   - type: BatteryAmmoProvider
     proto: BulletDisabler
-    fireCost: 62.5
   - type: GuideHelp
     guides:
     - Security
@@ -644,8 +731,8 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: BatteryAmmoProvider
-    proto: BulletDisablerSmg
-    fireCost: 25
+    proto: BulletDisablerSmgSlowing
+    fireCost: 15.6 # 64 shots, 2 stamcrits, +7 miss buffer per stamcrit (256 stam damage total)
   - type: MagazineVisuals
     magState: mag
     steps: 5
@@ -694,7 +781,7 @@
 
 - type: entity
   name: elite taser
-  parent: [ BaseCentcommContraband, WeaponTaser ]
+  parent: [ BaseTaskForceContraband, WeaponTaser ]
   id: WeaponTaserSuper
   suffix: ADMEME
   description: A low-capacity, energy-based stun gun used by elite security teams to disable even the toughest of targets.
@@ -750,7 +837,8 @@
   - type: StaticPrice
     price: 750
   - type: StealTarget
-    stealGroup: WeaponAntiqueLaser
+    stealGroup:
+    - WeaponAntiqueLaser
   - type: SentienceTarget # I hope this is only the captain's gun
     flavorKind: station-event-random-sentience-flavor-inanimate
     weight: 0.0002 # 5,000 times less likely than 1 regular animal
@@ -1010,6 +1098,7 @@
   - type: Appearance
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/energy_magnum.rsi
+<<<<<<< HEAD
   # SS220-multiphase-gun-instead-of-magnum-begin
   # - type: Tag
   #   tags:
@@ -1018,6 +1107,15 @@
   # - type: StealTarget
   #   stealGroup: WeaponEnergyMagnum
   # SS220-multiphase-gun-instead-of-magnum-end
+=======
+  - type: Tag
+    tags:
+    - HighRiskItem
+    - Sidearm
+  - type: StealTarget
+    stealGroup:
+    - WeaponEnergyMagnum
+>>>>>>> wizards/stable
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
@@ -1082,10 +1180,12 @@
     price: 100
 
 - type: entity
-  parent: [WeaponAdvancedLaser, BaseXenoborgContraband]
+  parent: [BaseXenoborgContraband, WeaponAdvancedLaser]
   id: WeaponLaserGunXenoborg
   name: xenoborg laser gun
   components:
+  - type: BatteryAmmoProvider
+    proto: XenoborgLaser
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/xenoborg_laser_gun.rsi
     layers:
@@ -1095,12 +1195,22 @@
       map: [ "enum.GunVisualLayers.MagUnshaded" ]
 
 - type: entity
-  parent: [WeaponLaserCannon, BaseXenoborgContraband]
+  parent: [BaseXenoborgContraband, WeaponLaserCannon]
   id: WeaponLaserCannonXenoborg
   name: xenoborg laser cannon
   components:
+  - type: BatteryAmmoProvider
+    proto: XenoborgHeavyLaser
+    fireCost: 100
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/xenoborg_laser_cannon.rsi
+    layers:
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-unshaded-4
+      map: [ "enum.GunVisualLayers.MagUnshaded" ]
   - type: BatterySelfRecharger
-    autoRechargeRate: 30
+    autoRechargeRate: 50
   # "remove" wield bonus and penalty so borgs can use it
   - type: GunWieldBonus
     minAngle: 0
@@ -1109,3 +1219,62 @@
     fireRate: 2
     minAngle: 1
     maxAngle: 2
+
+- type: entity
+  parent: [BaseXenoborgContraband, WeaponAdvancedLaser]
+  id: WeaponBurstFireLaserXenoborg
+  name: xenoborg burst fire laser
+  description: An alien weapon, channelling a burst-fire laser through a prism, causing targets to burst into fire.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/xenoborg_burstfire.rsi
+    layers:
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-unshaded-4
+      map: [ "enum.GunVisualLayers.MagUnshaded" ]
+      shader: unshaded
+  - type: BatterySelfRecharger
+    autoRechargeRate: 60
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/xenofirebeam.ogg
+    selectedMode: Burst
+    availableModes:
+    - Burst
+    minAngle: 2
+    maxAngle: 30
+    angleIncrease: 3
+    angleDecay: 15
+    cameraRecoilScalar: .25
+  - type: BatteryAmmoProvider
+    proto: XenoborgFireLaser
+    fireCost: 100
+
+- type: entity
+  parent: [BaseWeaponBatteryNoAmmoCounter, BaseXenoborgContraband]
+  id: WeaponRangeFinderXenoborg
+  name: xenoborg range finder
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/xenoborg_range_finder.rsi
+    layers:
+    - state: icon
+      map: [ "enum.GunVisualLayers.Base" ]
+  - type: Battery
+    maxCharge: 1
+    startingCharge: 1
+    showItemStatus: false
+  - type: BatteryAmmoProvider
+    proto: RangeLaser
+    fireCost: 0 # you are shooting a laser pointer, it's unlimited
+  - type: EyeCursorOffset
+    maxOffset: 3
+    pvsIncrease: 0.3
+  - type: CursorOffsetInHand
+  - type: TargetFinder
+  - type: DeviceLinkSource
+    ports:
+    - TargetSource
+  - type: AutoLinkTransmitter
+    channel: XenoborgGuidedMissileLauncher

@@ -13,6 +13,7 @@
   startingGear: SalvageSpecialistGear
   experienceDefinition: SalvageSpecialistRoleExperience # SS220-experience
   supervisors: job-supervisors-qm
+  guides: [ Salvage ]
   access:
   - Cargo
   - Salvage
